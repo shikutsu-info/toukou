@@ -642,14 +642,13 @@ require([
     
     //ボタンクリックインベント
     $('#locate_conpact').click(function() {
-        $("#mapviewDiv").toggle();
-        if ($('#mapviewDiv').css('display') == 'block') {
-            //$('#mapviewDiv').hide();
-            $("#locate_conpact").text("▲ 閉じる");
-        }else{
-            //$('#mapviewDiv').show();
-            $("#locate_conpact").text("▼ 開く");
-        }
+        $('#mapviewDiv').toggle(function(){
+            if ($(this).is(':visible')){
+                $("#locate_conpact").text("▲ 閉じる");
+            } else {
+                $("#locate_conpact").text("▼ 開く");
+            }
+        });
     });
     
     $('#filebtn_1').click(function() {
