@@ -1784,7 +1784,7 @@ var historyTable = {
     var form = new FormData();
     form.set('f','json');
     form.set('returnGeometry', false);
-    form.set('where', "Creator = '" + this.userId + "'");
+    form.set('where', "created_user = '" + this.userId + "'");
     form.set('outFields', '*');
     form.set('orderByFields', 'CreationDate DESC');
     form.set('resultOffset', (page -1 ) * this.records_per_page);
@@ -2028,7 +2028,7 @@ var historyTable = {
   async getRecordCount() {
     var form = new FormData();
     form.set('f','json');
-    form.set('where', "Creator = '" + this.userId + "'");
+    form.set('where', "created_user = '" + this.userId + "'");
     form.set('returnGeometry', false);
     form.set('returnCountOnly', true);
     form.set('token', token);
