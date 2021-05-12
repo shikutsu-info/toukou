@@ -1786,7 +1786,7 @@ var historyTable = {
     form.set('returnGeometry', false);
     form.set('where', "created_user = '" + this.userId + "'");
     form.set('outFields', '*');
-    form.set('orderByFields', 'CreationDate DESC');
+    form.set('orderByFields', 'created_date DESC');
     form.set('resultOffset', (page -1 ) * this.records_per_page);
     form.set('resultRecordCount', this.records_per_page);
     form.set('token', token);
@@ -1808,7 +1808,7 @@ var historyTable = {
 
         var objectid = features[i].attributes["OBJECTID"];
         var title = features[i].attributes["Title"];
-        var createdate = features[i].attributes["CreationDate"];
+        var createdate = features[i].attributes["created_date"];
         var str_createdate = formatDate(new Date(createdate), 'yyyy/MM/dd HH:mm');
         var naiyo = features[i].attributes["Naiyo"];
         var jusho = features[i].attributes["Jusho"];
