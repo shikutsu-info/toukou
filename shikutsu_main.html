@@ -1,22 +1,15 @@
-
-
 <!DOCTYPE html>
 <html lang="ja" >
 
 <head>
 
   <meta charset="UTF-8">
-
   <title>しつく君投稿アプリ</title>
-  
-  
-  
   
 <style>
 @media screen and (min-width: 767px) {
 
   html{
-    display: flex;
     align-items: top;
     justify-content: center;
     position: relative;
@@ -38,6 +31,7 @@
     margin: 35px;
     border-radius: 25px;
   }
+  
   #titlePanel {
     display: block;
     height: 80px;
@@ -98,7 +92,6 @@
   #attachmentDiv {
     margin-left: auto;
     margin-right: auto;
-    font-size: 18px;
     font-family: Avenir Next W00;
     font-size: 14px;
     margin: 10px;
@@ -216,6 +209,12 @@
     max-height: 200px;
     margin : 0 auto;
   }
+  
+  #footerPanel {
+    position: fixed;
+    bottom: 0;
+    
+  }
 }
 
 
@@ -256,7 +255,7 @@
   #formDiv {
     font-family: Avenir Next W00;
     font-size: 14px;
-    margin: 10px;
+    margin: 0px;
     padding: 0px;
   }
 
@@ -270,16 +269,16 @@
   #mapviewDiv {
     padding: 0;
     height: 250px;
-    margin:10px;
+    margin: 0px;
   }
   #viewmapviewDiv {
     padding: 0;
     height: 250px;
-    margin:10px;
+    margin: 0px;
   }
   #gridDiv {
     padding: 0;
-    margin:10px;
+    margin: 0px;
   }
   #buttonDiv {
     padding: 0;
@@ -304,23 +303,24 @@
   #attachmentDiv {
     margin-left: auto;
     margin-right: auto;
-    font-size: 18px;
     font-family: Avenir Next W00;
-    font-size: 14px;
-    margin: 10px;
+    font-size: 9px;
+    margin: 0px;
     padding: 0px;
   }
 
   .select_attachment {
     background-color: #f0f0f0;
-    border-radius: 20px;
-    padding: 20px;
     min-height: 300px;
   }
 
   label{
     color: black;
     font-weight: bold;
+  }
+  
+  img {
+    vertical-align: middle;
   }
 
   button {
@@ -427,6 +427,11 @@
     max-height: 200px;
     margin : 0 auto;
   }
+  
+  #footerPanel {
+    position: fixed;
+    bottom: 0;
+  }
 }
 </style>
 
@@ -452,10 +457,28 @@
   <body>
     <div id="titlePanel">
       <h2>しくつ君投稿アプリ</h2>
-      <span>GEO SEARCH CO.,LTD</span>
+      <span style="float: right;margin: 10px">GEO SEARCH CO.,LTD</span>
     </div>
-    <div id="anonymousPanel" style="display: block; padding: 5px; text-align: center;">
+    <div id="anonymousPanel" style="display: block; padding: 5px;">
       <button id="sign-in" class="sign-in-btn">サインイン</button>
+
+      <div id="helpDiv">
+        <label>◆ヘルプ◆</label><br/>
+        <span>
+          動画サイズは、HD(1280×720)を推奨しています。<br/>
+          カメラモードになった時に、「設定」から「サイズ」をご確認ください。<br/>
+          （機種により若干設定場所が異なります）<br/>
+        </span>
+        <br/>
+        <label>◆撮影のコツ◆</label><br/>
+        <span>
+          まず、真上から道路部分を含め撮影し、それから穴の部分を底辺を含め<br/>
+          360°撮影するときれいに3D化されます。
+        </span>
+        <br/>
+        <br/>
+        <img src="https://taka-github1.github.io/shikutsu/photographer.png" width="250px" height="auto"/>
+      </div>
     </div>
     <!--div id="personalizedPanel" style="display: none; padding: 5px; text-align: center;">
       <span id="userId" style="font-weight: bold;"></span>
@@ -472,9 +495,9 @@
         <tbody class="tbody" id="tableBody"></tbody>
       </table>
       <button id="btn_first" class="esri-icon-beginning"
-         onclick="historyTable.firstPage()"></button>
+              onclick="historyTable.firstPage()"></button>
       <button id="btn_prev" class="esri-icon-reverse"
-         onclick="historyTable.prevPage()"></button>
+              onclick="historyTable.prevPage()"></button>
       <span class="number-page" id="numberPage">
       </span>
 
@@ -505,19 +528,19 @@
           <label id="images_label"></label><br/>
           <table id="imageGallery_tbl">
             <tr>
-              <th style="width:50px;">No</th>
-              <th style="width:60px;"></th>
-              <th style="width:350px;">ファイル名</th>
-              <th style="width:80px;">サイズ</th>
-              <th style="width:150px;">状況</th>
-              <th style="width:40px;"><center><input class="delbtn" type="button" id="delAllBtn' + count + '" value="全削除" onclick="deleteAllImageRow()"></center></th>
+              <th style="width:10%;">No</th>
+              <th style="width:20%;"></th>
+              <th style="width:30%;">ファイル名</th>
+              <th style="width:10%;">サイズ</th>
+              <th style="width:20%;">状況</th>
+              <th style="width:10px;"><center><input class="delbtn" type="button" id="delAllBtn' + count + '" value="全削除" onclick="deleteAllImageRow()"></center></th>
             </tr>
           </table>
         </div>
         <div id="upload_movie" style="display: none" class="select_attachment">
           <table id="movieGallery_tbl">
             <tr>
-              <th style="min-width:150px"></th>
+              <th style="width:150px"></th>
               <th style="width:auto;">ファイル名</th>
               <th style="width:80px;">サイズ</th>
               <th style="width:150px;">状況</th>
@@ -556,39 +579,63 @@
       </div>
     </div>
     <div id="completeDiv" style="display: none;">
-      <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48Y2lyY2xlIGZpbGw9IiMzMTg3MkUiIGN4PSIzMiIgY3k9IjMyIiByPSIzMiIvPjxwYXRoIGZpbGw9IiNGRkYiIGQ9Ik0yMi42NjEgMzAuMjQ2bDUuMTgyIDQuOTg3TDQxLjU1MiAyMiA0NSAyNS40NjEgMjcuNzQ3IDQyIDE5IDMzLjQ5OHoiLz48L2c+PC9zdmc+"></img><br/>
+      <img src="https://taka-github1.github.io/shikutsu/complete.png" width="120px" height="auto"/><br/>
       <h1>正常に投稿されました</h1></br>
-      <div id="completebuttonDiv">
-        <button class="returnmenu" style="width:150px;height:40px">戻る</button>
-      </div>
+    <div id="completebuttonDiv">
+      <button class="returnmenu" style="width:150px;height:40px">戻る</button>
+    </div>
 
     </div>
-    <div id="viewformDiv" style="display: none;">
-      <label>タイトル</label><font color="red">*</font><br/><input id="viewtitle" type="text" class="input_text" disabled/><br/><br/>
-      <label>投稿内容</label><br/><input id="viewnaiyo" type="text" class="input_text" disabled/><br/><br/>
-      <label>場所</label><font color="red">*</font><button class="locate_conpact">▲ 閉じる</button><br/>
-      <div id="viewmapviewDiv"></div>
-      <label>住所</label><br/><input id="viewjusho" type="text" class="input_text" disabled/><br/><br/>
-      <label>備考</label><br/><input id="viewbikou" type="text" class="input_text" disabled/>
-      <input id="viewobjectid" type="text" class="input_text" hidden/>
-      <br/><br/>
-      <div id="viewheaderbuttonDiv" style="display: flex">
-        <button id="editform_show" class="esri-icon-edit">
-          登録情報の編集
-        </button>
-        <button id="edit_send" style="width:150px;height:40px;display: none;">登録</button>
-        <button id="edit_cancel" style="width:150px;height:40px;display: none;">キャンセル</button>
-      </div>
-      <br/><br/>
-      <label>添付ファイル</label><br/>
-      <div id="attachmentlistDiv"></div>
-      <div id="viewfooterbuttonDiv">
-        <button id="addattachment" style="height:40px">添付ファイルの追加(10MB以内)</button>
-        <input id="addattachment-select" type="file" accept="*" hidden/>
-        <button class="returnmenu" style="width:150px;height:40px">戻る</button>
-      </div>
+  <div id="viewformDiv" style="display: none;">
+    <label>タイトル</label><font color="red">*</font><br/><input id="viewtitle" type="text" class="input_text" disabled/><br/><br/>
+    <label>投稿内容</label><br/><input id="viewnaiyo" type="text" class="input_text" disabled/><br/><br/>
+    <label>場所</label><font color="red">*</font><button class="locate_conpact">▲ 閉じる</button><br/>
+    <div id="viewmapviewDiv"></div>
+    <label>住所</label><br/><input id="viewjusho" type="text" class="input_text" disabled/><br/><br/>
+    <label>備考</label><br/><input id="viewbikou" type="text" class="input_text" disabled/>
+    <input id="viewobjectid" type="text" class="input_text" hidden/>
+    <br/><br/>
+    <div id="viewheaderbuttonDiv" style="display: flex">
+      <button id="editform_show" class="esri-icon-edit">
+        登録情報の編集
+      </button>
+      <button id="edit_send" style="width:150px;height:40px;display: none;">登録</button>
+      <button id="edit_cancel" style="width:150px;height:40px;display: none;">キャンセル</button>
     </div>
-  
+    <br/><br/>
+    <label>添付ファイル</label><br/>
+    <div id="attachmentlistDiv"></div>
+    <div id="viewfooterbuttonDiv">
+      <button id="addattachment" style="height:40px">添付ファイルの追加(10MB以内)</button>
+      <input id="addattachment-select" type="file" accept="*" hidden/>
+      <button class="returnmenu" style="width:150px;height:40px">戻る</button>
+    </div>
+  </div>
+  <div id="helpDiv" style="display: none;">
+    <h1>
+      <img src="https://taka-github1.github.io/shikutsu/help.png" width="40px" height="auto"/>
+      ヘルプ
+    </h1>
+    <span>
+      動画サイズは、HD(1280×720)を推奨しています。<br/>
+      カメラモードになった時に、「設定」から「サイズ」をご確認ください。<br/>
+      （機種により若干設定場所が異なります）<br/>
+    </span>
+    <br/>
+    <label>◆撮影のコツ</label><br/>
+    <span>
+      まず、真上から道路部分を含め撮影し、それから穴の部分を底辺を含め<br/>
+      360°撮影するときれいに3D化されます。
+    </span>
+    <br/>
+    <br/>
+    <img src="https://taka-github1.github.io/shikutsu/photographer.png" width="250px" height="auto"/><br/><br/>
+    <button class="returnmenu" style="width:150px;height:40px">戻る</button>
+  </div>
+  <div id="footerPanel" style="display: none;">
+    <!--<a href="#" onclick="change_display(9);">しくつ君ヘルプ</a><br/>
+    <a target="_blank" href="https://www.geosearch.co.jp/">ジオ・サーチホームページ</a-->
+  </div>
   </body>
 </html>
   
@@ -700,6 +747,7 @@ require([
         $('#mainDiv').css('display', 'block');
         $('#formDiv').css('display', 'none');
         $('#completeDiv').css('display', 'none');
+        $('#footerPanel').css('display', 'block');
         token = identityManager.credentials[0].token;
 
         historyTable.init(identityManager.credentials[0].userId, token);
@@ -1027,7 +1075,10 @@ require([
 
   /*********************ロジック処理*********************/
 
-  function  handleImageFilesSelect(files) {
+  async function  handleImageFilesSelect(files) {
+    
+    //入力不可に設定
+    form_disabled(true);
 
     for (var i = 0, f; f = files[i]; i++) {
       var objTBL = document.getElementById("imageGallery_tbl");
@@ -1039,7 +1090,7 @@ require([
       // 最終行に新しい行を追加
       var row = objTBL.insertRow(count);
 
-      compact_image(f, count, row);
+      await compact_image(f, count, row);
 
       $('#images_label').html(count + "件の写真が選択されました");
     }
@@ -1049,7 +1100,7 @@ require([
 
   async function compact_image(f, count, row) {
 
-    await wait(count*0.5);
+    await wait(1);
 
     var c1 = row.insertCell(0);
     var c2 = row.insertCell(1);
@@ -1080,7 +1131,7 @@ require([
         const ctx = canvas.getContext('2d');
         ctx.drawImage(imgReader,0,0,imgWidth,imgHeight);
 
-        canvas.toBlob(function (blob) {
+        canvas.toBlob(async function (blob) {
           var url = URL.createObjectURL(blob);
 
           c2.innerHTML = '<center><img class="thumb" loading="lazy" height="30px" src="' + url +
@@ -1088,7 +1139,7 @@ require([
           c4.innerHTML =(Math.floor(blob.size/1024/1024*100)/100) + "MB"
           c5.innerHTML = '<span class="upload_id" hidden></span><span class="status"></span>';
 
-          upload_rowimage(row, file_property_bag);
+          await upload_rowimage(row, file_property_bag);
         });
 
 
@@ -1099,57 +1150,7 @@ require([
 
   }
 
-  function deleteAllImageRow() {
-    var objTBL = document.getElementById("imageGallery_tbl");
-    if (!objTBL)
-      return;
-    var tableRows = objTBL.getElementsByTagName('tr');
-    var rowCount = tableRows.length;
-
-    while (objTBL.rows.length > 1) objTBL.deleteRow(-1);
-
-    $('#images_label').html("");
-  }
-
-  function deleteImageRow(obj) {
-    if (!obj)
-      return;
-
-    var objTR = obj.parentNode.parentNode.parentNode;
-    var objTBL = objTR.parentNode.parentNode;
-
-    if (objTBL)
-      objTBL.deleteRow(objTR.sectionRowIndex);
-
-    var tagElements = document.getElementsByTagName("span");
-    if (!tagElements)
-      return false;
-
-    var seq = 1;
-    for (var i = 0; i < tagElements.length; i++)
-    {
-      if (tagElements[i].className.match("seqno"))
-        tagElements[i].innerHTML = seq++;
-    }
-
-    var tagElements = document.getElementsByTagName("input");
-    if (!tagElements)
-      return false;
-
-    seq = 1;
-    for (var i = 0; i < tagElements.length; i++)
-    {
-      if (tagElements[i].className.match("delbtn"))
-      {
-        tagElements[i].setAttribute("id", "delBtn" + seq);
-        ++seq;
-      }
-    }
-
-    $('#images_label').html(objTBL.rows.length-1 + "件の写真が選択されました");
-  }
-
-  function upload_rowimage(row, file_property_bag) {
+  async function upload_rowimage(row, file_property_bag) {
     var filename = row.children[2].innerText;
     var url = row.children[1].firstElementChild.firstElementChild.src;
 
@@ -1157,7 +1158,7 @@ require([
     var status_span = row.getElementsByClassName('status')[0];
 
     async function getImageData(url, filename, upload_id_span, status_span) {
-      status_span.innerText = "送信中　0%";
+      status_span.innerText = "0%";
 
       const res = await fetch(url);
       const blob = await res.blob();
@@ -1171,7 +1172,7 @@ require([
       form.set('file', upload_file);
       form.set('token', token);
 
-      var promise = $.ajax({
+      await $.ajax({
         url: url,
         type: "POST",
         data: form,
@@ -1184,13 +1185,18 @@ require([
           var XHR = $.ajaxSettings.xhr();
           XHR.upload.addEventListener('progress',function(e){
             var progre = parseInt(e.loaded/e.total * 100);
-            status_span.innerText = "送信中　" + progre + "%";
+            status_span.innerText = "" + progre + "%";
           });
           return XHR;
         },
         success: function(data) {
-          status_span.innerText = "送信完了";
+          status_span.innerText = "送信済";
           upload_id_span.innerText = data.item.itemID;
+          
+          if (check_image_upload() == true) {
+            //入力可に設定
+            form_disabled(false);
+          }
           console.log(status_span + ":" + data.item.itemID);
         },
         error: function(data) {
@@ -1198,7 +1204,22 @@ require([
         }
       });
     }
-    getImageData(url, filename, upload_id_span, status_span);
+    await getImageData(url, filename, upload_id_span, status_span);
+  }
+  
+  function check_image_upload() {
+    var objTBL = document.getElementById("imageGallery_tbl");
+    var tableRows = objTBL.getElementsByTagName('tr');
+
+    for (var i = 1; i < tableRows.length; i++) {
+      if (tableRows[i].getElementsByClassName('status')[0] == null) {
+        continue;
+      }
+      if (tableRows[i].getElementsByClassName('status')[0].innerText != "送信済") {
+        return false;
+      }
+    }
+    return true;
   }
 
   function  movieFilesSelect(file, index) {
@@ -1330,7 +1351,7 @@ require([
                   sum_status = sum_status + datas[i].progre;
                 }
                 progre = parseInt(sum_status/stop_status * 100);
-                $('#movie_status_' + str_index).html("送信中　" + progre + "%");
+                $('#movie_status_' + str_index).html("" + progre + "%");
               });
               return XHR;
             },
@@ -1391,7 +1412,7 @@ require([
       dataType: 'json',
       async: true
     }).done(function(data) {
-      $('#movie_status_' + str_index).html("送信完了");
+      $('#movie_status_' + str_index).html("送信済");
       $('#movie_upload_id_' + str_index).html(upload_id);
 
       //入力可に設定
@@ -1784,9 +1805,9 @@ var historyTable = {
     var form = new FormData();
     form.set('f','json');
     form.set('returnGeometry', false);
-    form.set('where', "created_user = '" + this.userId + "'");
+    form.set('where', "Creator = '" + this.userId + "'");
     form.set('outFields', '*');
-    form.set('orderByFields', 'created_date DESC');
+    form.set('orderByFields', 'CreationDate DESC');
     form.set('resultOffset', (page -1 ) * this.records_per_page);
     form.set('resultRecordCount', this.records_per_page);
     form.set('token', token);
@@ -1808,7 +1829,7 @@ var historyTable = {
 
         var objectid = features[i].attributes["OBJECTID"];
         var title = features[i].attributes["Title"];
-        var createdate = features[i].attributes["created_date"];
+        var createdate = features[i].attributes["CreationDate"];
         var str_createdate = formatDate(new Date(createdate), 'yyyy/MM/dd HH:mm');
         var naiyo = features[i].attributes["Naiyo"];
         var jusho = features[i].attributes["Jusho"];
@@ -2028,7 +2049,7 @@ var historyTable = {
   async getRecordCount() {
     var form = new FormData();
     form.set('f','json');
-    form.set('where', "created_user = '" + this.userId + "'");
+    form.set('where', "Creator = '" + this.userId + "'");
     form.set('returnGeometry', false);
     form.set('returnCountOnly', true);
     form.set('token', token);
@@ -2054,27 +2075,38 @@ var historyTable = {
 
 function change_display(page) {
   $('body, html').scrollTop(0);
+  
   if (page == 1) {  //main
     $('#mainDiv').css('display', 'block');
     $('#formDiv').css('display', 'none');
     $('#completeDiv').css('display', 'none');
     $('#viewformDiv').css('display', 'none');
+    $('#helpDiv').css('display', 'none');
   } else if (page == 2) { //form
     $('#mainDiv').css('display', 'none');
     $('#formDiv').css('display', 'block');
     $('#completeDiv').css('display', 'none');
     $('#viewformDiv').css('display', 'none');
+    $('#helpDiv').css('display', 'none');
   } else if (page == 3) { //complete
     $('#mainDiv').css('display', 'none');
     $('#formDiv').css('display', 'none');
     $('#completeDiv').css('display', 'block');
     $('#viewformDiv').css('display', 'none');
+    $('#helpDiv').css('display', 'none');
   } else if (page == 4) { //viewform
     change_view_enable(false);
     $('#mainDiv').css('display', 'none');
     $('#formDiv').css('display', 'none');
     $('#completeDiv').css('display', 'none');
     $('#viewformDiv').css('display', 'block');
+    $('#helpDiv').css('display', 'none');
+  } else if (page == 9) { //help
+    $('#mainDiv').css('display', 'none');
+    $('#formDiv').css('display', 'none');
+    $('#completeDiv').css('display', 'none');
+    $('#viewformDiv').css('display', 'none');
+    $('#helpDiv').css('display', 'block');
   }
 }
 
@@ -2107,6 +2139,56 @@ function change_view_enable(flg) {
       viewview_click.remove();
     }
   }
+}
+
+function deleteAllImageRow() {
+  var objTBL = document.getElementById("imageGallery_tbl");
+  if (!objTBL)
+    return;
+  var tableRows = objTBL.getElementsByTagName('tr');
+  var rowCount = tableRows.length;
+
+  while (objTBL.rows.length > 1) objTBL.deleteRow(-1);
+
+  $('#images_label').html("");
+}
+
+function deleteImageRow(obj) {
+  if (!obj)
+    return;
+
+  var objTR = obj.parentNode.parentNode.parentNode;
+  var objTBL = objTR.parentNode.parentNode;
+
+  if (objTBL)
+    objTBL.deleteRow(objTR.sectionRowIndex);
+
+  var tagElements = document.getElementsByTagName("span");
+  if (!tagElements)
+    return false;
+
+  var seq = 1;
+  for (var i = 0; i < tagElements.length; i++)
+  {
+    if (tagElements[i].className.match("seqno"))
+      tagElements[i].innerHTML = seq++;
+  }
+
+  var tagElements = document.getElementsByTagName("input");
+  if (!tagElements)
+    return false;
+
+  seq = 1;
+  for (var i = 0; i < tagElements.length; i++)
+  {
+    if (tagElements[i].className.match("delbtn"))
+    {
+      tagElements[i].setAttribute("id", "delBtn" + seq);
+      ++seq;
+    }
+  }
+
+  $('#images_label').html(objTBL.rows.length-1 + "件の写真が選択されました");
 }
 
 //ブラウザバックの禁止
