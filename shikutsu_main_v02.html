@@ -2442,11 +2442,11 @@ var historyTable = {
       $('#viewstatus').val(features[0].attributes["Status"]);
       $('#viewscene_itemid').val(features[0].attributes["scene_itemid"]);
       
-      if (features[0].attributes["Status"] == "0") {
+      if (features[0].attributes["Status"] == 0) {
         $('#status_text').html("加工待ち");
-      } else if (features[0].attributes["Status"] == "2") {
+      } else if (features[0].attributes["Status"] == 2) {
         $('#status_text').html("加工不可");
-      } else if (features[0].attributes["Status"] == "3") {
+      } else if (features[0].attributes["Status"] == 3) {
         $('#status_text').html("公開終了");
       }
       
@@ -2625,7 +2625,7 @@ function change_display(page) {
     $('#viewformDiv').css('display', 'block');
     $('#helpDiv').css('display', 'none');
     
-    if ($('#viewstatus').val() != "1" || $('#viewscene_itemid').val() == "") {
+    if ($('#viewstatus').val() != 1 || $('#viewscene_itemid').val() == "") {
       $('#making_scene').css('display', 'block');
       $('#viewscene').css('display', 'none');
     } else {  //作成済みのみ
