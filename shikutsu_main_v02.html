@@ -2605,6 +2605,8 @@ var historyTable = {
       console.log(data);
       this.records = data.count;
       this.pages = Math.ceil(data.count / this.records_per_page);
+      
+      if (this.pages == 0) this.pages = 1;
     }).fail(function(data) {
       console.log(data);
     });
