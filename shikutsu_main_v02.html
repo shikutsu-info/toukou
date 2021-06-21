@@ -40,11 +40,19 @@
 
   #titlePanel {
     display: block;
-    height: 80px;
     color: white;
     text-align: center;
     font-size: 18px;
-    background-color:rgba(50, 155, 50, 1);
+  }
+  
+  .header_img { 
+    display: block;
+    max-width: 1500px;
+    padding-right: 20px;
+    height: 140px;
+  }
+  .header_small_img { 
+    display: none;
   }
 
   #formDiv {
@@ -368,12 +376,20 @@
   }
 
   #titlePanel {
-    display: block;
-    height: 90px;
+    display: flex;
+    /*height: 90px;*/
     color: white;
     text-align: center;
     font-size: 18px;
-    background-color:rgba(50, 155, 50, 1);
+  }
+  
+  .header_img { 
+    display: none;
+  }
+  .header_small_img { 
+    display: block;
+    width: 100%;
+    padding-right: 20px;
   }
 
   #formDiv {
@@ -701,8 +717,8 @@
 
   <body>
     <div id="titlePanel">
-      <h2>しくつ君投稿アプリ</h2>
-      <span style="float: right;margin: 10px">GEO SEARCH CO.,LTD</span>
+      <img class="header_img" src="header.svg"/>
+      <img class="header_small_img"src="header_small.svg"/>
     </div>
     <div id="anonymousPanel" style="display: block; padding: 5px;">
       <button id="sign-in" class="sign-in-btn">サインイン</button>
