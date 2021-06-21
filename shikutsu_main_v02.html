@@ -2337,7 +2337,7 @@ var historyTable = {
 
         var objectid = features[i].attributes["OBJECTID"];
         var title = features[i].attributes["Title"];
-        var createdate = features[i].attributes["CreationDate"];
+        var createdate = features[i].attributes[create_date_field];
         var str_createdate = formatDate(new Date(createdate), 'yyyy/MM/dd HH:mm');
         var naiyo = features[i].attributes["Naiyo"];
         var jusho = features[i].attributes["Jusho"];
