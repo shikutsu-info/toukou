@@ -1,0 +1,15 @@
+{
+  "name": "ジオ・サーチ",
+  "webappId" : "7qK1l49P6ioNbSn9",
+  "push_feature_url": "https://services.arcgis.com/5otplaPwyIk8VcqM/arcgis/rest/services/SHIKUTSU_UPLOAD_FS_TOKO_v01/FeatureServer",
+  "layer_id": "0",
+  "history_webmap_id": "74a1e1f2cc894ba5b139fcb4bf52bb1a",
+  "basemap_id": "accf3eff22254ed69e23afeb094a4881",
+  "basescene_id": "bbbf9a58a1da4c05a8b9908335245dc1",
+  "group_id": "ad5a5dd1e4d24268890862ef8a9ff062",
+  "creator_field": "created_user",
+  "create_date_field": "created_date",
+  "init_latitude": 35.170915,
+  "init_longitude": 136.8793429,
+  "init_zoom": 13
+}
