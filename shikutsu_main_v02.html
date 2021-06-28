@@ -1068,7 +1068,7 @@ if (param != null) {
 }
 
 //configの読み込み
-var json_url = "shikutsu/KaishaID_" + $('#kaishaid').val() + ".json";
+var json_url = "KaishaID_" + $('#kaishaid').val() + ".json";
 
 $.ajaxSetup({async: false});
 $.getJSON(json_url, function(config) {
