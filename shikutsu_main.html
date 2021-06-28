@@ -6,9 +6,9 @@
 <head>
 
   <meta charset="UTF-8">
-
   <title>しくつ君投稿アプリ</title>
-  
+  <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon" /> 
+  <link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
   
   
   
@@ -40,9 +40,7 @@
 
   #titlePanel {
     display: block;
-    color: white;
-    text-align: center;
-    font-size: 18px;
+    text-align: left;
   }
   
   .header_img { 
@@ -54,6 +52,7 @@
   .header_small_img { 
     display: none;
   }
+
 
   #formDiv {
     font-size: 14px;
@@ -127,6 +126,36 @@
   #attachmentlistDiv {
     margin: 20px;
   }
+  
+  #backbtn{
+    position: fixed;
+    right: 0.5rem;
+    height: 2rem;
+    line-height: 2rem;
+    width: 2rem;
+    text-align: center;
+    border-radius: 0.2rem;
+    background: rgba(0, 0, 0, 0.5);
+    color: rgba(255, 255, 255, 0.75);
+  }
+  #bottombtn{
+    position: fixed;
+    right: 0.5rem;
+    height: 2rem;
+    line-height: 2rem;
+    width: 2rem;
+    text-align: center;
+    border-radius: 0.2rem;
+    background: rgba(0, 0, 0, 0.5);
+    color: rgba(255, 255, 255, 0.75);
+  }
+  #backbtn {
+    bottom: 14.5rem;
+  }
+  #bottombtn {
+    bottom: 12rem;
+  }
+  
   #gridDiv {
     padding: 0;
     margin:10px;
@@ -376,11 +405,9 @@
   }
 
   #titlePanel {
-    display: flex;
+    display: block;
     /*height: 90px;*/
-    color: white;
-    text-align: center;
-    font-size: 18px;
+    text-align: left;
   }
   
   .header_img { 
@@ -465,6 +492,36 @@
   #attachmentlistDiv {
     text-align: center;
   }
+  
+  #backbtn{
+    position: fixed;
+    right: 0.5rem;
+    height: 2rem;
+    line-height: 2rem;
+    width: 2rem;
+    text-align: center;
+    border-radius: 0.2rem;
+    background: rgba(0, 0, 0, 0.5);
+    color: rgba(255, 255, 255, 0.75);
+  }
+  #bottombtn{
+    position: fixed;
+    right: 0.5rem;
+    height: 2rem;
+    line-height: 2rem;
+    width: 2rem;
+    text-align: center;
+    border-radius: 0.2rem;
+    background: rgba(0, 0, 0, 0.5);
+    color: rgba(255, 255, 255, 0.75);
+  }
+  #backbtn {
+    bottom: 14.5rem;
+  }
+  #bottombtn {
+    bottom: 12rem;
+  }
+  
   #gridDiv {
     padding: 0;
     margin: 0px;
@@ -717,8 +774,11 @@
 
   <body>
     <div id="titlePanel">
-      <img class="header_img" src="header.svg"/>
+      <!--<h2>しくつ君投稿アプリ</h2>
+      <span style="float: right;margin: 10px">GEO SEARCH CO.,LTD</span> 
+-->   <img class="header_img" src="header.svg"/>
       <img class="header_small_img"src="header_small.svg"/>
+       <span>契約企業：</span><span id="KaishaName"></span>
     </div>
     <div id="anonymousPanel" style="display: block; padding: 5px;">
       <button id="sign-in" class="sign-in-btn">サインイン</button>
@@ -788,7 +848,7 @@
       <label>住所</label><br/><input id="jusho" type="text" class="input_text"/><br/><br/>
       <label>備考</label><br/><input id="bikou" type="text" class="input_text"/><br/><br/>
       <input id="email" type="text" class="hidden_email" hidden/><br/><br/>
-
+ 
       <div id="attachmentDiv">
         <label>投稿区分</label><label for="trigger" class="open_btn esri-icon-question">撮影のヒント</label><br/>
         <input type="radio" name="attachment" id="image" value="image" checked>
@@ -797,7 +857,8 @@
         <label for="movie" class="radiomenu">動画</label>
         <div id="upload_images" style="display: block" class="select_attachment">
           <input id="images-select" type="file" accept="image/*" style="display:none;" multiple/>
-          <button id="imagebtn"><img src="camera.png" height="18px"></img><span>　写真の選択</span></button>
+          <button id="imagebtn"><img src="camera.png
+" height="18px"></img><span>　写真の選択</span></button>
           <label id="images_label"></label><br/>
           <table id="imageGallery_tbl">
             <tr>
@@ -809,6 +870,7 @@
               <th style="width:10px;"><center><input class="delbtn" type="button" id="delAllBtn' + count + '" value="全削除" onclick="deleteAllImageRow()"></center></th>
             </tr>
           </table>
+        <span id="image_uploading" hidden>0</span>
         </div>
         <div id="upload_movie" style="display: none" class="select_attachment">
           <table id="movieGallery_tbl">
@@ -900,6 +962,8 @@
     <br/><br/>
     <label>添付ファイル</label><br/>
     <div id="attachmentlistDiv"></div>
+    <span id="backbtn"><i class="esri-icon-up-arrow"></i></span>
+    <span id="bottombtn"><i class="esri-icon-down-arrow"></i></span>
     <div id="viewfooterbuttonDiv">
       <button id="addattachment" style="height:40px">添付ファイルの追加(10MB以内)</button>
       <input id="addattachment-select" type="file" accept="*" hidden/>
@@ -951,30 +1015,26 @@
   
   
       <script id="rendered-js" >
-var webappId = "7qK1l49P6ioNbSn9";
-var push_feature_url = "https://services.arcgis.com/5otplaPwyIk8VcqM/arcgis/rest/services/SHIKUTSU_UPLOAD_FS_TOKO_v01/FeatureServer";
-
-var view_feature_url = "https://services.arcgis.com/5otplaPwyIk8VcqM/arcgis/rest/services/SHIKUTSU_UPLOAD_FS_TOKO_v01/FeatureServer";
-
-var history_webmap_id = "74a1e1f2cc894ba5b139fcb4bf52bb1a";
-var basemap_id = "accf3eff22254ed69e23afeb094a4881";
-var basescene_id = "bbbf9a58a1da4c05a8b9908335245dc1";
-
-var group_id = "ad5a5dd1e4d24268890862ef8a9ff062";
-
-var creator_field = "created_user";
-var create_date_field = "created_date";
-
-var register_url = push_feature_url + "/uploads/register";
-
+var kaisha_name = "";
+var webappId = "";
+var push_feature_url = "";
 var layer_id = "0";
+var history_webmap_id = "";
+var basemap_id = "";
+var basescene_id = "";
+var group_id = "";
+var creator_field = "";
+var create_date_field = "";
+var init_latitude = null;
+var init_longitude = null;
+var init_zoom = null;
+
 
 var token = "";
 var user = "";
 var email = "";
 var portal =null;
-var init_latitude = 35.170915;
-var init_longitude = 136.8793429;
+
 var latitude = null;
 var longitude = null;
 var jusho = "";
@@ -1008,6 +1068,18 @@ if (param != null) {
   $('#kaishaid').val(999999);
 }
 
+//configの読み込み
+var json_url = "KaishaID_" + $('#kaishaid').val() + ".json";
+
+$.ajaxSetup({async: false});
+$.getJSON(json_url, function(config) {
+  set_config(config);
+  $('#KaishaName').html(kaisha_name);
+});
+$.ajaxSetup({async: true});
+
+var register_url = push_feature_url + "/uploads/register";
+
 /*********************初期化処理*********************/
 
 require([
@@ -1027,6 +1099,7 @@ require([
   "esri/layers/PointCloudLayer",
   "esri/layers/IntegratedMeshLayer",
   "esri/widgets/Home",
+  "esri/widgets/Slice",
   "esri/Viewpoint",
   "esri/widgets/DirectLineMeasurement3D",
   "esri/widgets/AreaMeasurement3D"
@@ -1036,7 +1109,7 @@ require([
         Graphic, Locate, Search, Locator,
         WebScene, SceneView, Layer, 
         PointCloudLayer, IntegratedMeshLayer, 
-        Home, Viewpoint, DirectLineMeasurement3D, AreaMeasurement3D) {
+        Home, Slice, Viewpoint, DirectLineMeasurement3D, AreaMeasurement3D) {
 
   var portalUrl =  "https://www.arcgis.com/sharing";
 
@@ -1050,13 +1123,6 @@ require([
   $('#sign-in').click(function() {
     identityManager.getCredential(portalUrl);
   });
-
-  /*
-  $('#sign-out').click(function() {
-    identityManager.destroyCredentials();
-    window.location.reload();
-  });
-  */
 
   identityManager.checkSignInStatus(portalUrl).then(function() {
     $('#anonymousPanel').css('display', 'none');
@@ -1161,7 +1227,7 @@ require([
     view = new MapView({
       container: "mapviewDiv",
       map: map,
-      zoom: 13,
+      zoom: init_zoom,
       center: [init_longitude, init_latitude]
     });
 
@@ -1313,7 +1379,7 @@ require([
       environment: {
         background: {
           type: "color",
-          color: [255, 252, 244, 1]
+          color: [150, 152, 144, 1]
         },
         starsEnabled: false,
         atmosphereEnabled: false
@@ -1552,6 +1618,13 @@ require([
     
     addattachent_upload_file($('#viewobjectid').val(), this.files[0])
   });
+  
+  $('#backbtn').click(function () {
+    $('body, html').animate({scrollTop: 0}, 300, 'linear');
+  });
+  $('#bottombtn').click(function () {
+    $('body, html').animate({scrollTop: $('#viewfooterbuttonDiv').offset().top}, 300, 'linear');
+  });
 
   /*********************ロジック処理*********************/
 
@@ -1576,11 +1649,19 @@ require([
     }
 
     $('input[type=file]').val('');
+    
+    
   }
 
   async function compact_image(f, count, row) {
 
-    await wait(1);
+    var uploading = $('#image_uploading').html();
+    
+    while (uploading != "0") {
+      uploading = $('#image_uploading').html();
+      await wait(0.5);
+    }
+    $('#image_uploading').html("1");
 
     var c1 = row.insertCell(0);
     var c2 = row.insertCell(1);
@@ -1614,12 +1695,15 @@ require([
         canvas.toBlob(async function (blob) {
           var url = URL.createObjectURL(blob);
 
-          c2.innerHTML = '<center><img class="thumb" loading="lazy" height="30px" src="' + url +
-            '" title="' + f.name + '"/></center>';
+          //c2.innerHTML = '<center><img class="thumb" loading="lazy" height="30px" src="' + url + '" title="' + f.name + '" hidden/></center>';
+          //c2.innerHTML = '<span class="upload_url" hidden>' + url + '</span>';
+          
           c4.innerHTML =(Math.floor(blob.size/1024/1024*100)/100) + "MB"
-          c5.innerHTML = '<span class="upload_id" hidden></span><span class="status"></span>';
+          c5.innerHTML = '<span class="upload_url" hidden>' + url + '</span><span class="upload_id" hidden></span><span class="status"></span>';
 
+          $('#image_uploading').html("0");
           await upload_rowimage(row, file_property_bag);
+          
         });
 
 
@@ -1632,7 +1716,8 @@ require([
 
   async function upload_rowimage(row, file_property_bag) {
     var filename = row.children[2].innerText;
-    var url = row.children[1].firstElementChild.firstElementChild.src;
+    //var url = row.children[1].firstElementChild.firstElementChild.src;
+    var url = row.getElementsByClassName('upload_url')[0].innerText;
 
     var upload_id_span = row.getElementsByClassName('upload_id')[0];
     var status_span = row.getElementsByClassName('status')[0];
@@ -2328,7 +2413,6 @@ var historyTable = {
     var form = new FormData();
     form.set('f','json');
     form.set('returnGeometry', false);
-    //form.set('where', "Status<>9");
     form.set('where', "Status<>9 And " + creator_field + " = '" + this.userId + "'");
     form.set('outFields', '*');
     form.set('orderByFields', create_date_field + ' DESC');
@@ -2337,7 +2421,7 @@ var historyTable = {
     form.set('token', token);
 
     $.ajax({
-      url: view_feature_url + '/' + layer_id + '/query',
+      url: push_feature_url + '/' + layer_id + '/query',
       type: "POST",
       data: form,
       processData: false,
@@ -2415,7 +2499,7 @@ var historyTable = {
     form.set('token', token);
 
     $.ajax({
-      url: view_feature_url + '/' + layer_id + '/query',
+      url: push_feature_url + '/' + layer_id + '/query',
       type: "POST",
       data: form,
       processData: false,
@@ -2458,11 +2542,11 @@ var historyTable = {
       $('#viewstatus').val(features[0].attributes["Status"]);
       $('#viewscene_itemid').val(features[0].attributes["SceneItemID"]);
       
-      if (features[0].attributes["Status"] == 0) {
+      if (features[0].attributes["Status"] == "0") {
         $('#status_text').html("加工待ち");
-      } else if (features[0].attributes["Status"] == 2) {
+      } else if (features[0].attributes["Status"] == "2") {
         $('#status_text').html("加工不可");
-      } else if (features[0].attributes["Status"] == 3) {
+      } else if (features[0].attributes["Status"] == "9") {
         $('#status_text').html("公開終了");
       }
       
@@ -2483,7 +2567,7 @@ var historyTable = {
     form.set('token', token);
 
     $.ajax({
-      url: view_feature_url + '/' + layer_id + '/queryAttachments',
+      url: push_feature_url + '/' + layer_id + '/queryAttachments',
       type: "POST",
       data: form,
       processData: false,
@@ -2504,7 +2588,7 @@ var historyTable = {
       for(var i = 0; i< attachments.length; i++) {
         var att_name = attachments[i].name;
         var att_id = attachments[i].id;
-        var att_url = view_feature_url + '/' + layer_id + '/' + objectid + '/attachments/' + att_id + '?token=' + this.token;
+        var att_url = push_feature_url + '/' + layer_id + '/' + objectid + '/attachments/' + att_id + '?token=' + this.token;
         var contentType = attachments[i].contentType;
         var keywords = attachments[i].keywords;
         
@@ -2563,7 +2647,7 @@ var historyTable = {
     form.set('token', token);
 
     $.ajax({
-      url: view_feature_url + '/' + layer_id + '/deleteFeatures',
+      url: push_feature_url + '/' + layer_id + '/deleteFeatures',
       type: "POST",
       data: form,
       processData: false,
@@ -2586,14 +2670,13 @@ var historyTable = {
   async getRecordCount() {
     var form = new FormData();
     form.set('f','json');
-    //form.set('where', "1=1");
     form.set('where', creator_field + " = '" + this.userId + "'");
     form.set('returnGeometry', false);
     form.set('returnCountOnly', true);
     form.set('token', token);
 
     await $.ajax({
-      url: view_feature_url + '/' + layer_id + '/query',
+      url: push_feature_url + '/' + layer_id + '/query',
       type: "POST",
       data: form,
       processData: false,
@@ -2643,7 +2726,7 @@ function change_display(page) {
     $('#viewformDiv').css('display', 'block');
     $('#helpDiv').css('display', 'none');
     
-    if ($('#viewstatus').val() != 1 || $('#viewscene_itemid').val() == "") {
+    if ($('#viewstatus').val() != "1" || $('#viewscene_itemid').val() == "") {
       $('#making_scene').css('display', 'block');
       $('#viewscene').css('display', 'none');
     } else {  //作成済みのみ
@@ -2816,6 +2899,22 @@ function deleteImageRow(obj) {
   }
 
   $('#images_label').html(objTBL.rows.length-1 + "件の写真が選択されました");
+}
+
+function set_config(config) {
+  kaisha_name = config.name;
+  webappId = config.webappId;
+  push_feature_url = config.push_feature_url;
+  layer_id = config.layer_id;
+  history_webmap_id = config.history_webmap_id;
+  basemap_id = config.basemap_id;
+  basescene_id = config.basescene_id;
+  group_id = config.group_id;
+  creator_field = config.creator_field;
+  create_date_field = config.create_date_field;
+  init_latitude = config.init_latitude;
+  init_longitude = config.init_longitude;
+  init_zoom = config.init_zoom;
 }
 
 //ブラウザバックの禁止
