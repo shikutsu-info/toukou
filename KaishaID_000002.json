@@ -2,7 +2,7 @@
 {
   "name": "会社２",
   "webappId" : "7qK1l49P6ioNbSn9",
-  "push_feature_url": "https://services.arcgis.com/5otplaPwyIk8VcqM/arcgis/rest/services/SHIKUTSU_UPLOAD_FS_000002/FeatureServer",
+  "push_feature_url": "https://services.arcgis.com/5otplaPwyIk8VcqM/arcgis/rest/services/SHIKUTSU_UPLOAD_FS_TOKO_000002/FeatureServer",
   "layer_id": "0",
   "history_webmap_id": "74a1e1f2cc894ba5b139fcb4bf52bb1a",
   "basemap_id": "accf3eff22254ed69e23afeb094a4881",
