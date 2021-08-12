@@ -10,7 +10,7 @@
   "group_id": "ca529d6e9c844fa389f1c62d87ad91fe",
   "creator_field": "created_user",
   "create_date_field": "created_date",
-  "init_latitude": 35.170915,
-  "init_longitude": 136.8793429,
-  "init_zoom": 13
+  "init_latitude": 35.682,
+  "init_longitude": 139.75, 
+  "init_zoom": 10
 }
