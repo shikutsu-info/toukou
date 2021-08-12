@@ -12,6 +12,7 @@
   
   
   
+  
 <style>
 @media screen and (min-width: 767px) {
 
@@ -377,6 +378,47 @@
   background:#37beb0;
   color:#fff;
   transition: .3s ease;
+}
+
+input[type=checkbox] {
+    display: none;
+}
+.requestFile {
+    box-sizing: border-box;
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px 30px;
+    position: relative;
+    width: auto;
+}
+.requestFile::before {
+    background: #fff;
+    border: 1px solid #231815;
+    content: '';
+    display: block;
+    height: 16px;
+    left: 5px;
+    margin-top: -8px;
+    position: absolute;
+    top: 50%;
+    width: 16px;
+}
+.requestFile::after {
+    border-right: 6px solid #00cccc;
+    border-bottom: 3px solid #00cccc;
+    content: '';
+    display: block;
+    height: 9px;
+    left: 10px;
+    margin-top: -7px;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    transform: rotate(45deg);
+    width: 5px;
+}
+input[type=checkbox]:checked + .requestFile::after {
+    opacity: 1;
 }
 
 @media screen and (max-width: 767px) {
@@ -750,6 +792,47 @@
     color:#fff;
     transition: .3s ease;
   }
+
+  input[type=checkbox] {
+    display: none;
+  }
+  .requestFile {
+    box-sizing: border-box;
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px 30px;
+    position: relative;
+    width: auto;
+  }
+  .requestFile::before {
+    background: #fff;
+    border: 1px solid #231815;
+    content: '';
+    display: block;
+    height: 16px;
+    left: 5px;
+    margin-top: -8px;
+    position: absolute;
+    top: 50%;
+    width: 16px;
+  }
+  .requestFile::after {
+    border-right: 6px solid #00cccc;
+    border-bottom: 3px solid #00cccc;
+    content: '';
+    display: block;
+    height: 9px;
+    left: 10px;
+    margin-top: -7px;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    transform: rotate(45deg);
+    width: 5px;
+  }
+  input[type=checkbox]:checked + .requestFile::after {
+    opacity: 1;
+  }
 }
 </style>
 
@@ -765,11 +848,11 @@
   <head>
     <meta charset="utf-8" />
     <title>しくつ君投稿アプリ</title>
-    <link rel="stylesheet" href="https://js.arcgis.com/4.19/esri/css/main.css" />
+    <link rel="stylesheet" href="https://js.arcgis.com/4.20/esri/css/main.css" />
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://js.arcgis.com/4.19/"></script>
+    <script src="https://js.arcgis.com/4.20/"></script>
   </head>
 
   <body>
@@ -910,6 +993,16 @@
           <input id="movie-select3" type="file" accept="video/*" hidden/>
         </div>
       </div>
+      <br/>
+      <div id "requestFileDiv">
+        <label>取得ファイル形式</label><br/>
+        <input type="checkbox" id="requestFile-PDF" name="select-requestFile" checked="checked">
+        <label for="requestFile-PDF" class="requestFile">PDF</label>
+        <input type="checkbox" id="requestFile-LAS" name="select-requestFile">
+        <label for="requestFile-LAS" class="requestFile">LAS</label>
+        <input type="checkbox" id="requestFile-OBJ" name="select-requestFile">
+        <label for="requestFile-OBJ" class="requestFile">OBJ</label>
+      </div>
       <div id="buttonDiv">
         <button id="sendbtn" style="width:150px;height:40px">送信</button>
         <button id="clearbtn" style="width:150px;height:40px">クリア</button>
@@ -930,7 +1023,15 @@
     <label>場所</label><font color="red">*</font><button class="locate_conpact">▲ 閉じる</button><br/>
     <div id="viewmapviewDiv"></div>
     <label>住所</label><br/><input id="viewjusho" type="text" class="input_text" disabled/><br/><br/>
-    <label>備考</label><br/><input id="viewbikou" type="text" class="input_text" disabled/>
+    <label>備考</label><br/><input id="viewbikou" type="text" class="input_text" disabled/><br/>
+
+    <label>取得ファイル形式</label><br/>
+    <input type="checkbox" id="viewrequestFile-PDF" name="select-requestFile">
+    <label for="viewrequestFile-PDF" class="requestFile">PDF</label>
+    <input type="checkbox" id="viewrequestFile-LAS" name="select-requestFile">
+    <label for="viewrequestFile-LAS" class="requestFile">LAS</label>
+    <input type="checkbox" id="viewrequestFile-OBJ" name="select-requestFile">
+    <label for="viewrequestFile-OBJ" class="requestFile">OBJ</label>
     <input id="viewobjectid" type="text" class="input_text" hidden/>
     <input id="viewstatus" type="text" class="input_text" hidden/>
     <input id="viewscene_itemid" type="text" class="input_text" hidden/>
@@ -1019,7 +1120,7 @@ var kaisha_name = "";
 var webappId = "";
 var push_feature_url = "";
 var layer_id = "0";
-var history_webmap_id = "";
+//var history_webmap_id = "";
 var basemap_id = "";
 var basescene_id = "";
 var group_id = "";
@@ -1166,13 +1267,15 @@ require([
   function initForm() {
     const historymap = new WebMap({
       portalItem: {
-        id: history_webmap_id,
+        id: basemap_id,
       }
     });
     
     historyview = new MapView({
       container: "historyMapViewDiv",
-      map: historymap
+      map: historymap,
+      center: [init_longitude, init_latitude],
+      zoom: init_zoom
     });
     historyview.popup.collapseEnabled = false;
     historyview.popup.dockOptions = {
@@ -1210,12 +1313,53 @@ require([
     });
     
     historyview.when(function () {
-      var layers = historyview.map.layers;
-      var featureLayer = layers.find(
-      value => value.title == "試掘ポイント");
+      var featureLayer = new FeatureLayer({
+        url: push_feature_url
+      });
+
+      var popupTemplate = {
+        title: "{Title}",
+        outFields: ["*"],
+        content: [
+          {
+            type: "fields",
+            fieldInfos: [{
+              fieldName: "Naiyo",
+              label: "投稿内容"
+            }, {
+              fieldName: "Jusho",
+              label: "住所"
+            }, {
+              fieldName: "Bikou",
+              label: "備考"
+            }]
+          },
+        ]
+      };
+      featureLayer.popupTemplate = popupTemplate;
+
+      const labelClass = {
+        labelExpressionInfo: {
+          expression: "\"投稿日時\\n\" + Text($feature." + create_date_field + ", 'Y/MM/DD HH:mm')"
+        },
+        labelPlacement: "above-center",
+        maxScale: 0,
+        minScale: 200000,
+        symbol: {
+          type: "text",
+          color: [75,100,201,255],
+          font: {
+            family: "Playfair Display",
+            size: 9.75,
+          },
+          haloColor: [255,255,255,255],
+          haloSize: 1
+        }
+      };
       
-      //featureLayer.definitionExpression = "Status<>9";
+      featureLayer.labelingInfo = [labelClass];
       featureLayer.definitionExpression = "Status<>9 And " + creator_field + " = '" + user + "'";
+      historymap.add(featureLayer);
     });
     
     const map = new WebMap({
@@ -1522,6 +1666,17 @@ require([
       alert("場所が指定されていません");
       return;
     }
+    
+    //取得ファイル形式チェック
+    var request_file1 = $('#requestFile-PDF').is(':checked');
+    var request_file2 = $('#requestFile-LAS').is(':checked');
+    var request_file3 = $('#requestFile-OBJ').is(':checked');
+    
+    if (request_file1==false && request_file2==false && request_file3==false) {
+      alert("取得ファイル形式が指定されていません");
+      return;
+    }
+    
     $('#sendbtn').html("送信中");
 
     add_feature(latitude, longitude, attachment);
@@ -1563,6 +1718,15 @@ require([
     if (title == "") {
       alert("タイトルは必須です");
       $('#viewtitle').focus();
+      return;
+    }
+    //取得ファイル形式チェック
+    var request_file1 = $('#viewrequestFile-PDF').is(':checked');
+    var request_file2 = $('#viewrequestFile-LAS').is(':checked');
+    var request_file3 = $('#viewrequestFile-OBJ').is(':checked');
+    
+    if (request_file1==false && request_file2==false && request_file3==false) {
+      alert("取得ファイル形式が指定されていません");
       return;
     }
     edit_feature(latitude, longitude);
@@ -2014,6 +2178,11 @@ require([
     if (flg == "movie") {
       kbn = 1;
     }
+    
+    var request_file1 = Number($('#requestFile-PDF').is(':checked'));
+    var request_file2 = Number($('#requestFile-LAS').is(':checked'));
+    var request_file3 = Number($('#requestFile-OBJ').is(':checked'));
+    
     url = push_feature_url + "/" + layer_id + "/addFeatures";
 
     var feature = {
@@ -2030,7 +2199,10 @@ require([
         "Jusho": $('#jusho').val(),
         "Bikou": $('#bikou').val(),
         "Email": email,
-        "Status": 0
+        "Status": 0,
+        "Request_filetype01": request_file1,
+        "Request_filetype02": request_file2,
+        "Request_filetype03": request_file3
       }
     };
 
@@ -2241,10 +2413,20 @@ require([
 
     deleteAllImageRow();
     deleteAllMovieRow();
+    
+    $('#requestFile-PDF').prop('checked', true);
+    $('#requestFile-LAS').prop('checked', false);
+    $('#requestFile-OBJ').prop('checked', false);
+    
     $('#sendbtn').html("送信");
   }
   
   function edit_feature(lat, long) {
+    
+    var request_file1 = Number($('#viewrequestFile-PDF').is(':checked'));
+    var request_file2 = Number($('#viewrequestFile-LAS').is(':checked'));
+    var request_file3 = Number($('#viewrequestFile-OBJ').is(':checked'));
+    
     url = push_feature_url + "/" + layer_id + "/updateFeatures";
 
     var feature = {
@@ -2258,7 +2440,10 @@ require([
         "Title": $('#viewtitle').val(),
         "Naiyo": $('#viewnaiyo').val(),
         "Jusho": $('#viewjusho').val(),
-        "Bikou": $('#viewbikou').val()
+        "Bikou": $('#viewbikou').val(),
+        "Request_filetype01": request_file1,
+        "Request_filetype02": request_file2,
+        "Request_filetype03": request_file3
       }
     };
 
@@ -2538,6 +2723,9 @@ var historyTable = {
       $('#viewnaiyo').val(features[0].attributes["Naiyo"]);
       $('#viewjusho').val(features[0].attributes["Jusho"]);
       $('#viewbikou').val(features[0].attributes["Bikou"]);
+      $('#viewrequestFile-PDF').prop('checked', features[0].attributes["Request_filetype01"]);
+      $('#viewrequestFile-LAS').prop('checked', features[0].attributes["Request_filetype02"]);
+      $('#viewrequestFile-OBJ').prop('checked', features[0].attributes["Request_filetype03"]);
       $('#viewobjectid').val(objectid);
       $('#viewstatus').val(features[0].attributes["Status"]);
       $('#viewscene_itemid').val(features[0].attributes["SceneItemID"]);
@@ -2826,6 +3014,9 @@ function change_view_enable(flg) {
     $('#viewnaiyo').prop('disabled', false);
     $('#viewjusho').prop('disabled', false);
     $('#viewbikou').prop('disabled', false);
+    $('#viewrequestFile-PDF').prop('disabled', false);
+    $('#viewrequestFile-LAS').prop('disabled', false);
+    $('#viewrequestFile-OBJ').prop('disabled', false);
     $('#editform_show').css('display', 'none');
     $('#edit_send').css('display', 'block');
     $('#edit_cancel').css('display', 'block');
@@ -2840,6 +3031,9 @@ function change_view_enable(flg) {
     $('#viewnaiyo').prop('disabled', true);
     $('#viewjusho').prop('disabled', true);
     $('#viewbikou').prop('disabled', true);
+    $('#viewrequestFile-PDF').prop('disabled', true);
+    $('#viewrequestFile-LAS').prop('disabled', true);
+    $('#viewrequestFile-OBJ').prop('disabled', true);
     $('#editform_show').css('display', 'block');
     $('#edit_send').css('display', 'none');
     $('#edit_cancel').css('display', 'none');
@@ -2906,7 +3100,7 @@ function set_config(config) {
   webappId = config.webappId;
   push_feature_url = config.push_feature_url;
   layer_id = config.layer_id;
-  history_webmap_id = config.history_webmap_id;
+  //history_webmap_id = config.history_webmap_id;
   basemap_id = config.basemap_id;
   basescene_id = config.basescene_id;
   group_id = config.group_id;
