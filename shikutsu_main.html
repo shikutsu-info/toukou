@@ -1061,6 +1061,9 @@ input[type=checkbox]:checked + .requestFile::after {
       </div>
     </div>
     <br/><br/>
+    <div id="pdf_attachmentDiv"></div><br/>
+    <div id="las_attachmentDiv"></div><br/>
+    <div id="obj_attachmentDiv"></div><br/>
     <label>添付ファイル</label><br/>
     <div id="attachmentlistDiv"></div>
     <span id="backbtn"><i class="esri-icon-up-arrow"></i></span>
@@ -2730,6 +2733,7 @@ var historyTable = {
       $('#viewstatus').val(features[0].attributes["Status"]);
       $('#viewscene_itemid').val(features[0].attributes["SceneItemID"]);
       
+      /*
       if (features[0].attributes["Status"] == "0") {
         $('#status_text').html("加工待ち");
       } else if (features[0].attributes["Status"] == "2") {
@@ -2737,6 +2741,7 @@ var historyTable = {
       } else if (features[0].attributes["Status"] == "9") {
         $('#status_text').html("公開終了");
       }
+      */
       
       this.viewattachment(objectid);
       
@@ -2746,6 +2751,9 @@ var historyTable = {
     });
   },
   viewattachment:function(objectid) {
+    $('#pdf_attachmentDiv').html("");
+    $('#las_attachmentDiv').html("");
+    $('#obj_attachmentDiv').html("");
     $('#attachmentlistDiv').html("");
     
     var form = new FormData();
@@ -2780,7 +2788,19 @@ var historyTable = {
         var contentType = attachments[i].contentType;
         var keywords = attachments[i].keywords;
         
-        if (contentType.indexOf('video') !== -1) {
+        if (keywords.split(',').indexOf(" pdf") !== -1) {
+          var html = att_name + '<br/><a target="_blank" rel="noopener noreferrer"  href="'+ att_url + '">PDFダウンロード</a><br/>';
+          $('#pdf_attachmentDiv').html(html); 
+          continue;
+        } else if (keywords.split(',').indexOf(" las") !== -1) {
+          var html = att_name + '<br/><a target="_blank" rel="noopener noreferrer"  href="'+ att_url + '">LASダウンロード</a><br/>';
+          $('#las_attachmentDiv').html(html); 
+          continue; 
+        } else if (keywords.split(',').indexOf(" obj") !== -1) {
+          var html = att_name + '<br/><a target="_blank" rel="noopener noreferrer"  href="'+ att_url + '">OBJダウンロード</a><br/>';
+          $('#obj_attachmentDiv').html(html); 
+          continue;
+        } else if (contentType.indexOf('video') !== -1) {
           att_html += att_name + '<br/><video class="view_gallery" src="'+ att_url + '" controls width="100px"></video><br/>';
         } else if (contentType.indexOf('image') !== -1) {
           att_html += att_name + '<br/><img class="view_gallery" src="'+ att_url + '" width="100px"></img><br/>';
@@ -2914,7 +2934,8 @@ function change_display(page) {
     $('#viewformDiv').css('display', 'block');
     $('#helpDiv').css('display', 'none');
     
-    if ($('#viewstatus').val() != "1" || $('#viewscene_itemid').val() == "") {
+    //if ($('#viewstatus').val() != "1" || $('#viewscene_itemid').val() == "") {
+    if ($('#viewscene_itemid').val() == "") {
       $('#making_scene').css('display', 'block');
       $('#viewscene').css('display', 'none');
     } else {  //作成済みのみ
