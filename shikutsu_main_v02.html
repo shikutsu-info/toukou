@@ -2788,15 +2788,15 @@ var historyTable = {
         var contentType = attachments[i].contentType;
         var keywords = attachments[i].keywords;
         
-        if (keywords.split(',').indexOf(" pdf") !== -1) {
+        if (keywords.split('|').indexOf("pdf") !== -1) {
           var html = att_name + '<br/><a target="_blank" rel="noopener noreferrer"  href="'+ att_url + '">PDFダウンロード</a><br/>';
           $('#pdf_attachmentDiv').html(html); 
           continue;
-        } else if (keywords.split(',').indexOf(" las") !== -1) {
+        } else if (keywords.split('|').indexOf("las") !== -1) {
           var html = att_name + '<br/><a target="_blank" rel="noopener noreferrer"  href="'+ att_url + '">LASダウンロード</a><br/>';
           $('#las_attachmentDiv').html(html); 
           continue; 
-        } else if (keywords.split(',').indexOf(" obj") !== -1) {
+        } else if (keywords.split('|').indexOf("obj") !== -1) {
           var html = att_name + '<br/><a target="_blank" rel="noopener noreferrer"  href="'+ att_url + '">OBJダウンロード</a><br/>';
           $('#obj_attachmentDiv').html(html); 
           continue;
