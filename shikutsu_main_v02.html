@@ -1000,8 +1000,8 @@ input[type=checkbox]:checked + .requestFile::after {
         <label for="requestFile-PDF" class="requestFile">PDF</label>
         <input type="checkbox" id="requestFile-LAS" name="select-requestFile">
         <label for="requestFile-LAS" class="requestFile">LAS</label>
-        <input type="checkbox" id="requestFile-OBJ" name="select-requestFile">
-        <label for="requestFile-OBJ" class="requestFile">OBJ</label>
+        <input type="checkbox" id="requestFile-DWG" name="select-requestFile">
+        <label for="requestFile-DWG" class="requestFile">DWG</label>
       </div>
       <div id="buttonDiv">
         <button id="sendbtn" style="width:150px;height:40px">送信</button>
@@ -1030,8 +1030,8 @@ input[type=checkbox]:checked + .requestFile::after {
     <label for="viewrequestFile-PDF" class="requestFile">PDF</label>
     <input type="checkbox" id="viewrequestFile-LAS" name="select-requestFile">
     <label for="viewrequestFile-LAS" class="requestFile">LAS</label>
-    <input type="checkbox" id="viewrequestFile-OBJ" name="select-requestFile">
-    <label for="viewrequestFile-OBJ" class="requestFile">OBJ</label>
+    <input type="checkbox" id="viewrequestFile-DWG" name="select-requestFile">
+    <label for="viewrequestFile-DWG" class="requestFile">DWG</label>
     <input id="viewobjectid" type="text" class="input_text" hidden/>
     <input id="viewstatus" type="text" class="input_text" hidden/>
     <input id="viewscene_itemid" type="text" class="input_text" hidden/>
@@ -1673,7 +1673,7 @@ require([
     //取得ファイル形式チェック
     var request_file1 = $('#requestFile-PDF').is(':checked');
     var request_file2 = $('#requestFile-LAS').is(':checked');
-    var request_file3 = $('#requestFile-OBJ').is(':checked');
+    var request_file3 = $('#requestFile-DWG').is(':checked');
     
     if (request_file1==false && request_file2==false && request_file3==false) {
       alert("取得ファイル形式が指定されていません");
@@ -1726,7 +1726,7 @@ require([
     //取得ファイル形式チェック
     var request_file1 = $('#viewrequestFile-PDF').is(':checked');
     var request_file2 = $('#viewrequestFile-LAS').is(':checked');
-    var request_file3 = $('#viewrequestFile-OBJ').is(':checked');
+    var request_file3 = $('#viewrequestFile-DWG').is(':checked');
     
     if (request_file1==false && request_file2==false && request_file3==false) {
       alert("取得ファイル形式が指定されていません");
@@ -2184,7 +2184,7 @@ require([
     
     var request_file1 = Number($('#requestFile-PDF').is(':checked'));
     var request_file2 = Number($('#requestFile-LAS').is(':checked'));
-    var request_file3 = Number($('#requestFile-OBJ').is(':checked'));
+    var request_file3 = Number($('#requestFile-DWG').is(':checked'));
     
     url = push_feature_url + "/" + layer_id + "/addFeatures";
 
@@ -2419,7 +2419,7 @@ require([
     
     $('#requestFile-PDF').prop('checked', true);
     $('#requestFile-LAS').prop('checked', false);
-    $('#requestFile-OBJ').prop('checked', false);
+    $('#requestFile-DWG').prop('checked', false);
     
     $('#sendbtn').html("送信");
   }
@@ -2428,7 +2428,7 @@ require([
     
     var request_file1 = Number($('#viewrequestFile-PDF').is(':checked'));
     var request_file2 = Number($('#viewrequestFile-LAS').is(':checked'));
-    var request_file3 = Number($('#viewrequestFile-OBJ').is(':checked'));
+    var request_file3 = Number($('#viewrequestFile-DWG').is(':checked'));
     
     url = push_feature_url + "/" + layer_id + "/updateFeatures";
 
@@ -2728,7 +2728,7 @@ var historyTable = {
       $('#viewbikou').val(features[0].attributes["Bikou"]);
       $('#viewrequestFile-PDF').prop('checked', features[0].attributes["Request_filetype01"]);
       $('#viewrequestFile-LAS').prop('checked', features[0].attributes["Request_filetype02"]);
-      $('#viewrequestFile-OBJ').prop('checked', features[0].attributes["Request_filetype03"]);
+      $('#viewrequestFile-DWG').prop('checked', features[0].attributes["Request_filetype03"]);
       $('#viewobjectid').val(objectid);
       $('#viewstatus').val(features[0].attributes["Status"]);
       $('#viewscene_itemid').val(features[0].attributes["SceneItemID"]);
@@ -2796,8 +2796,8 @@ var historyTable = {
           var html = att_name + '<br/><a target="_blank" rel="noopener noreferrer"  href="'+ att_url + '">LASダウンロード</a><br/>';
           $('#las_attachmentDiv').html(html); 
           continue; 
-        } else if (keywords.split('|').indexOf("obj") !== -1) {
-          var html = att_name + '<br/><a target="_blank" rel="noopener noreferrer"  href="'+ att_url + '">OBJダウンロード</a><br/>';
+        } else if (keywords.split('|').indexOf("dwg") !== -1) {
+          var html = att_name + '<br/><a target="_blank" rel="noopener noreferrer"  href="'+ att_url + '">DWGダウンロード</a><br/>';
           $('#obj_attachmentDiv').html(html); 
           continue;
         } else if (contentType.indexOf('video') !== -1) {
@@ -3037,7 +3037,7 @@ function change_view_enable(flg) {
     $('#viewbikou').prop('disabled', false);
     $('#viewrequestFile-PDF').prop('disabled', false);
     $('#viewrequestFile-LAS').prop('disabled', false);
-    $('#viewrequestFile-OBJ').prop('disabled', false);
+    $('#viewrequestFile-DWG').prop('disabled', false);
     $('#editform_show').css('display', 'none');
     $('#edit_send').css('display', 'block');
     $('#edit_cancel').css('display', 'block');
@@ -3054,7 +3054,7 @@ function change_view_enable(flg) {
     $('#viewbikou').prop('disabled', true);
     $('#viewrequestFile-PDF').prop('disabled', true);
     $('#viewrequestFile-LAS').prop('disabled', true);
-    $('#viewrequestFile-OBJ').prop('disabled', true);
+    $('#viewrequestFile-DWG').prop('disabled', true);
     $('#editform_show').css('display', 'block');
     $('#edit_send').css('display', 'none');
     $('#edit_cancel').css('display', 'none');
