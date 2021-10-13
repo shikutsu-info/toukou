@@ -1,0 +1,14 @@
+{
+  "name": "ジオ・サーチインターナショナル株式会社",
+  "webappId" : "EEwx7awcQrzcSUQh",
+  "push_feature_url": "https://services-ap1.arcgis.com/IGJZjUgPhEbs94bW/arcgis/rest/services/SHIKUTSU_UPLOAD_FS_v01_Z00005/FeatureServer",
+  "layer_id": "0",
+  "basemap_id": "accf3eff22254ed69e23afeb094a4881",
+  "basescene_id": "f4bed046f9f74cf28af3f712949719b0",
+  "group_id": "4b7184929ed743c0b34d39ad6b3e264a",
+  "creator_field": "created_user",
+  "create_date_field": "created_date",
+  "init_latitude": 35.682,
+  "init_longitude": 139.75, 
+  "init_zoom": 10
+}
