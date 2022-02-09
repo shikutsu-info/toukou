@@ -1,0 +1,15 @@
+{
+  "name": "株式会社長大",
+  "webappId" : "7qK1l49P6ioNbSn9",
+  "push_feature_url": "https://services-ap1.arcgis.com/IGJZjUgPhEbs94bW/arcgis/rest/services/SHIKUTSU_UPLOAD_FS_v01_G00002/FeatureServer",
+  "layer_id": "0",
+  "history_webmap_id": "74a1e1f2cc894ba5b139fcb4bf52bb1a",
+  "basemap_id": "accf3eff22254ed69e23afeb094a4881",
+  "basescene_id": "f4bed046f9f74cf28af3f712949719b0",
+  "group_id": "1270295492964fff9f066fc64b61bfe4",
+  "creator_field": "created_user",
+  "create_date_field": "created_date",
+  "init_latitude": 35.682,
+  "init_longitude": 139.75, 
+  "init_zoom": 10
+}
