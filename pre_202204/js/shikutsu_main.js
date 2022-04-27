@@ -80,7 +80,7 @@ $.getJSON(json_url, function(config) {
   var kaisha_form = new FormData();
   kaisha_form.set('f','json');
   kaisha_form.set('returnGeometry', false);
-  kaisha_form.set('where', "KaishaID=" + $('#kaishaid').val());
+  kaisha_form.set('where', "KaishaID='" + $('#kaishaid').val() + "'");
   kaisha_form.set('outFields', '*');
   kaisha_form.set('token', token); // この時点ではトークンを持っていない
 
