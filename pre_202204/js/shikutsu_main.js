@@ -60,6 +60,9 @@ var photoLatLng = {
   lng: null
 };
 
+// モバイル端末かどうか
+let isMobile = false;
+
 
 
 var param = location.search.match(/field:KaishaID=(.*?)(&|$)/);
@@ -93,7 +96,6 @@ $.getJSON(json_url, function(config) {
     dataType: 'json',
     async: false
   }).done(function(data) {
-    console.log(data);
     if(data.features.length > 0){
       kaisha_name = data.features[0].attributes.KaishaName;
       group_id = data.features[0].attributes.GroupID;
@@ -111,6 +113,11 @@ $.getJSON(json_url, function(config) {
 // set_config({});// これは必要なのか？
 $.ajaxSetup({async: true});
 
+// ユーザーエージェントの判定を行い、Exif情報の扱いを決定します。
+if (navigator.userAgent.match(/iPhone|Android.+Mobile/)) {
+  isMobile = true;
+  $(".pconly").hide();
+}
 
 /*********************初期化処理*********************/
 
@@ -188,10 +195,7 @@ identityManager.checkSignInStatus(portalUrl).then(function() {
     dataType: 'json',
     async: false
   }).done(function(data){
-    console.log(feature_Itemid);
-    console.log(data);
     push_feature_url = data.url;
-    console.log(data.url);
     register_url = push_feature_url + "/uploads/register";
   }).fail(function(data){
     alert("URLの取得に失敗しました。");
@@ -359,50 +363,6 @@ identityManager.checkSignInStatus(portalUrl).then(function() {
     view.ui.add(locateBtn, {
       position: "top-left"
     });
-
-    var locatorTask = new Locator({
-      url: "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"
-    });
-
-    var graphic_rendar = function(lat, long){
-      view.graphics.removeAll();
-      var pointGraphic = new Graphic({
-        geometry: {
-          type: "point",
-          latitude: lat,
-          longitude: long
-        }, 
-        symbol: markerSymbol
-      });
-      view.graphics.add(pointGraphic);
-
-      var params = {
-        location: pointGraphic.geometry
-      };
-
-      latitude = lat;
-      longitude = long;
-
-      locatorTask
-        .locationToAddress(params)
-        .then(function (response) {
-
-        if (response.attributes.CountryCode == "JPN" && response.address != "日本") {
-          jusho = response.address;
-        } else {
-          jusho = "";
-        }
-
-        $('#gridDiv').html('緯度:' + Math.round(latitude * 100000) / 100000 + '　経度:' + Math.round(longitude * 100000) / 100000);
-        $('#jusho').val(jusho);
-
-      })
-        .catch(function (error) {
-        jusho = "";
-        $('#gridDiv').html('緯度:' + Math.round(latitude * 1000) / 1000 + '<　経度:' + Math.round(longitude * 1000) / 1000);
-        $('#jusho').val(jusho);
-      });
-    }
     
     //マップクリック
     view.on("click", function(event){
@@ -444,6 +404,10 @@ identityManager.checkSignInStatus(portalUrl).then(function() {
       latitude = lat;
       longitude = long;
 
+      var locatorTask = new Locator({
+        url: "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"
+      });
+      
       locatorTask
         .locationToAddress(params)
         .then(function (response) {
@@ -510,6 +474,48 @@ identityManager.checkSignInStatus(portalUrl).then(function() {
     sceneview.ui.add("measure_widget", "top-right");
   }
 
+  var graphic_rendar = function(lat, long){
+      view.graphics.removeAll();
+      var pointGraphic = new Graphic({
+        geometry: {
+          type: "point",
+          latitude: lat,
+          longitude: long
+        }, 
+        symbol: markerSymbol
+      });
+      view.graphics.add(pointGraphic);
+
+      var params = {
+        location: pointGraphic.geometry
+      };
+
+      latitude = lat;
+      longitude = long;
+
+      var locatorTask = new Locator({
+        url: "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"
+      });
+      locatorTask
+        .locationToAddress(params)
+        .then(function (response) {
+
+        if (response.attributes.CountryCode == "JPN" && response.address != "日本") {
+          jusho = response.address;
+        } else {
+          jusho = "";
+        }
+
+        $('#gridDiv').html('緯度:' + Math.round(latitude * 100000) / 100000 + '　経度:' + Math.round(longitude * 100000) / 100000);
+        $('#jusho').val(jusho);
+
+      })
+        .catch(function (error) {
+        jusho = "";
+        $('#gridDiv').html('緯度:' + Math.round(latitude * 1000) / 1000 + '<　経度:' + Math.round(longitude * 1000) / 1000);
+        $('#jusho').val(jusho);
+      });
+    }
 
   /*********************イベント処理*********************/
   // 新規投稿
@@ -579,7 +585,7 @@ identityManager.checkSignInStatus(portalUrl).then(function() {
 
   // 写真選択イベント
   $('#images-select').change(function() {
-    if(user_setting.toko == "1"){ // ユーザー設定がExifの時
+    if(user_setting.toko == "1" && !isMobile){ // ユーザー設定がExifの時かつPC端末の場合
       getPhotoExif(this);
     }
     handleImageFilesSelect(this.files);
@@ -861,30 +867,28 @@ identityManager.checkSignInStatus(portalUrl).then(function() {
   function getPhotoExif(vm){
     var images = $('#images-select');
     var files = images[0].files;
+    
+    if(isMovedMap == true){
+      if(confirm("選択した画像から位置情報が検出されました。地図を移動させますか？") == false){
+        return;
+      }
+    }
+    
     for(var i = 0; i < files.length; i++){
       $.fileExif(files[i],function(exif) {
-        if(exif.GPSLatitude && exif.GPSLongitude && isMovedMap == false){
+        if(exif.GPSLatitude && exif.GPSLongitude){
           photoLatLng.lat = exif.GPSLatitude[0]  + (exif.GPSLatitude[1] / 60)  + (exif.GPSLatitude[2] / 3600);
           photoLatLng.lng = exif.GPSLongitude[0] + (exif.GPSLongitude[1] / 60) + (exif.GPSLongitude[2] / 3600);
 
-          // 地図を画像の位置に移動
-          view.goTo({
-            center: [photoLatLng.lng,photoLatLng.lat],
-            zoom: 17
-          });
-
-          isMovedMap = true;
-        }
-        else if(exif.GPSLatitude && exif.GPSLongitude && isMovedMap == true){
-          if(confirm("選択した画像から位置情報が検出されました。地図を移動させますか？") == true){
-            photoLatLng.lat = exif.GPSLatitude[0]  + (exif.GPSLatitude[1] / 60)  + (exif.GPSLatitude[2] / 3600);
-            photoLatLng.lng = exif.GPSLongitude[0] + (exif.GPSLongitude[1] / 60) + (exif.GPSLongitude[2] / 3600);
-
+          //緯度経度が取得できた場合のみ位置を移動
+          if (isNaN(photoLatLng.lat) == false && isNaN(photoLatLng.lng) == false) {
             // 地図を画像の位置に移動
             view.goTo({
               center: [photoLatLng.lng,photoLatLng.lat],
               zoom: 17
             });
+            graphic_rendar(photoLatLng.lat, photoLatLng.lng);
+            isMovedMap = true;
           }
         }
       });
@@ -1682,6 +1686,10 @@ identityManager.checkSignInStatus(portalUrl).then(function() {
 
   // ユーザー設定保存メソッド
   function saveUserConf(){
+    // モバイル端末の場合強制的に端末のGPSにチェックをつける
+    if(isMobile) {
+      $("#gps").prop("checked", true);
+    }
     var toko = $('input:radio[name="toko_setting"]:checked').val();// チェックがついたほうのvalueを取得
     user_setting.toko = toko;
 
@@ -1902,33 +1910,33 @@ var historyTable = {
       dataType: 'json',
       async: false
     }).done(function(data) {
-      console.log(data);
       var features = data.features;
+      if(features != undefined) {
+        for(var i = 0; i< features.length; i++) {
+          var tr_html = "";
 
-      for(var i = 0; i< features.length; i++) {
-        var tr_html = "";
+          var objectid = features[i].attributes["OBJECTID"];
+          var title = features[i].attributes["Title"];
+          var createdate = features[i].attributes[create_date_field];
+          var str_createdate = formatDate(new Date(createdate), 'yyyy/MM/dd HH:mm');
+          var naiyo = features[i].attributes["Naiyo"];
+          var jusho = features[i].attributes["Jusho"];
+          var bikou = features[i].attributes["Bikou"];
 
-        var objectid = features[i].attributes["OBJECTID"];
-        var title = features[i].attributes["Title"];
-        var createdate = features[i].attributes[create_date_field];
-        var str_createdate = formatDate(new Date(createdate), 'yyyy/MM/dd HH:mm');
-        var naiyo = features[i].attributes["Naiyo"];
-        var jusho = features[i].attributes["Jusho"];
-        var bikou = features[i].attributes["Bikou"];
+          tr_html += '<tr>';
+          tr_html += '<td data-label="タイトル　">' + title + '　</td>';
+          tr_html += '<td data-label="投稿日時　">' + str_createdate + '　</td>';
+          tr_html += '<td data-label="投稿内容　">' + naiyo + '　</td>';
+          tr_html += '<td data-label="住所　　　">' + jusho + '　</td>';
+          tr_html += '<td data-label="備考　　　">' + bikou + '　</td>';
+          tr_html += '<td data-label="確認　　　">'
+          tr_html += '<input id="view" type="button" value="閲覧" onclick="historyTable.viewForm(' + objectid + ')"/>';
+          tr_html += '<input id="del" type="button" value="削除" onclick="historyTable.deleteRow(' + objectid + ')"/>';
+          tr_html += '</td>';
+          tr_html += '</tr>';
 
-        tr_html += '<tr>';
-        tr_html += '<td data-label="タイトル　">' + title + '　</td>';
-        tr_html += '<td data-label="投稿日時　">' + str_createdate + '　</td>';
-        tr_html += '<td data-label="投稿内容　">' + naiyo + '　</td>';
-        tr_html += '<td data-label="住所　　　">' + jusho + '　</td>';
-        tr_html += '<td data-label="備考　　　">' + bikou + '　</td>';
-        tr_html += '<td data-label="確認　　　">'
-        tr_html += '<input id="view" type="button" value="閲覧" onclick="historyTable.viewForm(' + objectid + ')"/>';
-        tr_html += '<input id="del" type="button" value="削除" onclick="historyTable.deleteRow(' + objectid + ')"/>';
-        tr_html += '</td>';
-        tr_html += '</tr>';
-
-        tableBody.append(tr_html);
+          tableBody.append(tr_html);
+        }
       }
     }).fail(function(data) {
       console.log(data);
@@ -2185,7 +2193,6 @@ var historyTable = {
       async: false,
       context: this,
     }).done(function(data) {
-      console.log(data);
       this.records = data.count;
       this.pages = Math.ceil(data.count / this.records_per_page);
       
