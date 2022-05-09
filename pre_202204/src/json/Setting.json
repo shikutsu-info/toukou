@@ -1,10 +1,9 @@
 {
 "webappId" : "7qK1l49P6ioNbSn9",
-"get_kaisha_url": "https://services-ap1.arcgis.com/IGJZjUgPhEbs94bW/arcgis/rest/services/SHIKUTSUKUN_KAISHA_VIEW_v01/FeatureServer/0",
+"get_kaisha_url": "https://services-ap1.arcgis.com/IGJZjUgPhEbs94bW/arcgis/rest/services/SHIKUTSUKUN_KAISHA_VIEW_demo_v01/FeatureServer/0",
 "layer_id": "0",
-"history_webmap_id": "74a1e1f2cc894ba5b139fcb4bf52bb1a",
 "basemap_id": "accf3eff22254ed69e23afeb094a4881",
-"basescene_id": "bbbf9a58a1da4c05a8b9908335245dc1",
+"basescene_id": "3e154449c905482688184e517e02fa2e",
 "creator_field": "created_user",
 "create_date_field": "created_date",
 "init_latitude": 35.682,
