@@ -663,10 +663,10 @@ identityManager.checkSignInStatus(portalUrl).then(function() {
     var request_file1 = $('#requestFile-PDF').is(':checked');
     var request_file2 = $('#requestFile-LAS').is(':checked');
     // var request_file3 = $('#requestFile-OBJ').is(':checked');
-    var request_file4 = $('#requestFile-DWG-heimen').is(':checked');
-    var request_file5 = $('#requestFile-DWG-oudan').is(':checked');
+    var request_file3 = $('#requestFile-DWG-heimen').is(':checked');
+    var request_file4 = $('#requestFile-DWG-oudan').is(':checked');
 
-    if (request_file1==false && request_file2==false && request_file4==false && request_file5 == false) {
+    if (request_file1==false && request_file2==false && request_file3==false && request_file4 == false) {
       alert("取得ファイル形式が指定されていません");
       return;
     }
@@ -745,10 +745,10 @@ identityManager.checkSignInStatus(portalUrl).then(function() {
     var request_file1 = $('#viewrequestFile-PDF').is(':checked');
     var request_file2 = $('#viewrequestFile-LAS').is(':checked');
     // var request_file3 = $('#viewrequestFile-OBJ').is(':checked');
-    var request_file4 = $('#viewrequestFile-DWG-heimen').is(':checked');
-    var request_file5 = $('#viewrequestFile-DWG-oudan').is(':checked');
+    var request_file3 = $('#viewrequestFile-DWG-heimen').is(':checked');
+    var request_file4 = $('#viewrequestFile-DWG-oudan').is(':checked');
     
-    if (request_file1==false && request_file2==false && request_file4 == false && request_file5 == false) {
+    if (request_file1==false && request_file2==false && request_file3 == false && request_file4 == false) {
       alert("取得ファイル形式が指定されていません");
       return;
     }
@@ -1285,8 +1285,8 @@ identityManager.checkSignInStatus(portalUrl).then(function() {
     var request_file1 = Number($('#requestFile-PDF').is(':checked'));
     var request_file2 = Number($('#requestFile-LAS').is(':checked'));
     // var request_file3 = Number($('#requestFile-OBJ').is(':checked'));
-    var request_file4 = Number($('#requestFile-DWG-heimen').is(':checked'));
-    var request_file5 = Number($('#requestFile-DWG-oudan').is(':checked'));
+    var request_file3 = Number($('#requestFile-DWG-heimen').is(':checked'));
+    var request_file4 = Number($('#requestFile-DWG-oudan').is(':checked'));
     
     url = push_feature_url + "/" + layer_id + "/addFeatures";
 
@@ -1307,8 +1307,8 @@ identityManager.checkSignInStatus(portalUrl).then(function() {
         "Status": 0,
         "Request_filetype01": request_file1,
         "Request_filetype02": request_file2,
-        "Request_filetype04": request_file4,
-        "Request_filetype05": request_file5
+        "Request_filetype03": request_file3,
+        "Request_filetype04": request_file4
       }
     };
 
@@ -1547,8 +1547,8 @@ identityManager.checkSignInStatus(portalUrl).then(function() {
     var request_file1 = Number($('#viewrequestFile-PDF').is(':checked'));
     var request_file2 = Number($('#viewrequestFile-LAS').is(':checked'));
     // var request_file3 = Number($('#viewrequestFile-OBJ').is(':checked'));
-    var request_file4 = Number($('#viewrequestFile-DWG-heimen').is(':checked'));
-    var request_file5 = Number($('#viewrequestFile-DWG-oudan').is(':checked'));
+    var request_file3 = Number($('#viewrequestFile-DWG-heimen').is(':checked'));
+    var request_file4 = Number($('#viewrequestFile-DWG-oudan').is(':checked'));
     
     url = push_feature_url + "/" + layer_id + "/updateFeatures";
 
@@ -1566,8 +1566,8 @@ identityManager.checkSignInStatus(portalUrl).then(function() {
         "Bikou": $('#viewbikou').val(),
         "Request_filetype01": request_file1,
         "Request_filetype02": request_file2,
-        "Request_filetype04": request_file4,
-        "Request_filetype05": request_file5
+        "Request_filetype03": request_file3,
+        "Request_filetype04": request_file4
       }
     };
 
@@ -2084,17 +2084,17 @@ var historyTable = {
         var contentType = attachments[i].contentType;
         var keywords = attachments[i].keywords;
         
-        if (keywords.split('|').indexOf("pdf") !== -1) {
+        if (keywords.split('|').indexOf("ManagementSystemUpload") !== -1 && keywords.toUpperCase().indexOf("PDF") != -1) {
           var html = att_name + '<br/><a target="_blank" rel="noopener noreferrer"  href="'+ att_url + '">PDFダウンロード</a><br/>';
           $('#pdf_attachmentDiv').html(html); 
           continue;
-        } else if (keywords.split('|').indexOf("las") !== -1) {
+        } else if (keywords.split('|').indexOf("ManagementSystemUpload") !== -1 && keywords.toUpperCase().indexOf("LAS") != -1) {
           var html = att_name + '<br/><a target="_blank" rel="noopener noreferrer"  href="'+ att_url + '">LASダウンロード</a><br/>';
           $('#las_attachmentDiv').html(html); 
           continue; 
-        } else if (keywords.split('|').indexOf("obj") !== -1) {
-          var html = att_name + '<br/><a target="_blank" rel="noopener noreferrer"  href="'+ att_url + '">OBJダウンロード</a><br/>';
-          $('#obj_attachmentDiv').html(html); 
+        } else  if (keywords.split('|').indexOf("ManagementSystemUpload") !== -1 && (keywords.indexOf("平面図") != -1 || keywords.indexOf("断面図") != -1)) {
+          var html = att_name + '<br/><a target="_blank" rel="noopener noreferrer"  href="'+ att_url + '">DWGダウンロード</a><br/>';
+          $('#dwg_attachmentDiv').html(html); 
           continue;
         } else if (contentType.indexOf('video') !== -1) {
           att_html += att_name + '<br/><video class="view_gallery" src="'+ att_url + '" controls width="100px"></video><br/>';
