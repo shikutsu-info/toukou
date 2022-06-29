@@ -2022,8 +2022,8 @@ var historyTable = {
       $('#viewrequestFile-PDF').prop('checked', features[0].attributes["Request_filetype01"]);
       $('#viewrequestFile-LAS').prop('checked', features[0].attributes["Request_filetype02"]);
       // $('#viewrequestFile-OBJ').prop('checked', features[0].attributes["Request_filetype03"]);
-      $('#viewrequestFile-DWG-heimen').prop('checked', features[0].attributes["Request_filetype04"]);
-      $('#viewrequestFile-DWG-oudan').prop('checked', features[0].attributes["Request_filetype05"]);
+      $('#viewrequestFile-DWG-heimen').prop('checked', features[0].attributes["Request_filetype03"]);
+      $('#viewrequestFile-DWG-oudan').prop('checked', features[0].attributes["Request_filetype04"]);
       $('#viewobjectid').val(objectid);
       $('#viewstatus').val(features[0].attributes["Status"]);
       $('#viewscene_itemid').val(features[0].attributes["SceneItemID"]);
