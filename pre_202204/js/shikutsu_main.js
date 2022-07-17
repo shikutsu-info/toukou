@@ -337,7 +337,12 @@ identityManager.checkSignInStatus(portalUrl).then(function() {
       };
       
       featureLayer.labelingInfo = [labelClass];
-      featureLayer.definitionExpression = "Status<>9 And " + creator_field + " = '" + user + "'";
+      
+      if (userLicenseType === "Creator") {  //Creatorは他ユーザの投稿も閲覧できる
+        featureLayer.definitionExpression = "Status<>9";
+      } else {
+        featureLayer.definitionExpression = "Status<>9 And " + creator_field + " = '" + user + "'";
+      }
       historymap.add(featureLayer);
     });
     
@@ -1901,7 +1906,11 @@ var historyTable = {
     var form = new FormData();
     form.set('f','json');
     form.set('returnGeometry', false);
-    form.set('where', "Status<>9 And " + creator_field + " = '" + this.userId + "'");
+    if (userLicenseType === "Creator") {  //Creatorは他ユーザの投稿も閲覧できる
+      form.set('where', "Status<>9");
+    } else {
+      form.set('where', "Status<>9 And " + creator_field + " = '" + this.userId + "'");
+    }
     form.set('outFields', '*');
     form.set('orderByFields', create_date_field + ' DESC');
     form.set('resultOffset', (page -1 ) * this.records_per_page);
@@ -2185,7 +2194,12 @@ var historyTable = {
   async getRecordCount() {
     var form = new FormData();
     form.set('f','json');
-    form.set('where', creator_field + " = '" + this.userId + "'");
+    
+    if (userLicenseType === "Creator") {  //Creatorは他ユーザの投稿も閲覧できる
+      form.set('where', "Status<>9");
+    } else {
+      form.set('where', "Status<>9 And " + creator_field + " = '" + this.userId + "'");
+    }
     form.set('returnGeometry', false);
     form.set('returnCountOnly', true);
     form.set('token', token);
