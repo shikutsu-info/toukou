@@ -229,7 +229,7 @@ identityManager.checkSignInStatus(portalUrl).then(function() {
         token = identityManager.credentials[0].token;
         user = identityManager.credentials[0].userId;
         email = portal.user.email;
-        getUserLicenseType(username, token)
+        getUserLicenseType(user, token)
         .then(function (response) {
           if (response.name) {
             userLicenseType = response.name;
