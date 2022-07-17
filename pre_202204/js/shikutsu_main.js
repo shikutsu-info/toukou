@@ -229,8 +229,13 @@ identityManager.checkSignInStatus(portalUrl).then(function() {
         token = identityManager.credentials[0].token;
         user = identityManager.credentials[0].userId;
         email = portal.user.email;
-        getUserLicenseType(user, token)
-        historyTable.init(identityManager.credentials[0].userId, token);
+        getUserLicenseType(username, token)
+        .then(function (response) {
+          if (response.name) {
+            userLicenseType = response.name;
+          }
+          historyTable.init(identityManager.credentials[0].userId, token);
+        });
 
         initForm();
       });
@@ -2466,7 +2471,7 @@ function getUserLicenseType(user, token) {
   form.set('f', 'json');
   form.set('token', token);
 
-  const response = $.ajax({
+  return $.ajax({
     url: userLicenseType_url,
     type: "POST",
     data: form,
@@ -2474,9 +2479,6 @@ function getUserLicenseType(user, token) {
     contentType: false,
     dataType: 'json',
     context: this,
-  }).then(function (response) {
-    userLicenseType = response.name;
-    console.log(userLicenseType);
   });
 }
 
