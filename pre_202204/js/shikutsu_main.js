@@ -25,6 +25,7 @@ var token = "";
 var user = "";
 var email = "";
 var portal =null;
+var userLicenseType = "";
 
 var latitude = null;
 var longitude = null;
@@ -228,6 +229,7 @@ identityManager.checkSignInStatus(portalUrl).then(function() {
         token = identityManager.credentials[0].token;
         user = identityManager.credentials[0].userId;
         email = portal.user.email;
+        getUserLicenseType(user, token)
         historyTable.init(identityManager.credentials[0].userId, token);
 
         initForm();
@@ -2455,6 +2457,27 @@ function set_config(config) {
   else{
     user_setting = config.user_setting;
   }
+}
+
+function getUserLicenseType(user, token) {
+  const userLicenseType_url = `https://www.arcgis.com/sharing/rest/community/users/${user}/userLicenseType`;
+
+  var form = new FormData();
+  form.set('f', 'json');
+  form.set('token', token);
+
+  const response = $.ajax({
+    url: userLicenseType_url,
+    type: "POST",
+    data: form,
+    processData: false,
+    contentType: false,
+    dataType: 'json',
+    context: this,
+  }).then(function (response) {
+    userLicenseType = response.name;
+    console.log(userLicenseType);
+  });
 }
 
 //ブラウザバックの禁止
