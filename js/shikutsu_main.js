@@ -25,6 +25,7 @@ var token = "";
 var user = "";
 var email = "";
 var portal =null;
+var userLicenseType = "";
 
 var latitude = null;
 var longitude = null;
@@ -228,7 +229,13 @@ identityManager.checkSignInStatus(portalUrl).then(function() {
         token = identityManager.credentials[0].token;
         user = identityManager.credentials[0].userId;
         email = portal.user.email;
-        historyTable.init(identityManager.credentials[0].userId, token);
+        getUserLicenseType(user, token)
+        .then(function (response) {
+          if (response.name) {
+            userLicenseType = response.name;
+          }
+          historyTable.init(identityManager.credentials[0].userId, token);
+        });
 
         initForm();
       });
@@ -330,7 +337,12 @@ identityManager.checkSignInStatus(portalUrl).then(function() {
       };
       
       featureLayer.labelingInfo = [labelClass];
-      featureLayer.definitionExpression = "Status<>9 And " + creator_field + " = '" + user + "'";
+      
+      if (userLicenseType === "Creator") {  //Creatorは他ユーザの投稿も閲覧できる
+        featureLayer.definitionExpression = "Status<>9";
+      } else {
+        featureLayer.definitionExpression = "Status<>9 And " + creator_field + " = '" + user + "'";
+      }
       historymap.add(featureLayer);
     });
     
@@ -1894,7 +1906,11 @@ var historyTable = {
     var form = new FormData();
     form.set('f','json');
     form.set('returnGeometry', false);
-    form.set('where', "Status<>9 And " + creator_field + " = '" + this.userId + "'");
+    if (userLicenseType === "Creator") {  //Creatorは他ユーザの投稿も閲覧できる
+      form.set('where', "Status<>9");
+    } else {
+      form.set('where', "Status<>9 And " + creator_field + " = '" + this.userId + "'");
+    }
     form.set('outFields', '*');
     form.set('orderByFields', create_date_field + ' DESC');
     form.set('resultOffset', (page -1 ) * this.records_per_page);
@@ -2178,7 +2194,12 @@ var historyTable = {
   async getRecordCount() {
     var form = new FormData();
     form.set('f','json');
-    form.set('where', creator_field + " = '" + this.userId + "'");
+    
+    if (userLicenseType === "Creator") {  //Creatorは他ユーザの投稿も閲覧できる
+      form.set('where', "Status<>9");
+    } else {
+      form.set('where', "Status<>9 And " + creator_field + " = '" + this.userId + "'");
+    }
     form.set('returnGeometry', false);
     form.set('returnCountOnly', true);
     form.set('token', token);
@@ -2455,6 +2476,24 @@ function set_config(config) {
   else{
     user_setting = config.user_setting;
   }
+}
+
+function getUserLicenseType(user, token) {
+  const userLicenseType_url = `https://www.arcgis.com/sharing/rest/community/users/${user}/userLicenseType`;
+
+  var form = new FormData();
+  form.set('f', 'json');
+  form.set('token', token);
+
+  return $.ajax({
+    url: userLicenseType_url,
+    type: "POST",
+    data: form,
+    processData: false,
+    contentType: false,
+    dataType: 'json',
+    context: this,
+  });
 }
 
 //ブラウザバックの禁止
