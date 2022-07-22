@@ -2065,7 +2065,7 @@ var historyTable = {
   viewattachment:function(objectid) {
     $('#pdf_attachmentDiv').html("");
     $('#las_attachmentDiv').html("");
-    $('#obj_attachmentDiv').html("");
+    $('#dwg_attachmentDiv').html("");
     $('#attachmentlistDiv').html("");
     
     var form = new FormData();
