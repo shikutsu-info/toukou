@@ -17,6 +17,7 @@ var register_url = "";
 
 //　ユーザー設定
 var user_setting = null;
+var ngCharacters = [];
 
 // 地図移動を行ったか判定するフラグ
 var isMovedMap = false;
@@ -2527,6 +2528,9 @@ function set_config(config) {
   else{
     user_setting = config.user_setting;
   }
+
+  //入力禁止文字
+  ngCharacters = config.ngCharacters;
 }
 
 function getUserLicenseType(user, token) {
