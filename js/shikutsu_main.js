@@ -17,6 +17,7 @@ var register_url = "";
 
 //　ユーザー設定
 var user_setting = null;
+var ngCharacters = [];
 
 // 地図移動を行ったか判定するフラグ
 var isMovedMap = false;
@@ -645,6 +646,13 @@ identityManager.checkSignInStatus(portalUrl).then(function() {
       return;
     }
 
+    //入力項目の禁止文字チェック
+    var ngCharaFlg = check_ngCharacters(0);
+    if (ngCharaFlg) {
+      alert("入力項目には禁止文字が入力されています");
+      return;
+    }
+    
     var attachment = $('input[name="attachment"]:checked').val();
 
     //アタッチメントの選択チェック
@@ -753,6 +761,14 @@ identityManager.checkSignInStatus(portalUrl).then(function() {
       $('#viewtitle').focus();
       return;
     }
+    
+    //入力項目の禁止文字チェック
+    var ngCharaFlg = check_ngCharacters(1);
+    if (ngCharaFlg) {
+      alert("入力項目には禁止文字が入力されています");
+      return;
+    }
+    
     //取得ファイル形式チェック
     var request_file1 = $('#viewrequestFile-PDF').is(':checked');
     var request_file2 = $('#viewrequestFile-LAS').is(':checked');
@@ -875,6 +891,42 @@ identityManager.checkSignInStatus(portalUrl).then(function() {
 
   /*********************ロジック処理*********************/
 
+  //入力項目に禁止文字が含まれるかのチェック
+  function check_ngCharacters(mode) {
+    var ngCharaFlg = false;
+
+    var title = $('#title');
+    var naiyo = $('#naiyo');
+    var jusho = $('#jusho');
+    var bikou = $('#bikou');
+
+    if (mode === 1) {
+      title = $('#viewtitle');
+      naiyo = $('#viewnaiyo');
+      jusho = $('#viewjusho');
+      bikou = $('#viewbikou');
+    }
+    for (var chara of ngCharacters) {
+      if (title.val().indexOf(chara) != -1) {
+        ngCharaFlg = true;
+        title.focus();
+      }
+      if (naiyo.val().indexOf(chara) != -1) {
+        ngCharaFlg = true;
+        naiyo.focus();
+      }
+      if (jusho.val().indexOf(chara) != -1) {
+        ngCharaFlg = true;
+        jusho.focus();
+      }
+      if (bikou.val().indexOf(chara) != -1) {
+        ngCharaFlg = true;
+        bikou.focus();
+      }
+    }
+    return ngCharaFlg;
+  }
+  
   // 選択した写真の位置情報を取得して地図を移動させるメソッド
   function getPhotoExif(vm){
     var images = $('#images-select');
@@ -2476,6 +2528,9 @@ function set_config(config) {
   else{
     user_setting = config.user_setting;
   }
+  
+  //入力禁止文字
+  ngCharacters = config.ngCharacters;
 }
 
 function getUserLicenseType(user, token) {
