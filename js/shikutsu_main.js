@@ -2161,7 +2161,7 @@ var historyTable = {
           $('#las_attachmentDiv').html(html); 
           continue; 
         } else  if (keywords.split('|').indexOf("ManagementSystemUpload") !== -1 && (keywords.indexOf("平面図") != -1 || keywords.indexOf("断面図") != -1)) {
-          var html = att_name + '<br/><a target="_blank" rel="noopener noreferrer"  href="'+ att_url + '">DWGダウンロード</a><br/>';
+          var html = att_name + '<br/><a target="_blank" rel="noopener noreferrer"  href="'+ att_url + '">平面図、断面図ダウンロード</a><br/>';
           $('#dwg_attachmentDiv').html(html); 
           continue;
         } else if (contentType.indexOf('video') !== -1) {
