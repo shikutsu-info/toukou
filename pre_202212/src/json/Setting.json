@@ -1,0 +1,186 @@
+{
+    "webappId": "7qK1l49P6ioNbSn9",
+    "get_kaisha_url": "https://services-ap1.arcgis.com/IGJZjUgPhEbs94bW/arcgis/rest/services/SHIKUTSUKUN_KAISHA_VIEW_demo_v01/FeatureServer/0",
+    "layer_id": "0",
+    "history_webmap_id": "accf3eff22254ed69e23afeb094a4881",
+    "basemap_id": "accf3eff22254ed69e23afeb094a4881",
+    "basescene_id": "3e154449c905482688184e517e02fa2e",
+    "creator_field": "created_user",
+    "create_date_field": "created_date",
+    "init_latitude": 35.682,
+    "init_longitude": 139.75,
+    "init_zoom": 10,
+    "user_setting": {
+        "toko": "1",
+        "pdf": "1",
+        "las": "0",
+        "heimenzu": "0",
+        "oudanzu": "0",
+        "rft05": "0"
+    },
+    "ngCharacters": [
+        "\\",
+        "/",
+        ":",
+        "*",
+        "?",
+        "\"",
+        "<",
+        ">",
+        "|"
+    ],
+    "change_content_mainDiv": {
+        "タイトル": "タイトル(試掘名)",
+        "投稿内容": "顧客会社名／投稿者名",
+        "タイトル　": "タイトル(試掘名)　",
+        "投稿日時　": "投稿日時　",
+        "投稿内容　": "顧客会社名/投稿者名　",
+        "住所　　　": "住所　　　",
+        "備考　　　": "備考　　　",
+        "確認　　　": "確認　　　"
+    },
+    "change_content_user_conf": {
+        "断面図(DWG)": "横断図(DWG)"
+    },
+    "change_content_changeDiv": {},
+    "change_content_formDiv": {
+        "タイトル": "タイトル(試掘名)",
+        "投稿内容": "顧客会社名/投稿者名",
+        "管情報": "管情報※入力内容は図面作成に反映されます",
+        "断面図(DWG)": "横断図(DWG)"
+    },
+    "change_content_viewformDiv": {
+        "タイトル": "タイトル(試掘名)",
+        "投稿内容": "顧客会社名/投稿者名",
+        "断面図(DWG)": "横断図(DWG)",
+        "添付ファイルの追加": "添付ファイルの追加(100MB以内)"
+    },
+    "default_value_formDiv": {
+        "kaninfo": "管①　管種：　　管径Φ：\r\n管②　管種：　　管径Φ：\r\n管③　管種：　　管径Φ：\r\n管④　管種：　　管径Φ：\r\n管⑤　管種：　　管径Φ："
+    },
+    "blob_chunk_size": 3145728,
+    "upload_limit_file_size": 1073741824,
+    "upload_limit_total_file_size": 107374182400,
+    "request_filetype_setting": [
+        {
+            "visible": true,
+            "keyword": [
+                "RFT01",
+                "PDF"
+            ],
+            "downloaded_key": "RFT01_DL",
+            "link_text": "PDFダウンロード"
+        },
+        {
+            "visible": true,
+            "keyword": [
+                "RFT02",
+                "LAS"
+            ],
+            "downloaded_key": "RFT02_DL",
+            "link_text": "LASダウンロード"
+        },
+        {
+            "visible": true,
+            "keyword": [
+                "RFT03",
+                "平面図"
+            ],
+            "downloaded_key": "RFT03_DL",
+            "link_text": "DWGダウンロード"
+        },
+        {
+            "visible": true,
+            "keyword": [
+                "RFT04",
+                "横断図"
+            ],
+            "downloaded_key": "RFT04_DL",
+            "link_text": "DWGダウンロード"
+        },
+        {
+            "visible": false,
+            "keyword": [],
+            "downloaded_key": "",
+            "link_text": ""
+        }
+    ],
+    "upload_file_type_white_list": [
+        "movie/*",
+        "image/*"
+    ],
+    "upload_extension_white_list": [
+        "*.7z",
+        "*.aif",
+        "*.avi",
+        "*.bmp",
+        "*.csv",
+        "*.doc",
+        "*.docx",
+        "*.dot",
+        "*.ecw",
+        "*.emf",
+        "*.eps",
+        "*.geojson",
+        "*.gif",
+        "*.gml",
+        "*.gpkg",
+        "*.gtar",
+        "*.gz",
+        "*.img",
+        "*.j2k",
+        "*.jp2",
+        "*.jpc",
+        "*.jpe",
+        "*.jpeg",
+        "*.jpf",
+        "*.jpg",
+        "*.json",
+        "*.m4a",
+        "*.mdb",
+        "*.mid",
+        "*.mov",
+        "*.mp2",
+        "*.mp3",
+        "*.mp4",
+        "*.mpa",
+        "*.mpe",
+        "*.mpeg",
+        "*.mpg",
+        "*.mpv2",
+        "*.pdf",
+        "*.png",
+        "*.ppt",
+        "*.pptx",
+        "*.ps",
+        "*.psd",
+        "*.qt",
+        "*.ra",
+        "*.ram",
+        "*.raw",
+        "*.rmi",
+        "*.sid",
+        "*.tar",
+        "*.tgz",
+        "*.tif",
+        "*.tiff",
+        "*.txt",
+        "*.vrml",
+        "*.wav",
+        "*.wma",
+        "*.wmf",
+        "*.wmv",
+        "*.wps",
+        "*.xls",
+        "*.xlsx",
+        "*.xlt",
+        "*.xml",
+        "*.zip"
+    ],
+    "upload_extension_black_list": [],
+    "_dev_": {
+        "total_uploadsize": "/* サイズ1GB = 1073741824 (1024*1024*1024)B */",
+        "uploadsize": "104857600 100MB = (1024 * 1024 * 100)B",
+        "blob_chunk_size": "3145728 3MB = (3 * 1024 * 1024)B"
+    }
+}
