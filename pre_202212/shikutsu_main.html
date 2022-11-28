@@ -50,6 +50,10 @@
       <label for="history-list" class="radiomenu">リスト</label>
       <input type="radio" name="history" id="history-map" value="history-map" />
       <label for="history-map" class="radiomenu">マップ</label>
+      <span>並べ替え：</span>
+      <select id="select_order">
+
+      </select>
       <div id="historyListDiv">
         <table class="history-table tbl-r05">
           <thead class="toko-thead" id="tableHead"></thead>
@@ -77,34 +81,15 @@
     <!--ユーザー設定画面-->
     <div id="user_conf">
       <div class="kaigyo pconly">
-        <label>投稿データの位置指定</label><br/>
+        <label class="sys-change-content">投稿データの位置指定</label><br/>
         <input type="radio" id="gps" value="0" name="toko_setting" />
         <label for="gps" class="radiomenu">端末のGPS</label>
         <input type="radio" id="exif" value="1" name="toko_setting">
         <label for="exif" class="radiomenu">写真の位置情報</label>
       </div>
       <div class="kaigyo">
-        <label>取得ファイル形式の初期値</label><br/>
-        <span id="user_conf_request_filetype_01">
-          <input type="checkbox" id="pdf" name="file_setting"/>
-          <label for="pdf" class="requestFile sys-change-content">3Dデータ(PDF)</label>
-        </span>
-        <span id="user_conf_request_filetype_02">
-          <input type="checkbox" id="las" name="file_setting">
-          <label for="las" class="requestFile sys-change-content">点群データ(LAS)</label>
-        </span>
-        <span id="user_conf_request_filetype_03">
-          <input type="checkbox" id="heimenzu" name="file_setting"/>
-          <label for="heimenzu" class="requestFile sys-change-content">平面図(DWG)</label>
-        </span>
-        <span id="user_conf_request_filetype_04">
-          <input type="checkbox" id="oudanzu" name="file_setting">
-          <label for="oudanzu" class="requestFile sys-change-content">断面図(DWG)</label>
-        </span>
-        <span id="user_conf_request_filetype_05">
-          <input type="checkbox" id="request_filetype05" name="file_setting"/>
-          <label for="request_filetype05" class="requestFile sys-change-content">AR</label>
-        </span>
+        <label class="sys-change-content">取得ファイル形式の初期値</label><br/>
+        <div class="flex-box request-filetype"></div>
       </div>
       <div id="confBtnDiv" class="chengeBtn">
         <button id="conf-save" class="commonbtn">保存</button>
@@ -149,14 +134,18 @@
       <div id="gridDiv">場所を指定してください</div>
       <label class="sys-change-content">住所</label>
       <div class="white-space-wrap"><input id="jusho" type="text"/></div>
+      <label class="sys-change-content">現場区分</label>
+      <div class="white-space-wrap"><select id="genbakubun"></select></div>
       <label class="sys-change-content">管情報※入力内容は図面作成に反映されます</label>
       <div class="white-space-wrap"><textarea id="kaninfo"></textarea></div>
+      <label class="sys-change-content">座標情報※LAS座標付与を希望する場合のみ記入してください</label>
+      <div class="white-space-wrap"><textarea id="zahyojoho"></textarea></div>
       <label class="sys-change-content">備考</label>
       <div class="white-space-wrap"><input id="bikou" type="text"/></div>
       <div class="white-space-wrap"><input id="email" type="text" class="hidden_email" hidden/></div>
       <div id="attachmentDiv">
         <div class="white-space-wrap"><label class="sys-change-content">投稿区分</label><label for="trigger" class="open_btn esri-icon-question">撮影のヒント</label></div>
-        <div><label class="sys-change-content">投稿ファイル選択※1GBまで</label></div>
+        <div><label class="sys-change-content">投稿ファイル選択※1GBまで</label><label for="popup_help2_trigger" class="open_btn esri-icon-question">許可されているファイル</label></div>
         <input type="radio" name="attachment" id="image" value="image" checked>
         <label for="image" class="radiomenu sys-change-content">写真</label>
         <input type="radio" name="attachment" id="movie" value="movie">
@@ -220,26 +209,7 @@
       </div>
       <div id="requestFileDiv">
         <div class="white-space-wrap"><label class="sys-change-content">取得ファイル形式</label></div>
-        <span id="form_request_filetype_01">
-          <input type="checkbox" id="requestFile-PDF" name="select-requestFile">
-          <label for="requestFile-PDF" class="requestFile sys-change-content">3Dデータ(PDF)</label>
-        </span>
-        <span id="form_request_filetype_02">
-          <input type="checkbox" id="requestFile-LAS" name="select-requestFile">
-          <label for="requestFile-LAS" class="requestFile sys-change-content">点群データ(LAS)</label>
-        </span>
-        <span id="form_request_filetype_03">
-          <input type="checkbox" id="requestFile-DWG-heimen" name="select-requestFile">
-          <label for="requestFile-DWG-heimen" class="requestFile sys-change-content">平面図(DWG)</label>
-        </span>
-        <span id="form_request_filetype_04">
-          <input type="checkbox" id="requestFile-DWG-oudan" name="select-requestFile">
-          <label for="requestFile-DWG-oudan" class="requestFile sys-change-content">断面図(DWG)</label>
-        </span>
-        <span id="form_request_filetype_05">
-          <input type="checkbox" id="form_request_filetype05" name="select-requestFile">
-          <label for="form_request_filetype05" class="requestFile sys-change-content">AR</label>
-        </span>
+        <div class="flex-box request-filetype"></div>
       </div>
       <div id="buttonDiv">
         <button id="sendbtn" class="commonbtn">送信</button>
@@ -273,42 +243,25 @@
         <div id="viewmapviewDiv"></div>
         <label class="sys-change-content">住所</label>
         <div class="white-space-wrap"><input id="viewjusho" type="text" disabled/></div>
+        <label class="sys-change-content">現場区分</label>
+        <div class="white-space-wrap"><select id="viewgenbakubun"></select></div>
         <label class="sys-change-content">管情報</label>
         <div class="white-space-wrap"><textarea id="viewkaninfo" disabled></textarea></div>
+        <label class="sys-change-content">座標情報</label>
+        <div class="white-space-wrap"><textarea id="viewzahyojoho"></textarea></div>
         <label class="sys-change-content">備考</label>
         <div class="white-space-wrap"><input id="viewbikou" type="text" disabled/></div>
       </div>
       <div class="margin-bottom-10">
         <div class="white-space-wrap"><label class="sys-change-content">取得ファイル形式</label></div>
-        <span id="view_request_filetype_01">
-          <input type="checkbox" id="viewrequestFile-PDF" name="select-requestFile">
-          <label for="viewrequestFile-PDF" class="requestFile sys-change-content">3Dデータ(PDF)</label>
-        </span>
-        <span id="view_request_filetype_02">
-          <input type="checkbox" id="viewrequestFile-LAS" name="select-requestFile">
-          <label for="viewrequestFile-LAS" class="requestFile sys-change-content">点群データ(LAS)</label>
-        </span>
-        <span id="view_request_filetype_03">
-          <input type="checkbox" id="viewrequestFile-DWG-heimen" name="select-requestFile">
-          <label for="viewrequestFile-DWG-heimen" class="requestFile sys-change-content">平面図(DWG)</label>
-        </span>
-        <span id="view_request_filetype_04">
-          <input type="checkbox" id="viewrequestFile-DWG-oudan" name="select-requestFile">
-          <label for="viewrequestFile-DWG-oudan" class="requestFile sys-change-content">断面図(DWG)</label>
-        </span>
-        <span id="view_request_filetype_05">
-          <input type="checkbox" id="view_request_filetype05" name="select-requestFile">
-          <label for="view_request_filetype05" class="requestFile sys-change-content">AR</label>
-        </span>
+        <div class="flex-box request-filetype"></div>
         <input id="viewobjectid" type="text" hidden/>
         <input id="viewstatus" type="text" hidden/>
         <input id="viewscene_itemid" type="text" hidden/>
       </div>
       <div class="margin-bottom-10">
         <div id="viewheaderbuttonDiv">
-          <button id="editform_show" class="esri-icon-edit">
-          登録情報の編集
-          </button>
+          <button id="editform_show" class="esri-icon-edit">登録情報の編集</button>
           <button id="edit_send" class="sendbtn">登録</button>
           <button id="edit_cancel" class="sendbtn">キャンセル</button>
         </div>
@@ -326,14 +279,9 @@
           <button class="action-button esri-icon-measure-area" id="areaButton" type="button" title="面積計測"></button>
           <button class="action-button esri-icon-erase" id="clearButton" type="button" title="クリア"></button>
         </div>
-      </div><br/>
-      <div id="div_request_filetype01_attachment"></div>
-      <div id="div_request_filetype02_attachment"></div>
-      <div id="dwg_attachmentDiv"></div>
-      <div id="div_request_filetype03_attachment"></div>
-      <div id="div_request_filetype04_attachment"></div>
-      <div id="div_request_filetype05_attachment"></div><br/>
-      <div class="white-space-wrap"><label class="sys-change-content">添付ファイル</label></div>
+      </div>
+      <div id="div_request_filetype_attachment"></div>
+      <div class="white-space-wrap"><label class="sys-change-content">添付ファイル</label><label for="popup_help2_trigger" class="open_btn esri-icon-question">許可されているファイル</label></div>
       <div id="attachmentlistDiv"></div>
       <span id="backbtn-view" class="backbtn"><i class="esri-icon-up-arrow"></i></span>
       <span id="bottombtn-view" class="bottombtn"><i class="esri-icon-down-arrow"></i></span>
@@ -375,6 +323,19 @@
             </span>
             <img src="./src/img/photographer.png" class="photographer-Image"/>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="popup_wrap">
+      <input id="popup_help2_trigger" type="checkbox">
+      <div class="popup_overlay">
+        <label for="popup_help2_trigger" class="popup_trigger"></label>
+        <div class="popup_content">
+          <label for="popup_help2_trigger" class="close_btn">×</label>
+          <h2>
+            <img src="./src/img/help.png" class="help-Image"/><span>サポートされているファイル形式</span>
+          </h2>
+          <div id="file_extension_list" class="margin-top flex-box"></div>
         </div>
       </div>
     </div>

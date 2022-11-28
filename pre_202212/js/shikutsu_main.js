@@ -99,6 +99,13 @@ var upload_extension_black_list = [];
 // アップロードファイル許可タイプ
 var upload_file_type_white_list = [];
 
+// 一覧並べ替え項目
+var list_order_select_item = [];
+
+// セレクトタグの選択項目
+var select_option_list = {}
+
+
 var param = location.search.match(/field:KaishaID=(.*?)(&|$)/);
 if (param != null) {
   $('#kaishaid').val(decodeURIComponent(param[1]));
@@ -739,13 +746,14 @@ require([
     }
     
     //取得ファイル形式チェック
-    var request_file1 = $('#requestFile-PDF').is(':checked');
-    var request_file2 = $('#requestFile-LAS').is(':checked');
-    var request_file3 = $('#requestFile-DWG-heimen').is(':checked');
-    var request_file4 = $('#requestFile-DWG-oudan').is(':checked');
-    var request_file5 = $('#form_request_filetype05').is(':checked');
-
-    if (request_file1==false && request_file2==false && request_file3==false && request_file4 == false && request_file5 == false) {
+    var checked = false;
+    $("#formDiv .request-filetype input[type='checkbox']").each(function(idx, elem) {
+      if (elem.checked) {
+        checked = true;
+        return false; // eachを抜ける
+      }
+    });
+    if (!checked) {
       alert("取得ファイル形式が指定されていません");
       return;
     }
@@ -824,16 +832,18 @@ require([
     }
     
     //取得ファイル形式チェック
-    var request_file1 = $('#viewrequestFile-PDF').is(':checked');
-    var request_file2 = $('#viewrequestFile-LAS').is(':checked');
-    var request_file3 = $('#viewrequestFile-DWG-heimen').is(':checked');
-    var request_file4 = $('#viewrequestFile-DWG-oudan').is(':checked');
-    var request_file5 = $('#view_request_filetype05').is(':checked');
-    
-    if (request_file1==false && request_file2==false && request_file3 == false && request_file4 == false) {
+    var checked = false;
+    $("#viewformDiv .request-filetype input[type='checkbox']").each(function(idx, elem) {
+      if (elem.checked) {
+        checked = true;
+        return false; // eachを抜ける
+      }
+    });
+    if (!checked) {
       alert("取得ファイル形式が指定されていません");
       return;
     }
+
     edit_feature(latitude, longitude);
   });
 
@@ -953,6 +963,7 @@ require([
     var jusho = $('#jusho');
     var kaninfo = $('#kaninfo');
     var bikou = $('#bikou');
+    var zahyojoho = $("#zahyojoho");
 
     if (mode === 1) {
       title = $('#viewtitle');
@@ -960,6 +971,7 @@ require([
       jusho = $('#viewjusho');
       kaninfo = $('#viewkaninfo');
       bikou = $('#viewbikou');
+      zahyojoho = $("#viewzahyojoho");
     }
     for (var chara of ngCharacters) {
       if (title.val().indexOf(chara) != -1) {
@@ -981,6 +993,10 @@ require([
       if (bikou.val().indexOf(chara) != -1) {
         ngCharaFlg = true;
         bikou.focus();
+      }
+      if (zahyojoho.val().indexOf(chara) != -1) {
+        ngCharaFlg = true;
+        zahyojoho.focus();
       }
     }
     return ngCharaFlg;
@@ -1287,7 +1303,7 @@ require([
             cancel = true;
           }
           if (file.size > upload_limit_file_size){
-            $tr.find(".status").html("<span style='color:red;'>アップロード不可(禁止拡張子)</span>");
+            $tr.find(".status").html("<span style='color:red;'>アップロード不可(サイズオーバー)</span>");
             cancel = true;
           }
           if (!cancel){
@@ -1576,13 +1592,29 @@ require([
       kbn = 1;
     }
     
-    var request_file1 = Number($('#requestFile-PDF').is(':checked'));
-    var request_file2 = Number($('#requestFile-LAS').is(':checked'));
-    var request_file3 = Number($('#requestFile-DWG-heimen').is(':checked'));
-    var request_file4 = Number($('#requestFile-DWG-oudan').is(':checked'));
-    var request_file5 = Number($('#form_request_filetype05').is(':checked'));
-
     url = push_feature_url + "/" + layer_id + "/addFeatures";
+
+    var attributes = {
+      "KaishaID": $('#kaishaid').val(),
+      "Kbn": kbn,
+      "Title": $('#title').val(),
+      "Naiyo": $('#naiyo').val(),
+      "Jusho": $('#jusho').val(),
+      "kaninfo": $('#kaninfo').val(),
+      "Bikou": $('#bikou').val(),
+      "GenbaKubun": $("#genbakubun").val(),
+      "ZahyoJoho": $("#zahyojoho").val(),
+      "Email": email,
+      "Status": 0
+    };
+    // 要否ファイルチェックボックスのチェック状態からパラメータ作成
+    var index = -1;
+    $.each(request_filetype_setting, function(idx, item) {
+      if (item.visible) {
+        index++;
+        attributes[item.field_name] = Number($("#formDiv .request-filetype input[type='checkbox']").eq(index).prop("checked"));
+      }
+    });
 
     var feature = {
       "geometry": {
@@ -1590,22 +1622,7 @@ require([
         "y": lat,
         "spatialReference" : {"wkid" : 4326}
       },
-      "attributes": {
-        "KaishaID": $('#kaishaid').val(),
-        "Kbn": kbn,
-        "Title": $('#title').val(),
-        "Naiyo": $('#naiyo').val(),
-        "Jusho": $('#jusho').val(),
-        "kaninfo": $('#kaninfo').val(),
-        "Bikou": $('#bikou').val(),
-        "Email": email,
-        "Status": 0,
-        "Request_filetype01": request_file1,
-        "Request_filetype02": request_file2,
-        "Request_filetype03": request_file3,
-        "Request_filetype04": request_file4,
-        "Request_filetype05": request_file5
-      }
+      "attributes": attributes
     };
 
     var form = new FormData();
@@ -1823,6 +1840,9 @@ require([
     $('#naiyo').val("");
     $('#bikou').val("");
     $('#kaninfo').val("");
+    $("#genbakubun").val("");
+    $("#zahyojoho").val("");
+    
     view.graphics.removeAll();
 
     $('#gridDiv').html("場所を指定してください");
@@ -1832,27 +1852,13 @@ require([
     delete_all_file_row();
 
     // ユーザー設定を読み込む
-    $('#requestFile-PDF').prop('checked', false);
-    $('#requestFile-LAS').prop('checked', false);
-    $('#requestFile-DWG-heimen').prop('checked', false);
-    $('#requestFile-DWG-oudan').prop('checked', false);
-    $('#form_request_filetype05').prop('checked', false);
-
-    if(user_setting.pdf == "1"){
-      $('#requestFile-PDF').prop('checked', true);
-    }
-    if(user_setting.las == "1"){
-      $('#requestFile-LAS').prop('checked', true);
-    }
-    if(user_setting.heimenzu == "1"){
-      $('#requestFile-DWG-heimen').prop('checked', true);
-    }
-    if(user_setting.oudanzu == "1"){
-      $('#requestFile-DWG-oudan').prop('checked', true);
-    }
-    if (user_setting.rft05 == "1"){
-      $('#form_request_filetype05').prop('checked', true);
-    }
+    var index = -1;
+    $.each(request_filetype_setting, function(idx, item) {
+      if (item.visible) {
+        index++;
+        $("#formDiv .request-filetype input[type='checkbox']").eq(index).prop("checked", (user_setting[item.field_name] == "1"? true: false));
+      }
+    });
     
     $('#sendbtn').html("送信");
   }
@@ -1863,14 +1869,28 @@ require([
    * @param {} long 
    */
   function edit_feature(lat, long) {
-    
-    var request_file1 = Number($('#viewrequestFile-PDF').is(':checked'));
-    var request_file2 = Number($('#viewrequestFile-LAS').is(':checked'));
-    var request_file3 = Number($('#viewrequestFile-DWG-heimen').is(':checked'));
-    var request_file4 = Number($('#viewrequestFile-DWG-oudan').is(':checked'));
-    var request_file5 = Number($('#view_request_filetype05').is(':checked'));
-    
+
     url = push_feature_url + "/" + layer_id + "/updateFeatures";
+
+    var attributes = {
+      "OBJECTID": $('#viewobjectid').val(),
+      "Title": $('#viewtitle').val(),
+      "Naiyo": $('#viewnaiyo').val(),
+      "Jusho": $('#viewjusho').val(),
+      "Bikou": $('#viewbikou').val(),
+      "kaninfo": $('#viewkaninfo').val(),
+      "zahyojoho": $("#viewzahyojoho").val(),
+      "genbakubun": $("#viewgenbakubun").val()
+    };
+
+    // 要否ファイルチェックボックスのチェック状態からパラメータ作成
+    var index = -1;
+    $.each(request_filetype_setting, function(idx, item) {
+      if (item.visible) {
+        index++;
+        attributes[item.field_name] = Number($("#viewformDiv .request-filetype input[type='checkbox']").eq(index).prop("checked"));
+      }
+    });
 
     var feature = {
       "geometry": {
@@ -1878,19 +1898,7 @@ require([
         "y": lat,
         "spatialReference" : {"wkid" : 4326}
       },
-      "attributes": {
-        "OBJECTID": $('#viewobjectid').val(),
-        "Title": $('#viewtitle').val(),
-        "Naiyo": $('#viewnaiyo').val(),
-        "Jusho": $('#viewjusho').val(),
-        "Bikou": $('#viewbikou').val(),
-        "kaninfo": $('#viewkaninfo').val(),
-        "Request_filetype01": request_file1,
-        "Request_filetype02": request_file2,
-        "Request_filetype03": request_file3,
-        "Request_filetype04": request_file4,
-        "Request_filetype05": request_file5
-      }
+      "attributes": attributes
     };
 
     var form = new FormData();
@@ -1986,37 +1994,14 @@ require([
     else{
       $("#exif").prop("checked", true)
     }
-
-    if(user_setting.pdf == "1"){
-      $("#pdf").prop("checked", true);
-    }
-    else{
-      $("#pdf").prop("checked", false);
-    }
-    if(user_setting.las == "1"){
-      $("#las").prop("checked", true);
-    }
-    else{
-      $("#las").prop("checked", false);
-    }
-    if(user_setting.heimenzu == "1"){
-      $("#heimenzu").prop("checked", true);
-    }
-    else{
-      $("#heimenzu").prop("checked", false);
-    }
-    if(user_setting.oudanzu == "1"){
-      $("#oudanzu").prop("checked", true);
-    }
-    else{
-      $("#oudanzu").prop("checked", false);
-    }
-    if (user_setting.rft05 == "1"){
-      $("#request_filetype05").prop("checked", true);
-    }
-    else {
-      $("#request_filetype05").prop("checked", false);
-    }
+    // クッキー情報から各チェックボックスのチェック状態を復元
+    var index = -1;
+    $.each(request_filetype_setting, function(idx, item) {
+      if (item.visible) {
+        index++;
+        $("#user_conf .request-filetype input[type='checkbox']").eq(index).prop("checked", (user_setting[item.field_name] == "1"?true: false));
+      }
+    });
   }
 
   /**
@@ -2029,41 +2014,14 @@ require([
     }
     var toko = $('input:radio[name="toko_setting"]:checked').val();// チェックがついたほうのvalueを取得
     user_setting.toko = toko;
-
-      if($("#pdf").prop("checked")){
-        user_setting.pdf = "1";
+    // クッキー情報へ各チェックボックスのチェック状態を保存
+    var index = -1;
+    $.each(request_filetype_setting, function(idx, item) {
+      if (item.visible) {
+        index++;
+        user_setting[item.field_name] = $("#user_conf .request-filetype input[type='checkbox']").eq(index).prop("checked") ? "1": "0";
       }
-      else{
-        user_setting.pdf = "0";
-      }
-
-      if($("#las").prop("checked")){
-        user_setting.las = "1";
-      }
-      else{
-        user_setting.las = "0";
-      }
-    
-      if($("#heimenzu").prop("checked")){
-        user_setting.heimenzu = "1";
-      }
-      else{
-        user_setting.heimenzu = "0";
-      }
-    
-      if($("#oudanzu").prop("checked")){
-        user_setting.oudanzu = "1";
-      }
-      else{
-        user_setting.oudanzu = "0";
-      }
-
-      if ($("#request_filetype05").prop("checked")){
-        user_setting.rft05 = "1";
-      }
-      else {
-        user_setting.rft05 = "0";
-      }
+    });
     // jsonに変換
     var cookie_data = JSON.stringify(user_setting);
     // cookieに保存
@@ -2255,7 +2213,14 @@ var historyTable = {
       form.set('where', "Status<>9 And " + creator_field + " = '" + this.userId + "'");
     }
     form.set('outFields', '*');
-    form.set('orderByFields', create_date_field + ' DESC');
+    // 選択中の並べ替え項目
+    var order = $("#select_order").val();
+    if (order != undefined && order.length > 0) {
+      form.set("orderByFields", order);
+    }
+    else {
+      form.set('orderByFields', create_date_field + ' DESC');
+    }
     form.set('resultOffset', (page -1 ) * this.records_per_page);
     form.set('resultRecordCount', this.records_per_page);
     form.set('token', token);
@@ -2389,11 +2354,18 @@ var historyTable = {
       $('#viewjusho').val(features[0].attributes["Jusho"]);
       $('#viewbikou').val(features[0].attributes["Bikou"]);
       $('#viewkaninfo').val(features[0].attributes["kaninfo"]);
-      $('#viewrequestFile-PDF').prop('checked', features[0].attributes["Request_filetype01"]);
-      $('#viewrequestFile-LAS').prop('checked', features[0].attributes["Request_filetype02"]);
-      $('#viewrequestFile-DWG-heimen').prop('checked', features[0].attributes["Request_filetype03"]);
-      $('#viewrequestFile-DWG-oudan').prop('checked', features[0].attributes["Request_filetype04"]);
-      $('#view_request_filetype05').prop('checked', features[0].attributes["Request_filetype05"]);
+      $("#viewzahyojoho").val(features[0].attributes["ZahyoJoho"]);
+      $("#viewgenbakubun").val(features[0].attributes["GenbaKubun"]);
+
+      // 要否ファイルチェックボックスチェック状態の設定
+      var index = -1;
+      $.each(request_filetype_setting, function(idx, item) {
+        if (item.visible) {
+          index++;
+          $("#viewformDiv .request-filetype input[type='checkbox']").eq(index).prop("checked", (features[0].attributes[item.field_name] == 1 ? true : false));
+        }
+      });
+
       $('#viewobjectid').val(objectid);
       $('#viewstatus').val(features[0].attributes["Status"]);
       $('#viewscene_itemid').val(features[0].attributes["SceneItemID"]);
@@ -2422,7 +2394,6 @@ var historyTable = {
     $('#div_request_filetype03_attachment').html("");
     $('#div_request_filetype04_attachment').html("");
     $("#div_request_filetype05_attachment").html("");
-    $('#dwg_attachmentDiv').html("");
     $('#attachmentlistDiv').html("");
     
     var form = new FormData();
@@ -2450,52 +2421,34 @@ var historyTable = {
       
       var att_html = "";
       
+      // 要否ファイルリンク表示用要素を用意
+      var $elem = $("#div_request_filetype_attachment").empty();
+      for(var i = 0;i<request_filetype_setting.length;i++){
+        if (request_filetype_setting[i].visible || false){
+          $("<div id='div_request_filetype_attachment_" + i.toString() + "'></div>").appendTo($elem);
+        }
+      }
       for(var i = 0; i< attachments.length; i++) {
         var att_name = attachments[i].name;
         var att_id = attachments[i].id;
         var att_url = push_feature_url + '/' + layer_id + '/' + objectid + '/attachments/' + att_id + '?token=' + this.token;
         var contentType = attachments[i].contentType;
         var keywords = attachments[i].keywords;
-        // RequestFileType01
-        if (keywords.split('|').indexOf("ManagementSystemUpload") !== -1 && func_request_filetype_setting_exists_keyword(request_filetype_setting, keywords, 0)){
-          var html = "<span>" + att_name + '</span><div><a target="_blank" rel="noopener noreferrer"  href="'+ att_url + '">' + request_filetype_setting[0].link_text + '</a></div>';
-          $('#div_request_filetype01_attachment').html(html);
-          replace_download_link_button($("#div_request_filetype01_attachment"), {layer_id: layer_id, objectid: objectid}, attachments[i], request_filetype_setting[0].downloaded_key);
-          continue;
-        } 
-        // RequestFileType02
-        else if (keywords.split('|').indexOf("ManagementSystemUpload") !== -1 && func_request_filetype_setting_exists_keyword(request_filetype_setting, keywords, 1)){
-          var html = "<span>" + att_name + '</span><div><a target="_blank" rel="noopener noreferrer"  href="'+ att_url + '">' + request_filetype_setting[1].link_text + '</a></div>';
-          $('#div_request_filetype02_attachment').html(html); 
-          replace_download_link_button($("#div_request_filetype02_attachment"), {layer_id: layer_id, objectid: objectid}, attachments[i], request_filetype_setting[1].downloaded_key);
-          continue; 
-        }
-        // RequestFileType03
-        else  if (keywords.split('|').indexOf("ManagementSystemUpload") !== -1 && func_request_filetype_setting_exists_keyword(request_filetype_setting, keywords, 2)){
-          var html = "<span>" + att_name + '</span><div><a target="_blank" rel="noopener noreferrer"  href="'+ att_url + '">' + request_filetype_setting[2].link_text + '</a></div>';
-          $('#div_request_filetype03_attachment').html(html); 
-          replace_download_link_button($("#div_request_filetype03_attachment"), {layer_id: layer_id, objectid: objectid}, attachments[i], request_filetype_setting[2].downloaded_key);
+
+        if (keywords.split("|").indexOf("ManagementSystemUpload") != -1) {
+          // 要否ファイルの判定をし、合致した場合はリンクを作成
+          for(var j = 0;j<request_filetype_setting.length;j++){
+            if (func_request_filetype_setting_exists_keyword(request_filetype_setting, keywords, j)){
+              var html = "<span>" + att_name + '</span><div><a target="_blank" rel="noopener noreferrer"  href="'+ att_url + '">' + request_filetype_setting[j].link_text + '</a></div>';
+              // 複数存在する場合は前回要素を削除
+              var $div = $("#div_request_filetype_attachment_" + j.toString()).empty();
+              $div.html(html);
+              replace_download_link_button($div, {layer_id: layer_id, objectid: objectid}, attachments[i], request_filetype_setting[j].downloaded_key);
+              break;
+            }
+          }
           continue;
         }
-        // RequestFileType04
-        else  if (keywords.split('|').indexOf("ManagementSystemUpload") !== -1 && func_request_filetype_setting_exists_keyword(request_filetype_setting, keywords, 3)){
-          var html = "<span>" + att_name + '</span><div><a target="_blank" rel="noopener noreferrer"  href="'+ att_url + '">' + request_filetype_setting[3].link_text + '</a></div>';
-          $('#div_request_filetype04_attachment').html(html); 
-          replace_download_link_button($("#div_request_filetype04_attachment"), {layer_id: layer_id, objectid: objectid}, attachments[i], request_filetype_setting[3].downloaded_key);
-          continue;
-        }
-        // RequestFileType05
-        else if (keywords.split('|').indexOf("ManagementSystemUpload") !== -1 && func_request_filetype_setting_exists_keyword(request_filetype_setting, keywords, 4)){
-          var html = "<span>" + att_name + '</span><div><a target="_blank" rel="noopener noreferrer" href="' + att_url + '">' + request_filetype_setting[4].link_text + '</a></div>';
-          $("#div_request_filetype05_attachment").html(html);
-          replace_download_link_button($("#div_request_filetype05_attachment"), {layer_id: layer_id, objectid: objectid}, attachments[i], request_filetype_setting[4].downloaded_key);
-          continue;
-        }
-        // else  if (keywords.split('|').indexOf("ManagementSystemUpload") !== -1 && (keywords.indexOf("平面図") != -1 || keywords.indexOf("断面図") != -1)) {
-        //   var html = "<span>" + att_name + '</span><div><a target="_blank" rel="noopener noreferrer"  href="'+ att_url + '">DWGダウンロード</a></div>';
-        //   $('#dwg_attachmentDiv').html(html); 
-        //   continue;
-        // } 
         else if (contentType.indexOf('video') !== -1) {
           att_html += att_name + '<br/><video class="view_gallery" src="'+ att_url + '" controls width="100px"></video><br/>';
         } 
@@ -2755,12 +2708,14 @@ function change_view_enable(flg) {
     $('#viewjusho').prop('disabled', false);
     $('#viewkaninfo').prop('disabled', false);
     $('#viewbikou').prop('disabled', false);
-    $('#viewkaninfo').prop('disabled', false);
-    $('#viewrequestFile-PDF').prop('disabled', false);
-    $('#viewrequestFile-LAS').prop('disabled', false);
-    $('#viewrequestFile-DWG-heimen').prop('disabled', false);
-    $('#viewrequestFile-DWG-oudan').prop('disabled', false);
-    $('#view_request_filetype05').prop('disabled', false);
+    $('#viewzahyojoho').prop('disabled', false);
+    $("#viewgenbakubun").prop("disabled", false);
+
+    // 要否ファイルチェックボックスを有効状態に設定
+    $("#viewformDiv .request-filetype input[type='checkbox']").each(function(idx, elem) {
+      elem.disabled = false;
+    });
+
     $('#editform_show').css('display', 'none');
     $('#edit_send').css('display', 'block');
     $('#edit_cancel').css('display', 'block');
@@ -2776,12 +2731,14 @@ function change_view_enable(flg) {
     $('#viewjusho').prop('disabled', true);
     $('#viewkaninfo').prop('disabled', true);
     $('#viewbikou').prop('disabled', true);
-    $('#viewkaninfo').prop('disabled', true);
-    $('#viewrequestFile-PDF').prop('disabled', true);
-    $('#viewrequestFile-LAS').prop('disabled', true);
-    $('#viewrequestFile-DWG-heimen').prop('disabled', true);
-    $('#viewrequestFile-DWG-oudan').prop('disabled', true);
-    $('#view_request_filetype05').prop('disabled', true);
+    $('#viewzahyojoho').prop('disabled', true);
+    $("#viewgenbakubun").prop("disabled", true);
+
+    // 要否ファイルチェックボックスを無効状態に設定
+    $("#viewformDiv .request-filetype input[type='checkbox']").each(function(idx, elem) {
+      elem.disabled = true;
+    });
+
     $('#editform_show').css('display', 'block');
     $('#edit_send').css('display', 'none');
     $('#edit_cancel').css('display', 'none');
@@ -2792,7 +2749,10 @@ function change_view_enable(flg) {
   }
   
 }
-
+/**
+ * 設定情報の設定
+ * @param {Object} config 
+ */
 function set_config(config) {
   webappId = config.webappId;
   kaisha_url = config.get_kaisha_url;
@@ -2850,6 +2810,79 @@ function set_config(config) {
   // チャンクサイズ
   blob_chunk_size = config.blob_chunk_size;
 
+  // 一覧並べ替え項目
+  list_order_select_item = config.list_order_select_item;
+
+  // セレクトタグの選択項目
+  select_option_list = config.select_option_list;
+
+  create_list_order_select(list_order_select_item, $("#select_order"));
+  $("#select_order").change(function() {
+    historyTable.changePage(0);
+  });
+
+  // 要否ファイルチェックボックス作成 ユーザー設定部
+  create_request_filetype_check(request_filetype_setting, $("#user_conf .request-filetype"), "setting-request-filetype", "setting_", "requestFile sys-change-content");
+  // 要否ファイルチェックボックス作成 新規投稿部
+  create_request_filetype_check(request_filetype_setting, $("#formDiv .request-filetype"), "form-request-filetype", "form_", "requestFile sys-change-content");
+  // 要否ファイルチェックボックス作成 情報編集部
+  create_request_filetype_check(request_filetype_setting, $("#viewformDiv .request-filetype"), "view-request-filetype", "view_", "requestFile sys-change-content");
+  // 許可されているファイルポップアップ内容作成
+  create_file_extension_list(upload_extension_white_list, $("#file_extension_list"));
+
+  // 投稿フォームのセレクトタグの設定
+  create_select_option(select_option_list.GenbaKubun, $("#genbakubun"));
+  // 閲覧情報のセレクトタグの設定
+  create_select_option(select_option_list.GenbaKubun, $("#viewgenbakubun"));
+}
+
+/**
+ * セレクトタグの項目作成
+ * @param {Object[]} list 
+ * @param {jQueryElement} $select 
+ */
+function create_select_option(list, $select) {
+  for(var i = 0;i<list.length;i++) {
+    $("<option value='" + list[i].value + "'></option>").text(list[i].text).appendTo($select);
+  }
+}
+/**
+ * 許可されているファイルポップアップ内容作成
+ * @param {String[]} settings 
+ * @param {jQueryElement} $div 
+ */
+function create_file_extension_list(settings, $div) {
+  for(var i=0;i<settings.length;i++) {
+    $("<div></div>").text(settings[i].replace("*.", "") + (i==(settings.length - 1)?"" : "、")).appendTo($div);
+  }
+}
+/**
+ * 要否ファイルチェックボックス作成
+ * @param {Object[]} settings 
+ * @param {jQueryElement} $parent 
+ * @param {String} name 
+ * @param {String} id_initial 
+ * @param {String} className 
+ */
+function create_request_filetype_check(settings, $parent, name, id_initial, className) {
+  for(var i = 0;i<settings.length;i++) {
+    if (settings[i].visible) {
+      var $div = $("<div class='flex-box'></div>").appendTo($parent);
+      var $input = $("<input type='checkbox' name='" + name + "' id='" + id_initial + settings[i].field_name + "' />").appendTo($div);
+      var $label = $("<label for='" + id_initial + settings[i].field_name + "'></label>").text(settings[i].checkbox_label).appendTo($div);
+      $label.addClass(className);
+    }
+  }
+}
+/**
+ * 並べ替えセレクトタグ項目の作成
+ * @param {Object[]} settings 
+ * @param {jQueryElement} $select 
+ */
+function create_list_order_select(settings, $select) {
+  for (var i = 0;i<settings.length;i++) {
+    $("<option></option>").html(settings[i].html).val(settings[i].value).appendTo($select);
+  }
 }
 /**
  * 指定辞書と親エレメントから文言の置き換えを行う
