@@ -62,7 +62,7 @@
 "request_filetype_setting":[
     {
         "visible": true,
-        "keyword": ["RFT01"],
+        "keyword": ["RFT01", "PDF"],
         "downloaded_key": "RFT01_DL",
         "link_text":"PDFダウンロード",
         "field_name": "Request_filetype01",
@@ -70,7 +70,7 @@
     },
     {
         "visible": true,
-        "keyword": ["RFT02"],
+        "keyword": ["RFT02", "LAS"],
         "downloaded_key": "RFT02_DL",
         "link_text":"点群データ座標なしダウンロード",
         "field_name": "Request_filetype02",
