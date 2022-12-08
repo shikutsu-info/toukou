@@ -50,21 +50,23 @@
       <label for="history-list" class="radiomenu">リスト</label>
       <input type="radio" name="history" id="history-map" value="history-map" />
       <label for="history-map" class="radiomenu">マップ</label>
-      <span>並べ替え：</span>
-      <select id="select_order">
-
-      </select>
       <div id="historyListDiv">
+        <div class="tool-menu">
+          <span>並べ替え：</span>
+          <select id="select_order"></select>
+        </div>
         <table class="history-table tbl-r05">
           <thead class="toko-thead" id="tableHead"></thead>
           <tbody id="tableBody"></tbody>
         </table>
+        <div class="foot-menu">
+          <button id="btn_first" class="esri-icon-beginning" ></button>
+          <button id="btn_prev" class="esri-icon-reverse" ></button>
+          <span></span><!-- これが必要なのか確認いらなさそう -->
+          <button id="btn_next" class="esri-icon-forward" ></button>
+          <button id="btn_last" class="esri-icon-end" ></button>
+        </div>
       </div>
-      <button id="btn_first" class="esri-icon-beginning" ></button>
-      <button id="btn_prev" class="esri-icon-reverse" ></button>
-      <span></span><!-- これが必要なのか確認いらなさそう -->
-      <button id="btn_next" class="esri-icon-forward" ></button>
-      <button id="btn_last" class="esri-icon-end" ></button>
       <!--投稿確認用マップ-->
       <div id="historyMapDiv">
         <div id="historyMapViewDiv"></div>
@@ -88,7 +90,7 @@
         <label for="exif" class="radiomenu">写真の位置情報</label>
       </div>
       <div class="kaigyo">
-        <label class="sys-change-content">取得ファイル形式の初期値</label><br/>
+        <label class="sys-change-content">希望成果品の初期値</label><br/>
         <div class="flex-box request-filetype"></div>
       </div>
       <div id="confBtnDiv" class="chengeBtn">
@@ -135,7 +137,8 @@
       <label class="sys-change-content">住所</label>
       <div class="white-space-wrap"><input id="jusho" type="text"/></div>
       <label class="sys-change-content">現場区分</label>
-      <div class="white-space-wrap"><select id="genbakubun"></select></div>
+      <!-- <div class="white-space-wrap"><select id="genbakubun"></select></div> -->
+      <div class="white-space-wrap flex-box" id="genbakubun"></div>
       <label class="sys-change-content">管情報※入力内容は図面作成に反映されます</label>
       <div class="white-space-wrap"><textarea id="kaninfo"></textarea></div>
       <label class="sys-change-content">座標情報※LAS座標付与を希望する場合のみ記入してください</label>
@@ -144,9 +147,9 @@
       <div class="white-space-wrap"><input id="bikou" type="text"/></div>
       <div class="white-space-wrap"><input id="email" type="text" class="hidden_email" hidden/></div>
       <div id="attachmentDiv">
-        <div class="white-space-wrap"><label class="sys-change-content">投稿区分</label><label for="trigger" class="open_btn esri-icon-question">撮影のヒント</label></div>
+        <!-- <div class="white-space-wrap"><label class="sys-change-content">投稿区分</label><label for="trigger" class="open_btn esri-icon-question">撮影のヒント</label></div> -->
         <div><label class="sys-change-content">投稿ファイル選択※1GBまで</label><label for="popup_help2_trigger" class="open_btn esri-icon-question">許可されているファイル</label></div>
-        <input type="radio" name="attachment" id="image" value="image" checked>
+        <!-- <input type="radio" name="attachment" id="image" value="image" checked>
         <label for="image" class="radiomenu sys-change-content">写真</label>
         <input type="radio" name="attachment" id="movie" value="movie">
         <label for="movie" class="radiomenu sys-change-content">動画</label>
@@ -187,7 +190,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <div id="upload_file" class="select_attachment">
           <input id="file_select" type="file" multiple hidden/>
           <button id="filebtn"><span class="esri-icon-documentation"></span><span class="margin-left-5 sys-change-content">ファイルの選択</span></button>
@@ -208,7 +211,7 @@
         </div>
       </div>
       <div id="requestFileDiv">
-        <div class="white-space-wrap"><label class="sys-change-content">取得ファイル形式</label></div>
+        <div class="white-space-wrap"><label class="sys-change-content">希望成果品</label></div>
         <div class="flex-box request-filetype"></div>
       </div>
       <div id="buttonDiv">
@@ -244,7 +247,8 @@
         <label class="sys-change-content">住所</label>
         <div class="white-space-wrap"><input id="viewjusho" type="text" disabled/></div>
         <label class="sys-change-content">現場区分</label>
-        <div class="white-space-wrap"><select id="viewgenbakubun"></select></div>
+        <!-- <div class="white-space-wrap"><select id="viewgenbakubun"></select></div> -->
+        <div class="white-space-wrap flex-box" id="viewgenbakubun"></div>
         <label class="sys-change-content">管情報</label>
         <div class="white-space-wrap"><textarea id="viewkaninfo" disabled></textarea></div>
         <label class="sys-change-content">座標情報</label>
@@ -253,7 +257,7 @@
         <div class="white-space-wrap"><input id="viewbikou" type="text" disabled/></div>
       </div>
       <div class="margin-bottom-10">
-        <div class="white-space-wrap"><label class="sys-change-content">取得ファイル形式</label></div>
+        <div class="white-space-wrap"><label class="sys-change-content">希望成果品</label></div>
         <div class="flex-box request-filetype"></div>
         <input id="viewobjectid" type="text" hidden/>
         <input id="viewstatus" type="text" hidden/>
@@ -300,7 +304,7 @@
       <img src="./src/img/photographer.png" class="photographer-Image"/>
       <button class="returnmenu commonbtn">戻る</button>
     </div>
-    <div class="popup_wrap">
+    <!-- <div class="popup_wrap">
       <input id="trigger" type="checkbox">
       <div class="popup_overlay">
         <label for="trigger" class="popup_trigger"></label>
@@ -325,7 +329,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="popup_wrap">
       <input id="popup_help2_trigger" type="checkbox">
       <div class="popup_overlay">
@@ -336,6 +340,7 @@
             <img src="./src/img/help.png" class="help-Image"/><span>サポートされているファイル形式</span>
           </h2>
           <div id="file_extension_list" class="margin-top flex-box"></div>
+          <div style="font-weight: bold;">※上記ファイル以外はZIPファイルにしてください</div>
         </div>
       </div>
     </div>

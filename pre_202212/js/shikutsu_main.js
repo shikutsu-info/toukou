@@ -105,6 +105,8 @@ var list_order_select_item = [];
 // セレクトタグの選択項目
 var select_option_list = {}
 
+// 特定会社ID時の内容変更
+var switch_naiyo_kaisha_id_list = [];
 
 var param = location.search.match(/field:KaishaID=(.*?)(&|$)/);
 if (param != null) {
@@ -147,7 +149,7 @@ $.getJSON(json_url, function(config) {
       $('#sign-in').prop("disabled", true);
     }
   }).fail(function(data) {
-    console.log(data);
+    // console.log(data);
   });
     $('#KaishaName').html(kaisha_name);
 });
@@ -575,6 +577,9 @@ require([
     form_clear();
     // 初期値設定
     func_default_value_setting(default_value_formDiv, $("#formDiv"));
+    each_switch_kaisha_id_setting(switch_naiyo_kaisha_id_list, function(setting) {
+      func_default_value_setting(setting["default_value"], $("#formDiv"));
+    });
     change_display(2);
   });
 
@@ -620,26 +625,6 @@ require([
     });
   });
 
-  //投稿区分の切り替え
-  $('input[name="attachment"]:radio').change(function() {
-    var type = $(this).val();
-    if(type == "image"){
-      $('#upload_images').css('display', 'block');
-      $('#upload_movie').css('display', 'none');
-      $('#upload_file').css('display', 'none');
-    } 
-    else if (type == "movie"){
-      $('#upload_images').css('display', 'none');
-      $('#upload_movie').css('display', 'block');
-      $('#upload_file').css('display', 'none');
-    }
-    else {
-      $('#upload_images').css('display', 'none');
-      $('#upload_movie').css('display', 'none');
-      $('#upload_file').css('display', 'block');
-    }
-  });
-
   //送信ボタンクリック
   $('#sendbtn').click(function() {
     var kaishaid = $('#kaishaid').val();
@@ -667,64 +652,6 @@ require([
     var attachment = $('input[name="attachment"]:checked').val();
 
     var size = 0; // 合計サイズ
-    //アタッチメントの選択チェック
-    // 写真の場合
-    if (attachment == "image"){
-      // 写真ファイルサイズチェック
-      $("#image_table").find(".row").each(function(idx, tr) {
-        var $elem = $(tr).find("input.id");
-        if ($elem.length > 0 && $elem.val().length > 0){
-          size += parseInt($(tr).find("input.size").val());
-        }
-      });
-      if (size == 0){
-        alert("写真が選択されていません");
-        return ;
-      }
-    }
-    // 動画の場合
-    else if (attachment == "movie"){
-      // 動画ファイルサイズチェック
-      $("#movie_table").find(".row").each(function(idx, tr) {
-        var $elem = $(tr).find("input.id");
-        if ($elem.length > 0 && $elem.val().length > 0){
-          size += parseInt($(tr).find("input.size").val());
-        }
-      });
-      if (size == 0){
-        alert("動画が選択されていません");
-        return ;
-      }
-    }
-    // その他の場合
-    else {
-      // 写真ファイルサイズチェック
-      $("#image_table").find(".row").each(function(idx, tr) {
-        var $elem = $(tr).find("input.id");
-        if ($elem.length > 0 && $elem.val().length > 0){
-          size += parseInt($(tr).find("input.size").val());
-        }
-      });
-      if (size > 0) {
-        attachment = "image";
-      }
-      else {
-        // 動画ファイルサイズチェック
-        $("#movie_table").find(".row").each(function(idx, tr) {
-          var $elem = $(tr).find("input.id");
-          if ($elem.length > 0 && $elem.val().length > 0){
-            size += parseInt($(tr).find("input.size").val());
-          }
-        });
-        if (size > 0){
-          attachment = "movie";
-        }
-      }
-    }
-    if (attachment == "file") {
-      alert("写真または動画が選択されていません");
-      return ;
-    }
     // その他ファイルサイズチェック
     $("#file_table").find(".row").each(function(idx, tr) {
       var $elem = $(tr).find("input.id");
@@ -754,7 +681,7 @@ require([
       }
     });
     if (!checked) {
-      alert("取得ファイル形式が指定されていません");
+      alert("希望成果品が指定されていません");
       return;
     }
     
@@ -840,7 +767,7 @@ require([
       }
     });
     if (!checked) {
-      alert("取得ファイル形式が指定されていません");
+      alert("希望成果品が指定されていません");
       return;
     }
 
@@ -1002,104 +929,29 @@ require([
     return ngCharaFlg;
   }
 
-  //写真選択
-  $('#imagebtn').click(function() {
-    $('#images-select').click();
-  });
-
-  // 写真選択イベント
-  $('#images-select').change(function() {
-    if(user_setting.toko == "1" && !isMobile){ // ユーザー設定がExifの時かつPC端末の場合
-      getPhotoExif(this.files);
-    }
-    upload_files(this.files, "#image_table", "#image-select", "#images_label", "写真", {
-      delete_button_click: function() {
-        // テーブルの行が０になった場合地図移動を許可する
-        if($("#image_table").find(".row").length == 1){
-          isMovedMap = false;
-        }
-      }
-    });
-  });
-
-  /**
-   * 選択した写真の位置情報を取得して地図を移動させるメソッド
-   * @param {FileObject[]} files
-   * @returns 
-   */
-  function getPhotoExif(files){
-    if(isMovedMap == true){
-      if(confirm("選択した画像から位置情報が検出されました。地図を移動させますか？") == false){
-        return;
-      }
-    }
-    
-    for(var i = 0; i < files.length; i++){
-      $.fileExif(files[i],function(exif) {
-        if(exif.GPSLatitude && exif.GPSLongitude){
-          photoLatLng.lat = exif.GPSLatitude[0]  + (exif.GPSLatitude[1] / 60)  + (exif.GPSLatitude[2] / 3600);
-          photoLatLng.lng = exif.GPSLongitude[0] + (exif.GPSLongitude[1] / 60) + (exif.GPSLongitude[2] / 3600);
-
-          //緯度経度が取得できた場合のみ位置を移動
-          if (isNaN(photoLatLng.lat) == false && isNaN(photoLatLng.lng) == false) {
-            // 地図を画像の位置に移動
-            view.goTo({
-              center: [photoLatLng.lng,photoLatLng.lat],
-              zoom: 17
-            });
-            graphic_rendar(photoLatLng.lat, photoLatLng.lng);
-            isMovedMap = true;
-          }
-        }
-      });
-    }
-  }
-  // 写真全削除ボタンクリックイベント
-  $("#image_del_all_btn").click(function(){
-    isMovedMap = false;
-    delete_all_image_row();
-  });
-  /**
-   * 写真全削除
-   * @returns 
-   */
-  function delete_all_image_row() {
-    $("#image_table").children("div").each(function(idx, elem) {
-      if (idx != 0) $(elem).remove();
-    });
-    $("#images_label").html("");
-  }
-  
-  //動画選択
-  $('#moviebtn1').click(function() {
-    $('#movie_select').click();
-  });
-  $('#movie_select').change(function() {
-    upload_files(this.files, "#movie_table", "#movie_select", "#movie_label", "動画");
-  });
-  /**
-   * 動画全削除ボタンクリック
-   */
-  $("#movie_del_all_btn").click(function() {
-    delete_all_movie_row();
-  });
-  /**
-   * 動画全削除
-   */
-  function delete_all_movie_row() {
-    $("#movie_table").children("div").each(function(idx, elem) {
-      if (idx != 0) $(elem).remove();
-    });
-    $("#movie_label").html("");
-  }
-
   // その他選択
   $("#filebtn").click(function(){
     $("#file_select").click();
   });
   // その他選択イベント
   $("#file_select").change(function() {
-    upload_files(this.files, "#file_table", "#file_select", "#file_label", "ファイル");
+    // ファイル選択
+    upload_files(this.files, "#file_table", "#file_select", "#file_label", "ファイル", {
+      // Exif情報処理
+      hasExif: function(exifs) {
+        if(user_setting.toko == "1" && !isMobile && exifs.length > 0){ // ユーザー設定がExifの時かつPC端末の場合
+          if(confirm("選択した画像から位置情報が検出されました。地図を移動させますか？") != false){
+            // 地図を画像の位置に移動
+            view.goTo({
+              center: [exifs[0].lng, exifs[0].lat],
+              zoom: 17
+            });
+            graphic_rendar(exifs[0].lat, exifs[0].lng);
+            isMovedMap = true;
+          }
+        }
+      }
+    });
   });
   // その他全削除ボタン
   $("#file_del_all_btn").click(function() {
@@ -1230,11 +1082,14 @@ require([
       // ボタン等選択不可に
       form_disabled(true);
     }
+
+    // Exif情報の取得
+    var exifs = new Array();
     for(var idx = 0;idx<files.length;idx++){
       waiting.status = true;
       (function(files, i) {
         return new $.Deferred(function(defer) {
-          console.log("files[" + i + "]");
+          // console.log("files[" + i + "]");
           // キャンセルフラグ
           var cancel = false;
           var file = files[i];
@@ -1261,7 +1116,7 @@ require([
           $tr.find("div.status").text("読込中");
           // 削除ボタンクリック
           $tr.find(".btn-del").click(function() {
-            console.log("files[" + i + "].btn-del.click()");
+            // console.log("files[" + i + "].btn-del.click()");
             $tr.remove();
             var select_count = 0;
             $elem.children("div").each(function(idx, tr) {
@@ -1311,7 +1166,7 @@ require([
             // ファイル読み込み開始
             read_file(file).then(function(args) {
               // ファイル読み込み完了
-              console.log("files[" + i + "](read_file.then())");
+              // console.log("files[" + i + "](read_file.then())");
               // 読み込みBlobデータ保持
               var blob = args.event.target.result;
               $tr.find(".status").html("<span style='color:blue;'>登録中</span>");
@@ -1335,7 +1190,7 @@ require([
                 var registed_data = args;
                 // レスポンス処理
                 if (!cancel && registed_data != undefined && (registed_data.success || false)){
-                  console.log("files[" + i + "](regist_upload_file.then())");
+                  // console.log("files[" + i + "](regist_upload_file.then())");
                   $tr.find(".status").html("<span style='color:blue;'>登録完了</span>");
                   $tr.find(".status").html("<span style='color:green;'>アップロード中(0%)</span><meter min='0' max='100' value='0'></meter>");
                   // Blobデータを指定サイズで分割
@@ -1367,8 +1222,8 @@ require([
                       // 処理中に削除ボタンが押されていたら処理をキャンセルする
                       args.cancel = cancel;
                       if (!args.cancel && args.data != undefined && (args.data.success || false)) {
-                        console.log("files[" + i + "](upload_blobs.uploading())");
-                        console.log(args);
+                        // console.log("files[" + i + "](upload_blobs.uploading())");
+                        // console.log(args);
                         // アップロード状況を更新
                         $tr.find(".status").html("<span style='color:green;'>アップロード中(" + Math.ceil(((args.index + 1) / args.blobs.length) * 100) + "%)</span><meter min='0' max='100' value='" + Math.ceil(((args.index + 1) / args.blobs.length) * 100) + "'></meter>");
                       }
@@ -1378,7 +1233,7 @@ require([
                     }
                   }).then(function(args) {
                     // 分割アップロード完了
-                    console.log("files[" + i + "](upload_blobs.then())");
+                    // console.log("files[" + i + "](upload_blobs.then())");
                     $tr.find(".status").html("<span style='color:blue;'>適用中</span>");
                     var url = push_feature_url + "/uploads/" + registed_data.item.itemID + "/commit";
                     var form = new FormData();
@@ -1397,12 +1252,34 @@ require([
                     request_ajax(param).then(function(args) {
                       // レスポンス処理
                       if (!cancel && args != undefined && (args.success || false)) {
-                        console.log("files[" + i + "](commit_upload_file.then())");
+                        // console.log("files[" + i + "](commit_upload_file.then())");
                         $tr.find(".status").html("<span style='font-weight:bold;color:blue;'>追加済み</span>");
                         $tr.find("input.id").val(registed_data.item.itemID);
                         $tr.find("input.name").val(file.name);
                         $tr.find("input.size").val(file.size);
-                        defer.resolve();
+                        if (callbacks.hasExif != undefined){
+                          $.fileExif(file, function(exif) {
+                            if (!cancel){
+                              if (typeof(exif) != "undefined" && exif != false){
+                                var obj = {
+                                  lat: exif.GPSLatitude[0]  + (exif.GPSLatitude[1] / 60)  + (exif.GPSLatitude[2] / 3600),
+                                  lng: exif.GPSLongitude[0] + (exif.GPSLongitude[1] / 60) + (exif.GPSLongitude[2] / 3600)
+                                }
+                                if (isNaN(obj.lat) == false && isNaN(obj.lng) == false){
+                                  exifs.push(obj);
+                                }
+                              }
+                              defer.resolve();
+                            }
+                            else {
+                              defer.reject();
+                            }
+                          });
+                        }
+                        else {
+                          // 正常
+                          defer.resolve();
+                        }
                       }
                       else {
                         // キャンセル/エラー時
@@ -1444,11 +1321,11 @@ require([
       })(files, idx).then(function() {
         // 処理正常終了
         waiting.status = false;
-        console.log("files[" + idx + "](.then())");
+        // console.log("files[" + idx + "](.then())");
       }).fail(function() {
         // 処理失敗終了
         waiting.status = false;
-        console.log("files[" + idx + "](.fail())");
+        // console.log("files[" + idx + "](.fail())");
       });
       // 非同期処理待ち
       while(waiting.status) await sleep(0.5);
@@ -1472,6 +1349,11 @@ require([
     }
     // input[type='file']の値をクリア
     $(selector_select).val("");
+
+    // Exif情報が存在した場合
+    if (callbacks.hasExif != undefined && exifs.length > 0){
+      callbacks.hasExif(exifs);
+    }
   }
   /**
    * ファイルの読み込み
@@ -1584,6 +1466,12 @@ require([
     return defer.promise();
   }
 
+  /**
+   * 登録処理
+   * @param {Double} lat 
+   * @param {Double} long 
+   * @param {Int} flg 
+   */
   function add_feature(lat, long, flg) {
     form_disabled(true);
 
@@ -1602,7 +1490,8 @@ require([
       "Jusho": $('#jusho').val(),
       "kaninfo": $('#kaninfo').val(),
       "Bikou": $('#bikou').val(),
-      "GenbaKubun": $("#genbakubun").val(),
+      // "GenbaKubun": $("#genbakubun").val(),
+      "GenbaKubun": $("#genbakubun input[type='radio']:checked").val(),
       "ZahyoJoho": $("#zahyojoho").val(),
       "Email": email,
       "Status": 0
@@ -1639,10 +1528,10 @@ require([
       dataType: 'json',
       async: false
     }).done(function(data) {
-      console.log(data);
+      // console.log(data);
       append_attachments(data.addResults[0].objectId, flg);
     }).fail(function(data) {
-      console.log(data);
+      // console.log(data);
     });
   }
 
@@ -1655,31 +1544,6 @@ require([
 
     var uploads = [];
 
-    //画像ファイル
-    if (flg == "image") {
-      $("#image_table").children(".row").each(function(idx, row) {
-        var $row = $(row);
-        if ($row.find("input.id").length > 0 && $row.find("input.id").val().length > 0){
-          uploads.push({
-            id: $row.find("input.id").val(),
-            status: 0
-          });
-        }
-      });
-    } 
-    //動画ファイル
-    else {
-      $("#movie_table").children(".row").each(function(idx, row) {
-        var $row = $(row);
-        if ($row.find("input.id").length > 0 && $row.find("input.id").val().length > 0){
-          uploads.push({
-            id: $row.find("input.id").val(),
-            status: 0
-          });
-        }
-      });
-    }
-
     // その他ファイル
     $("#file_table").children(".row").each(function(idx, row) {
       var $row = $(row);
@@ -1691,8 +1555,16 @@ require([
       }
     });
 
-    // 投稿ファイル登録
-    append_attachents(oid, uploads)
+    if (uploads.length > 0){
+      // 投稿ファイル登録
+      append_attachents(oid, uploads)
+    }
+    else {
+      //投稿後画面切り替え
+      form_disabled(false);
+      change_display(3);
+      $("html,body").animate({scrollTop:0},"300");
+    }
   }
 
   /**
@@ -1727,7 +1599,7 @@ require([
           dataType: 'json',
           async: true
         }).done(function(data) {
-          console.log(data);
+          // console.log(data);
 
           uploads[count].status = 1;
 
@@ -1740,7 +1612,7 @@ require([
             callback();
           }
         }).fail(function(data) {
-          console.log(data);
+          // console.log(data);
         });
 
         if (count >= uploads.length - 1) {
@@ -1840,15 +1712,14 @@ require([
     $('#naiyo').val("");
     $('#bikou').val("");
     $('#kaninfo').val("");
-    $("#genbakubun").val("");
+    // $("#genbakubun").val("");
+    $("#genbakubun input[type='radio']:eq(0)").prop("checked", true);
     $("#zahyojoho").val("");
     
     view.graphics.removeAll();
 
     $('#gridDiv').html("場所を指定してください");
 
-    delete_all_image_row();
-    delete_all_movie_row();
     delete_all_file_row();
 
     // ユーザー設定を読み込む
@@ -1880,7 +1751,8 @@ require([
       "Bikou": $('#viewbikou').val(),
       "kaninfo": $('#viewkaninfo').val(),
       "zahyojoho": $("#viewzahyojoho").val(),
-      "genbakubun": $("#viewgenbakubun").val()
+      // "genbakubun": $("#viewgenbakubun").val()
+      "genbakubun": $("#viewgenbakubun input[type='radio']:checked").val()
     };
 
     // 要否ファイルチェックボックスのチェック状態からパラメータ作成
@@ -1915,11 +1787,11 @@ require([
       dataType: 'json',
       async: false
     }).done(function(data) {
-      console.log(data);
+      // console.log(data);
       //戻る
       $('.returnmenu').click();
     }).fail(function(data) {
-      console.log(data);
+      // console.log(data);
     });
   }
 
@@ -1933,7 +1805,7 @@ require([
   }
 
   /**
-   * 
+   * 部品(ツール)の有効化
    * @param {String} type 
    */
   function setActiveWidget(type) {
@@ -2080,7 +1952,7 @@ require([
           changePassword(newPwd);
         }
       }).fail(function(xhr) {
-        console.log(xhr);
+        // console.log(xhr);
         $('#warnDiv').html('<ul><li>現在のパスワードの確認に失敗しました。</li></ul>');
       });
     }
@@ -2118,12 +1990,12 @@ require([
         document.location.reload()
       }
       else{
-        console.log(data)
+        // console.log(data)
         $('#warnDiv').html('<ul><li>パスワードの変更に失敗しました。</li></ul>');
       }
     }).fail(function(xhr) {
       $('#warnDiv').html('<ul><li>パスワードの変更に失敗しました。</li></ul>');
-      console.log(xhr);
+      // console.log(xhr);
     });
   }
 });
@@ -2173,6 +2045,10 @@ var historyTable = {
         </tr>`;
     // 文言置き換え
     func_change_content_replace(change_content_mainDiv, $("#tableHead"));
+    // 特定会社ID時設定置き換え
+    each_switch_kaisha_id_setting(switch_naiyo_kaisha_id_list, function(setting) {
+      func_change_content_replace(setting["change_content"], $("#tableHead"));
+    });
   },
 
   changePage:function(page) {
@@ -2263,10 +2139,14 @@ var historyTable = {
           
           // エレメントの属性値の書き換え
           func_change_attr_replace(change_content_mainDiv, tableBody.find("tr:last").find("td"), "data-label");
+          // 特定会社ID時設定置き換え
+          each_switch_kaisha_id_setting(switch_naiyo_kaisha_id_list, function(setting) {
+            func_change_attr_replace(setting["change_content"], tableBody.find("tr:last").find("td"), "data-label");
+          });
         }
       }
     }).fail(function(data) {
-      console.log(data);
+      // console.log(data);
     });
 
   },
@@ -2316,7 +2196,7 @@ var historyTable = {
       async: true,
       context: this,
     }).done(function(data) {
-      console.log(data);
+      // console.log(data);
       var features = data.features;
 
       // 存在・削除確認
@@ -2355,8 +2235,13 @@ var historyTable = {
       $('#viewbikou').val(features[0].attributes["Bikou"]);
       $('#viewkaninfo').val(features[0].attributes["kaninfo"]);
       $("#viewzahyojoho").val(features[0].attributes["ZahyoJoho"]);
-      $("#viewgenbakubun").val(features[0].attributes["GenbaKubun"]);
-
+      // $("#viewgenbakubun").val(features[0].attributes["GenbaKubun"]);
+      $("#viewgenbakubun input").each(function() {
+        if (this.value == features[0].attributes["GenbaKubun"]){
+          this.checked = true;
+          return false;
+        }
+      });
       // 要否ファイルチェックボックスチェック状態の設定
       var index = -1;
       $.each(request_filetype_setting, function(idx, item) {
@@ -2384,7 +2269,7 @@ var historyTable = {
       
       change_display(4);
     }).fail(function(data) {
-      console.log(data);
+      // console.log(data);
     });
   },
 
@@ -2412,7 +2297,7 @@ var historyTable = {
       async: true,
       context: this,
     }).done(function(data) {
-      console.log(data);
+      // console.log(data);
       
       if (data.attachmentGroups.length == 0) {
         return;
@@ -2469,7 +2354,7 @@ var historyTable = {
       $('#attachmentlistDiv').html(att_html);
       
     }).fail(function(data) {
-      console.log(data);
+      // console.log(data);
     });
   }, 
 
@@ -2491,9 +2376,9 @@ var historyTable = {
       async: true
     }).done(function(data) {
       historyTable.viewattachment(oid);
-      console.log(data);
+      // console.log(data);
     }).fail(function(data) {
-      console.log(data);
+      // console.log(data);
     });
   },
 
@@ -2518,11 +2403,11 @@ var historyTable = {
       async: true,
       context: this,
     }).done(function(data) {
-      console.log(data);
+      // console.log(data);
       this.refreshRow();
       refresh_mapview(historyview);
     }).fail(function(data) {
-      console.log(data);
+      // console.log(data);
     });
   },
 
@@ -2559,7 +2444,7 @@ var historyTable = {
       
       if (this.pages == 0) this.pages = 1;
     }).fail(function(data) {
-      console.log(data);
+      // console.log(data);
     });
   }
 };
@@ -2709,7 +2594,10 @@ function change_view_enable(flg) {
     $('#viewkaninfo').prop('disabled', false);
     $('#viewbikou').prop('disabled', false);
     $('#viewzahyojoho').prop('disabled', false);
-    $("#viewgenbakubun").prop("disabled", false);
+    // $("#viewgenbakubun").prop("disabled", false);
+    $("#viewgenbakubun").find("input").each(function() {
+      this.disabled = false;
+    });
 
     // 要否ファイルチェックボックスを有効状態に設定
     $("#viewformDiv .request-filetype input[type='checkbox']").each(function(idx, elem) {
@@ -2732,7 +2620,10 @@ function change_view_enable(flg) {
     $('#viewkaninfo').prop('disabled', true);
     $('#viewbikou').prop('disabled', true);
     $('#viewzahyojoho').prop('disabled', true);
-    $("#viewgenbakubun").prop("disabled", true);
+    // $("#viewgenbakubun").prop("disabled", true);
+    $("#viewgenbakubun").find("input").each(function() {
+      this.disabled = true;
+    });
 
     // 要否ファイルチェックボックスを無効状態に設定
     $("#viewformDiv .request-filetype input[type='checkbox']").each(function(idx, elem) {
@@ -2816,6 +2707,10 @@ function set_config(config) {
   // セレクトタグの選択項目
   select_option_list = config.select_option_list;
 
+  // 特定会社ID時の内容変更
+  switch_naiyo_kaisha_id_list = config.switch_naiyo_kaisha_id_list;
+
+  // セレクトタグ項目生成
   create_list_order_select(list_order_select_item, $("#select_order"));
   $("#select_order").change(function() {
     historyTable.changePage(0);
@@ -2831,9 +2726,14 @@ function set_config(config) {
   create_file_extension_list(upload_extension_white_list, $("#file_extension_list"));
 
   // 投稿フォームのセレクトタグの設定
-  create_select_option(select_option_list.GenbaKubun, $("#genbakubun"));
+  // create_select_option(select_option_list.GenbaKubun, $("#genbakubun"));
+  create_radio_list(select_option_list.GenbaKubun, $("#genbakubun"), "radiomenu");
   // 閲覧情報のセレクトタグの設定
-  create_select_option(select_option_list.GenbaKubun, $("#viewgenbakubun"));
+  // create_select_option(select_option_list.GenbaKubun, $("#viewgenbakubun"));
+  create_radio_list(select_option_list.GenbaKubun, $("#viewgenbakubun"), "radiomenu");
+
+  // 特定会社ID時の内容変更
+  replace_switch_kaisha_id(switch_naiyo_kaisha_id_list);
 }
 
 /**
@@ -2844,6 +2744,19 @@ function set_config(config) {
 function create_select_option(list, $select) {
   for(var i = 0;i<list.length;i++) {
     $("<option value='" + list[i].value + "'></option>").text(list[i].text).appendTo($select);
+  }
+}
+/**
+ * ラジオ選択リストの作成
+ * @param {Object[]} list 
+ * @param {jQueryElement} $elem 
+ * @param {String} label_class 
+ */
+function create_radio_list(list, $elem, label_class){
+  for(var i = 0;i<list.length;i++){
+    var id = ($elem.get(0).id + "_" + i);
+    $("<input type='radio' name='" + $elem.get(0).id + "' id='" + id + "' />").val(list[i].value).appendTo($elem);
+    $("<label for='" + id + "'></label>").addClass(label_class).text(list[i].text).appendTo($elem);
   }
 }
 /**
@@ -3020,6 +2933,46 @@ function replace_download_link_button($html, parentInfo, attachment, downloaded_
       window.open(href, "_blank");
       return false;
     });
+  }
+}
+
+/**
+ * 特定会社ID時の内容変更
+ * @param {object[]} settings 
+ */
+function replace_switch_kaisha_id(settings){
+  for(var i = 0;i<settings.length;i++){
+    var setting = settings[i];
+    if ($.inArray($("#kaishaid").val(), setting["ids"]) != -1){
+      for (var j = 0;j<(setting["textarea_ids"] || []).length;j++){
+        var $textarea = $("#" + setting["textarea_ids"][j]);
+        if ($textarea.length > 0){
+          var $parent = $textarea.parent();
+          $textarea.remove();
+          $("<textarea id='" + setting["textarea_ids"][j] + "'></textarea>").appendTo($parent);
+        }
+      }
+      // 文言の置換
+      func_change_content_replace(setting["change_content"], $("#mainDiv"));
+      func_change_content_replace(setting["change_content"], $("#user_conf"));
+      func_change_content_replace(setting["change_content"], $("#changeDiv"));
+      func_change_content_replace(setting["change_content"], $("#formDiv"));
+      func_change_content_replace(setting["change_content"], $("#viewformDiv"));
+    }
+  }
+}
+/**
+ * 該当の会社IDを持つ設定が存在した場合にその設定を引き数に渡された関数を実行する
+ * @param {object[]} settings 
+ * @param {function} func 
+ */
+function each_switch_kaisha_id_setting(settings, func){
+  func = func || function() {}
+  for(var i = 0;i<settings.length;i++){
+    var setting = settings[i];
+    if ($.inArray($("#kaishaid").val(), setting["ids"]) != -1){
+      func(setting);
+    }
   }
 }
 function getUserLicenseType(user, token) {

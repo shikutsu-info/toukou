@@ -1,19 +1,19 @@
 {
-"webappId" : "flcUBGNhsFIOGDte",
-"get_kaisha_url": "https://services-ap1.arcgis.com/IGJZjUgPhEbs94bW/arcgis/rest/services/SHIKUTSUKUN_KAISHA_VIEW_demo_v01/FeatureServer/0",
-"layer_id": "0",
-"history_webmap_id": "accf3eff22254ed69e23afeb094a4881",
-"basemap_id": "accf3eff22254ed69e23afeb094a4881",
-"basescene_id": "3e154449c905482688184e517e02fa2e",
-"creator_field": "created_user",
-"create_date_field": "created_date",
-"init_latitude": 35.682,
-"init_longitude": 139.75, 
-"init_zoom": 10,
-"user_setting":{
+  "webappId": "flcUBGNhsFIOGDte",
+  "get_kaisha_url": "https://services-ap1.arcgis.com/IGJZjUgPhEbs94bW/arcgis/rest/services/SHIKUTSUKUN_KAISHA_VIEW_demo_v01/FeatureServer/0",
+  "layer_id": "0",
+  "history_webmap_id": "accf3eff22254ed69e23afeb094a4881",
+  "basemap_id": "accf3eff22254ed69e23afeb094a4881",
+  "basescene_id": "3e154449c905482688184e517e02fa2e",
+  "creator_field": "created_user",
+  "create_date_field": "created_date",
+  "init_latitude": 35.682,
+  "init_longitude": 139.75,
+  "init_zoom": 10,
+  "user_setting": {
     "toko": "1"
-},
-"ngCharacters": [
+  },
+  "ngCharacters": [
     "\\",
     "/",
     ":",
@@ -23,105 +23,112 @@
     "<",
     ">",
     "|"
-],
-"change_content_mainDiv":{
-    "タイトル":"タイトル(試掘名)",
-    "投稿内容":"顧客会社名／投稿者名",
-    "タイトル　":"タイトル(試掘名)　",
-    "投稿日時　":"投稿日時　",
-    "投稿内容　":"顧客会社名/投稿者名　",
-    "住所　　　":"住所　　　",
-    "備考　　　":"備考　　　",
-    "確認　　　":"確認　　　"
-},
-"change_content_user_conf":{
-    "断面図(DWG)":"横断図(DWG)"
-},
-"change_content_changeDiv":{
-
-},
-"change_content_formDiv":{
-    "タイトル":"タイトル(試掘名)",
-    "投稿内容":"顧客会社名/投稿者名",
-    "管情報":"管情報※入力内容は図面作成に反映されます",
-    "断面図(DWG)":"横断図(DWG)"
-},
-"change_content_viewformDiv":{
-    "タイトル":"タイトル(試掘名)",
-    "投稿内容":"顧客会社名/投稿者名",
-    "断面図(DWG)":"横断図(DWG)",
-    "添付ファイルの追加":"添付ファイルの追加(100MB以内)"
-},
-"default_value_formDiv":{
-    "kaninfo":"管①　管種：　　管径Φ：\r\n管②　管種：　　管径Φ：\r\n管③　管種：　　管径Φ：\r\n管④　管種：　　管径Φ：\r\n管⑤　管種：　　管径Φ：",
+  ],
+  "change_content_mainDiv": {
+    "タイトル": "タイトル(試掘名)",
+    "投稿内容": "投稿者名",
+    "タイトル　": "タイトル(試掘名)　",
+    "投稿日時　": "投稿日時　",
+    "投稿内容　": "投稿者名　",
+    "住所　　　": "住所　　　",
+    "備考　　　": "備考　　　",
+    "確認　　　": "確認　　　"
+  },
+  "change_content_user_conf": {},
+  "change_content_changeDiv": {},
+  "change_content_formDiv": {
+    "タイトル": "タイトル(試掘名)",
+    "投稿内容": "投稿者名",
+    "管情報": "管情報※入力内容は図面作成に反映されます"
+  },
+  "change_content_viewformDiv": {
+    "タイトル": "タイトル(試掘名)",
+    "投稿内容": "投稿者名"
+  },
+  "default_value_formDiv": {
+    "kaninfo": "管①　管種：　　管径Φ：\r\n管②　管種：　　管径Φ：\r\n管③　管種：　　管径Φ：\r\n管④　管種：　　管径Φ：\r\n管⑤　管種：　　管径Φ：",
     "zahyojoho": "座標①　　x：　　　y：　　　z：\r\n座標②　　x：　　　y：　　　z：\r\n座標③　　x：　　　y：　　　z："
-},
-"blob_chunk_size": 3145728,
-"upload_limit_file_size": 104857600,
-"upload_limit_total_file_size": 1073741824,
-"request_filetype_setting":[
+  },
+  "blob_chunk_size": 3145728,
+  "upload_limit_file_size": 104857600,
+  "upload_limit_total_file_size": 1073741824,
+  "request_filetype_setting": [
     {
-        "visible": true,
-        "keyword": ["RFT01", "PDF"],
-        "downloaded_key": "RFT01_DL",
-        "link_text":"PDFダウンロード",
-        "field_name": "Request_filetype01",
-        "checkbox_label": "3Dデータ(*.pdf)"
+      "visible": true,
+      "keyword": [
+        "RFT01"
+      ],
+      "downloaded_key": "RFT01_DL",
+      "link_text": "PDFダウンロード",
+      "field_name": "Request_filetype01",
+      "checkbox_label": "3Dデータ(.pdf)"
     },
     {
-        "visible": true,
-        "keyword": ["RFT02", "LAS"],
-        "downloaded_key": "RFT02_DL",
-        "link_text":"点群データ座標なしダウンロード",
-        "field_name": "Request_filetype02",
-        "checkbox_label": "点群データ(*_las.zip)/座標なし"
+      "visible": true,
+      "keyword": [
+        "RFT02"
+      ],
+      "downloaded_key": "RFT02_DL",
+      "link_text": "点群データ座標なしダウンロード",
+      "field_name": "Request_filetype02",
+      "checkbox_label": "点群データ(.las)/座標なし"
     },
     {
-        "visible": true,
-        "keyword": ["RFT03"],
-        "downloaded_key": "RFT03_DL",
-        "link_text":"点群データ座標付与ダウンロード",
-        "field_name": "Request_filetype03",
-        "checkbox_label": "点群データ(*_las_pos.zip)/座標付与"
+      "visible": true,
+      "keyword": [
+        "RFT03"
+      ],
+      "downloaded_key": "RFT03_DL",
+      "link_text": "点群データ座標付与ダウンロード",
+      "field_name": "Request_filetype03",
+      "checkbox_label": "点群データ(.las)/座標付与"
     },
     {
-        "visible": true,
-        "keyword": ["RFT04"],
-        "downloaded_key": "RFT04_DL",
-        "link_text":"平面図ダウンロード",
-        "field_name": "Request_filetype04",
-        "checkbox_label": "平面図(*_h_dxf.zip)"
+      "visible": true,
+      "keyword": [
+        "RFT04"
+      ],
+      "downloaded_key": "RFT04_DL",
+      "link_text": "平面図ダウンロード",
+      "field_name": "Request_filetype04",
+      "checkbox_label": "平面図(.dxf)"
     },
     {
-        "visible": true,
-        "keyword": ["RFT05"],
-        "downloaded_key": "RFT05_DL",
-        "link_text":"断面図ダウンロード",
-        "field_name": "Request_filetype05",
-        "checkbox_label": "断面図(*_d_dxf.zip)"
+      "visible": true,
+      "keyword": [
+        "RFT05"
+      ],
+      "downloaded_key": "RFT05_DL",
+      "link_text": "断面図ダウンロード",
+      "field_name": "Request_filetype05",
+      "checkbox_label": "断面図(.dxf)"
     },
     {
-        "visible": true,
-        "keyword": ["RFT06"],
-        "downloaded_key": "RFT06_DL",
-        "link_text":"CAD+LAS統合ダウンロード",
-        "field_name": "Request_filetype06",
-        "checkbox_label": "CAD+LAS統合(*.dwg)"
+      "visible": true,
+      "keyword": [
+        "RFT06"
+      ],
+      "downloaded_key": "RFT06_DL",
+      "link_text": "CAD+LAS統合ダウンロード",
+      "field_name": "Request_filetype06",
+      "checkbox_label": "CAD+LAS統合(.dwg)"
     },
     {
-        "visible": true,
-        "keyword": ["RFT07"],
-        "downloaded_key": "RFT07_DL",
-        "link_text":"ARダウンロード",
-        "field_name": "Request_filetype07",
-        "checkbox_label": "AR(*.xlsx)"
+      "visible": true,
+      "keyword": [
+        "RFT07"
+      ],
+      "downloaded_key": "RFT07_DL",
+      "link_text": "ARダウンロード",
+      "field_name": "Request_filetype07",
+      "checkbox_label": "AR(.png)"
     }
-],
-"upload_file_type_white_list":[
+  ],
+  "upload_file_type_white_list": [
     "movie/*",
     "image/*"
-],
-"upload_extension_white_list":[
+  ],
+  "upload_extension_white_list": [
     "*.7z",
     "*.aif",
     "*.avi",
@@ -188,31 +195,98 @@
     "*.xlt",
     "*.xml",
     "*.zip"
-],
-"upload_extension_black_list":[
-    
-],
-"list_order_select_item": [
-    {"value": "", "html": "未設定"},
-    {"value": "OBJECTID desc", "html": "試掘No(降順)"},
-    {"value": "Title", "html": "投稿タイトル"},
-    {"value": "created_date", "html": "作成日(昇順)"},
-    {"value": "created_date desc", "html": "作成日(降順)"},
-    {"value": "created_user", "html": "作成者(昇順)"},
-    {"value": "created_user desc", "html": "作成者(降順)"}
-],
-"select_option_list": {
+  ],
+  "upload_extension_black_list": [],
+  "list_order_select_item": [
+    {
+      "value": "",
+      "html": "未設定"
+    },
+    {
+      "value": "Title",
+      "html": "タイトル(試掘名)"
+    },
+    {
+      "value": "created_date",
+      "html": "投稿日時(昇順)"
+    },
+    {
+      "value": "created_date desc",
+      "html": "投稿日時(降順)"
+    },
+    {
+      "value": "created_user",
+      "html": "顧客会社名／投稿者名(昇順)"
+    },
+    {
+      "value": "created_user desc",
+      "html": "顧客会社名／投稿者名(降順)"
+    }
+  ],
+  "select_option_list": {
     "GenbaKubun": [
-        {"value": "", "text": "選択されていません"},
-        {"value": "車道部", "text": "車道部"},
-        {"value": "歩道部", "text": "歩道部"},
-        {"value": "歩車道部", "text": "歩車道部"},
-        {"value": "敷地内", "text": "敷地内"}
+      {
+        "value": "",
+        "text": "選択されていません"
+      },
+      {
+        "value": "車道部",
+        "text": "車道部"
+      },
+      {
+        "value": "歩道部",
+        "text": "歩道部"
+      },
+      {
+        "value": "歩車道部",
+        "text": "歩車道部"
+      },
+      {
+        "value": "敷地内",
+        "text": "敷地内"
+      }
     ]
-},
-"_dev_":{
+  },
+  "switch_naiyo_kaisha_id_list": [
+    {
+      "ids": [
+        "S00000_02"
+      ],
+      "change_content": {
+        "投稿者名　": "顧客会社名／投稿者名／工事番号　",
+        "投稿者名": "顧客会社名／投稿者名／工事番号"
+      },
+      "default_value": {
+        "naiyo": "顧客会社名：\n投稿者名：\n工事番号："
+      },
+      "textarea_ids": [
+        "naiyo",
+        "viewnaiyo"
+      ]
+    }
+  ],
+  "_dev_": {
     "total_uploadsize": "/* サイズ1GB = 1073741824 (1024*1024*1024)B */",
     "uploadsize": "104857600 100MB = (1024 * 1024 * 100)B",
-    "blob_chunk_size": "3145728 3MB = (3 * 1024 * 1024)B"
-}
+    "blob_chunk_size": "3145728 3MB = (3 * 1024 * 1024)B",
+    "switch_naiyo_kaisha_id_list": [
+      {
+        "ids": [
+          "入力状態・文言を変更するKaishaID_1",
+          "入力状態・文言を変更するKaishaID_2"
+        ],
+        "change_content": {
+          "投稿者名　": "顧客会社名／投稿者名／工事番号　",
+          "投稿者名": "顧客会社名／投稿者名／工事番号"
+        },
+        "default_value": {
+          "naiyo": "顧客会社名：\n投稿者名：\n工事番号："
+        },
+        "textarea_ids": [
+          "naiyo",
+          "viewnaiyo"
+        ]
+      }
+    ]
+  }
 }

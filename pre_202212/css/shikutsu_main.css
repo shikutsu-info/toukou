@@ -18,7 +18,8 @@ input[type="text"],textarea{
 h2 {
   margin: 10px;
 }
-#sign-in {
+#sign-in,
+#show_form {
   width: 60%;
   min-width: 150px;
   font-size: 24px;
@@ -168,9 +169,6 @@ input[type=checkbox]:checked + .requestFile::after {
 #mainDiv{
   display: none;
 }
-#show_form{
-  margin: 20px;
-}
 #change-password{
   margin: 20px;
 }
@@ -277,8 +275,7 @@ input[type=radio]:checked + .radiomenu::after {
 #image_uploading{
   visibility: hidden;
 }
-#upload_movie,
-#upload_file{
+#upload_movie {
   display: none;
 }
 .wid150{
@@ -839,10 +836,15 @@ button span {
   box-sizing: border-box;
 }
 #zahyojoho,
-#viewzahyojoho {
+#viewzahyojoho,
+textarea#naiyo,
+textarea#viewnaiyo {
   min-height: 80px;
 }
 
+#historyListDiv .tool-menu {
+  padding: 10px 0px 5px 5px;
+}
 @media screen and (min-width: 386px) {
   .row .size {
     width: 100px;
