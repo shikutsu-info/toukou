@@ -50,8 +50,8 @@
     "zahyojoho": "座標①　　x：　　　y：　　　z：\r\n座標②　　x：　　　y：　　　z：\r\n座標③　　x：　　　y：　　　z："
   },
   "blob_chunk_size": 3145728,
-  "upload_limit_file_size": 104857600,
-  "upload_limit_total_file_size": 1073741824,
+  "upload_limit_file_size": 1000000000,
+  "upload_limit_total_file_size": 100000000000,
   "request_filetype_setting": [
     {
       "visible": true,
