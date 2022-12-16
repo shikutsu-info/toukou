@@ -137,7 +137,6 @@
       <label class="sys-change-content">住所</label>
       <div class="white-space-wrap"><input id="jusho" type="text"/></div>
       <label class="sys-change-content">現場区分</label>
-      <!-- <div class="white-space-wrap"><select id="genbakubun"></select></div> -->
       <div class="white-space-wrap flex-box" id="genbakubun"></div>
       <label class="sys-change-content">管情報※入力内容は図面作成に反映されます</label>
       <div class="white-space-wrap"><textarea id="kaninfo"></textarea></div>
@@ -147,50 +146,7 @@
       <div class="white-space-wrap"><input id="bikou" type="text"/></div>
       <div class="white-space-wrap"><input id="email" type="text" class="hidden_email" hidden/></div>
       <div id="attachmentDiv">
-        <!-- <div class="white-space-wrap"><label class="sys-change-content">投稿区分</label><label for="trigger" class="open_btn esri-icon-question">撮影のヒント</label></div> -->
         <div><label class="sys-change-content">投稿ファイル選択※1GBまで</label><label for="popup_help2_trigger" class="open_btn esri-icon-question">許可されているファイル</label></div>
-        <!-- <input type="radio" name="attachment" id="image" value="image" checked>
-        <label for="image" class="radiomenu sys-change-content">写真</label>
-        <input type="radio" name="attachment" id="movie" value="movie">
-        <label for="movie" class="radiomenu sys-change-content">動画</label>
-        <input type="radio" name="attachment" id="file" value="file" >
-        <label for="file" class="radiomenu sys-change-content">その他</label>
-        <div id="upload_images" class="select_attachment">
-          <input id="images-select" type="file" accept="image/*" multiple/>
-          <button id="imagebtn"><img src="./src/img/camera.png" class="image-height"></img><span class="margin-left-5 sys-change-content">写真の選択</span></button>
-          <label id="images_label"></label>
-          <div id="image_table">
-            <div class="row flex-box">
-              <div class="no">No</div>
-              <div class="flex-box attrib">
-                <div class="name">ファイル名</div>
-                <div class="size">サイズ</div>
-                <div class="status">状況</div>
-              </div>
-              <div class="delete h-center">
-                <input class="file_delbtn" type="button" id="image_del_all_btn" value="全削除">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div id="upload_movie" class="select_attachment">
-          <input type="file" id="movie_select" type="file" accept="video/*" multiple hidden />
-          <button id="moviebtn1"><img src="./src/img/movie.drawio.png" class="image-height"/><span class="margin-left-5 sys-change-content">動画の選択</span></button>
-          <label id="movie_label"></label>
-          <div id="movie_table">
-            <div class="row flex-box">
-              <div class="no">No</div>
-              <div class="flex-box attrib">
-                <div class="name">ファイル名</div>
-                <div class="size">サイズ</div>
-                <div class="status">状況</div>
-              </div>
-              <div class="delete h-center">
-                <input class="file_delbtn" type="button" id="movie_del_all_btn" value="全削除">
-              </div>
-            </div>
-          </div>
-        </div> -->
         <div id="upload_file" class="select_attachment">
           <input id="file_select" type="file" multiple hidden/>
           <button id="filebtn"><span class="esri-icon-documentation"></span><span class="margin-left-5 sys-change-content">ファイルの選択</span></button>
@@ -247,7 +203,6 @@
         <label class="sys-change-content">住所</label>
         <div class="white-space-wrap"><input id="viewjusho" type="text" disabled/></div>
         <label class="sys-change-content">現場区分</label>
-        <!-- <div class="white-space-wrap"><select id="viewgenbakubun"></select></div> -->
         <div class="white-space-wrap flex-box" id="viewgenbakubun"></div>
         <label class="sys-change-content">管情報</label>
         <div class="white-space-wrap"><textarea id="viewkaninfo" disabled></textarea></div>
@@ -304,32 +259,6 @@
       <img src="./src/img/photographer.png" class="photographer-Image"/>
       <button class="returnmenu commonbtn">戻る</button>
     </div>
-    <!-- <div class="popup_wrap">
-      <input id="trigger" type="checkbox">
-      <div class="popup_overlay">
-        <label for="trigger" class="popup_trigger"></label>
-        <div class="popup_content">
-          <label for="trigger" class="close_btn">×</label>
-          <h2>
-            <img src="./src/img/help.png" class="help-Image"/>
-            撮影のヒント
-          </h2>
-          <span>
-            <div class="kaigyo">動画サイズは、HD(1280×720)を推奨しています。</div>
-            <div class="kaigyo">カメラモードになった時に、「設定」から「サイズ」をご確認ください。</div>
-            <div class="kaigyo">（機種により若干設定場所が異なります）</div>
-          </span>
-          <div class="margin-top">        
-            <label>◆撮影のコツ◆</label><br/>
-              <span>
-              <div class="kaigyo">まず、真上から道路部分を含め撮影し、それから穴の部分を底辺を含め</div>
-              <div class="kaigyo">360°撮影するときれいに3D化されます。</div>
-            </span>
-            <img src="./src/img/photographer.png" class="photographer-Image"/>
-          </div>
-        </div>
-      </div>
-    </div> -->
     <div class="popup_wrap">
       <input id="popup_help2_trigger" type="checkbox">
       <div class="popup_overlay">

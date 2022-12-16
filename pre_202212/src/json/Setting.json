@@ -216,11 +216,11 @@
     },
     {
       "value": "created_user",
-      "html": "顧客会社名／投稿者名(昇順)"
+      "html": "投稿者名(昇順)"
     },
     {
       "value": "created_user desc",
-      "html": "顧客会社名／投稿者名(降順)"
+      "html": "投稿者名(降順)"
     }
   ],
   "select_option_list": {
@@ -250,7 +250,8 @@
   "switch_naiyo_kaisha_id_list": [
     {
       "ids": [
-        "ZZ9903","ZZ9904"
+        "ZZ9903",
+        "ZZ9904"
       ],
       "change_content": {
         "投稿者名　": "顧客会社名／投稿者名／工事番号　",
@@ -262,6 +263,32 @@
       "textarea_ids": [
         "naiyo",
         "viewnaiyo"
+      ],
+      "list_order_select_item": [
+        {
+          "value": "",
+          "html": "未設定"
+        },
+        {
+          "value": "Title",
+          "html": "タイトル(試掘名)"
+        },
+        {
+          "value": "created_date",
+          "html": "投稿日時(昇順)"
+        },
+        {
+          "value": "created_date desc",
+          "html": "投稿日時(降順)"
+        },
+        {
+          "value": "created_user",
+          "html": "顧客会社名／投稿者名(昇順)"
+        },
+        {
+          "value": "created_user desc",
+          "html": "顧客会社名／投稿者名(降順)"
+        }
       ]
     }
   ],
@@ -285,6 +312,32 @@
         "textarea_ids": [
           "naiyo",
           "viewnaiyo"
+        ],
+        "list_order_select_item": [
+          {
+            "value": "",
+            "html": "未設定"
+          },
+          {
+            "value": "Title",
+            "html": "タイトル(試掘名)"
+          },
+          {
+            "value": "created_date",
+            "html": "投稿日時(昇順)"
+          },
+          {
+            "value": "created_date desc",
+            "html": "投稿日時(降順)"
+          },
+          {
+            "value": "created_user",
+            "html": "顧客会社名／投稿者名(昇順)"
+          },
+          {
+            "value": "created_user desc",
+            "html": "顧客会社名／投稿者名(降順)"
+          }
         ]
       }
     ]

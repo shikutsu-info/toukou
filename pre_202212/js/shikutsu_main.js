@@ -2178,6 +2178,9 @@ var historyTable = {
     return this.pages;
   },
   viewForm:function(objectid) {
+    // アタッチメントリンク部分のクリア
+    $("#div_request_filetype_attachment").empty();
+
     var form = new FormData();
     form.set('f','json');
     form.set('objectIds', objectid);
@@ -2709,6 +2712,11 @@ function set_config(config) {
 
   // 特定会社ID時の内容変更
   switch_naiyo_kaisha_id_list = config.switch_naiyo_kaisha_id_list;
+
+  // 特定会社ID時の考慮
+  each_switch_kaisha_id_setting(switch_naiyo_kaisha_id_list, function(setting) {
+    list_order_select_item = setting.list_order_select_item;
+  });
 
   // セレクトタグ項目生成
   create_list_order_select(list_order_select_item, $("#select_order"));
