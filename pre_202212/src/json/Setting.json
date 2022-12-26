@@ -226,10 +226,6 @@
   "select_option_list": {
     "GenbaKubun": [
       {
-        "value": "",
-        "text": "選択されていません"
-      },
-      {
         "value": "車道部",
         "text": "車道部"
       },
