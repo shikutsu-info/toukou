@@ -11,7 +11,8 @@
   "init_longitude": 139.75,
   "init_zoom": 10,
   "user_setting": {
-    "toko": "1"
+    "toko": "1",
+    "Request_filetype01": "1"
   },
   "ngCharacters": [
     "\\",
