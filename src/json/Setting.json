@@ -247,8 +247,12 @@
   "switch_naiyo_kaisha_id_list": [
     {
       "ids": [
-        "ZZ9903",
-        "ZZ9904"
+        "GS_chubu",
+        "GS_fukuoka",
+        "GS_hokkaido",
+        "GS_osaka",
+        "GS_tohoku",
+        "GS_tokyo"
       ],
       "change_content": {
         "投稿者名　": "顧客会社名／投稿者名／工事番号　",
