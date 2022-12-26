@@ -12,10 +12,14 @@ body {
   
   font-family: 'Arial', sans-serif;
 }
+input[type="text"],textarea{
+  font-family: inherit;
+}
 h2 {
   margin: 10px;
 }
-#sign-in {
+#sign-in,
+#show_form {
   width: 60%;
   min-width: 150px;
   font-size: 24px;
@@ -28,7 +32,7 @@ h2 {
   width: 100%;
   min-height: 300px;
   height: calc(100vh - 400px);
-  margin: 10px;
+  /* margin: 10px; */
 }
 #sceneviewDiv {
   padding: 0;
@@ -59,6 +63,17 @@ input[type="password"]{
   box-sizing: border-box;
 }
 
+textarea {
+  width: 99%;
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 3px;
+  border: 2px solid #ddd;
+  box-sizing: border-box;
+  resize: none;
+  line-height: 18px;
+  min-height: 120px;
+}
 .popup_overlay {
   display: flex;
   justify-content: center;
@@ -154,9 +169,6 @@ input[type=checkbox]:checked + .requestFile::after {
 #mainDiv{
   display: none;
 }
-#show_form{
-  margin: 20px;
-}
 #change-password{
   margin: 20px;
 }
@@ -245,11 +257,8 @@ input[type=radio]:checked + .radiomenu::after {
   background-color: #f0f0f0;
   min-height: 300px;
   display: block;
-  border-radius: 20px;
+  border-radius: 6px;
   padding: 20px;
-}
-#imagebtn img{
-  height: 18px;
 }
 ._wid10{
   width: 10%;
@@ -266,7 +275,7 @@ input[type=radio]:checked + .radiomenu::after {
 #image_uploading{
   visibility: hidden;
 }
-#upload_movie{
+#upload_movie {
   display: none;
 }
 .wid150{
@@ -391,7 +400,7 @@ input[type=radio]:checked + .radiomenu::after {
   display: block;
 }
 #addattachment{
-  height: 40px;
+  min-height: 40px;
 }
 #helpDiv{
   display: none;
@@ -449,7 +458,8 @@ button {
   font-weight: bold;
   font-size: 14px;
   min-width: 60px;
-  height: 40px;
+  /* height: 40px; */
+  min-height: 40px;
 }
 
 button:not(:disabled):hover {
@@ -489,7 +499,7 @@ label{
 }
 .header_img { 
   max-width: 1500px;
-  padding-right: 20px;
+  /* padding-right: 20px; */
   height: 140px;
   display: block;
 }
@@ -501,7 +511,15 @@ label{
 #attachmentlistDiv {
   margin: 20px;
 }
-
+#div_request_filetype_attachment {
+  margin-top: 20px;
+}
+#div_request_filetype_attachment span {
+  margin: 20px 0px 0px 20px;
+}
+#div_request_filetype_attachment a {
+  margin-left: 30px;
+}
 tr {
   border: 1px solid #a4a4a4;
   border-collapse: collapse;
@@ -568,7 +586,7 @@ td {
   .header_small_img { 
     display: block;
     width: 100%;
-    padding-right: 20px;
+    /* padding-right: 20px; */
   }
 
   #formDiv {
@@ -709,5 +727,150 @@ td {
     height:100%;
     border: 1px solid #a4a4a4;
     border-collapse: collapse;
+  }
+
+
+}
+
+/* 追加 */
+.flex-box {
+  display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: left;
+}
+
+.h-center {
+  text-align: center;
+}
+.h-right {
+  text-align: right;
+}
+
+.row {
+  border: 1px solid #CCCCCC;
+  box-sizing: border-box;
+}
+.row div {
+  box-sizing: inherit;
+}
+
+.row:nth-child(1) {
+  border-radius: 4px 4px 0px 0px;
+  background-color: #DFDFDF;
+}
+.row:nth-child(1) div {
+  font-weight: bold;
+}
+.row:nth-child(n+2){
+  border-top: 0px;
+}
+
+.row .no,
+.row .name,
+.row .size,
+.row .status,
+.row .delete{
+  padding: 4px;
+  overflow-wrap: anywhere;
+}
+
+.row .no {
+  width: 40px;
+  text-align: right;
+  border-right: 1px solid #CCCCCC;
+}
+.row .attrib {
+  width: calc(100% - 120px);
+}
+.row .name {
+  width: 100%;
+  border-bottom: 1px solid #CCCCCC;
+}
+.row .size {
+  width: 100%;
+  border-bottom: 1px solid #CCCCCC;
+  text-align: right;
+}
+.row .status {
+  width: 100%;
+  text-align: center;
+}
+
+.row .delete {
+  width: 80px;
+  text-align: center;
+  border-left: 1px solid #CCCCCC;
+}
+
+.row input[type="button"]{
+  margin: 0px;
+}
+
+.select_attachment {
+  padding: 0px 5px 5px 5px;
+}
+
+button img {
+  vertical-align: middle;
+}
+button span {
+  vertical-align: middle;
+}
+
+.request-filetype {
+  justify-content: left;
+}
+
+#file_extension_list div {
+  padding: 4px 0px 4px 4px;
+}
+#formDiv select,
+#viewformDiv select
+{
+  width: 99%;
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 3px;
+  border: 2px solid #ddd;
+  box-sizing: border-box;
+}
+#zahyojoho,
+#viewzahyojoho,
+textarea#naiyo,
+textarea#viewnaiyo {
+  min-height: 80px;
+}
+
+#historyListDiv .tool-menu {
+  padding: 10px 0px 5px 5px;
+}
+@media screen and (min-width: 386px) {
+  .row .size {
+    width: 100px;
+    border-bottom: 0px;
+    border-right: 1px solid #CCCCCC;
+  }
+  .row .status {
+    width: calc(100% - 100px);
+  }
+  .row .name {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 768px){
+  .row .size {
+    width: 100px;
+    border-bottom: 0px;
+    border-right: 1px solid #CCCCCC;
+  }
+  .row .status {
+    width: 220px;
+  }
+  .row .name {
+    width: calc(100% - 320px);
+    border-bottom: 0px;
+    border-right: 1px solid #CCCCCC;
   }
 }

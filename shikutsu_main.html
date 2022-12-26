@@ -42,25 +42,31 @@
     <!--メイン画面-->
     <div id="mainDiv">
       <div class="kaigyo">
-        <label>新たに投稿する</label><br/>
+        <label class="sys-change-content">新たに投稿する</label><br/>
         <button id="show_form" class="esri-icon-edit">投稿する</button>
       </div>
-      <div class="white-space-wrap"><label>過去の投稿を確認する</label></div>
+      <div class="white-space-wrap"><label class="sys-change-content">過去の投稿を確認する</label></div>
       <input type="radio" name="history" id="history-list" value="history-list" checked />
       <label for="history-list" class="radiomenu">リスト</label>
       <input type="radio" name="history" id="history-map" value="history-map" />
       <label for="history-map" class="radiomenu">マップ</label>
       <div id="historyListDiv">
+        <div class="tool-menu">
+          <span>並べ替え：</span>
+          <select id="select_order"></select>
+        </div>
         <table class="history-table tbl-r05">
           <thead class="toko-thead" id="tableHead"></thead>
           <tbody id="tableBody"></tbody>
         </table>
+        <div class="foot-menu">
+          <button id="btn_first" class="esri-icon-beginning" ></button>
+          <button id="btn_prev" class="esri-icon-reverse" ></button>
+          <span></span><!-- これが必要なのか確認いらなさそう -->
+          <button id="btn_next" class="esri-icon-forward" ></button>
+          <button id="btn_last" class="esri-icon-end" ></button>
+        </div>
       </div>
-      <button id="btn_first" class="esri-icon-beginning" ></button>
-      <button id="btn_prev" class="esri-icon-reverse" ></button>
-      <span></span><!-- これが必要なのか確認いらなさそう -->
-      <button id="btn_next" class="esri-icon-forward" ></button>
-      <button id="btn_last" class="esri-icon-end" ></button>
       <!--投稿確認用マップ-->
       <div id="historyMapDiv">
         <div id="historyMapViewDiv"></div>
@@ -77,22 +83,15 @@
     <!--ユーザー設定画面-->
     <div id="user_conf">
       <div class="kaigyo pconly">
-        <label>投稿データの位置指定</label><br/>
+        <label class="sys-change-content">投稿データの位置指定</label><br/>
         <input type="radio" id="gps" value="0" name="toko_setting" />
         <label for="gps" class="radiomenu">端末のGPS</label>
         <input type="radio" id="exif" value="1" name="toko_setting">
         <label for="exif" class="radiomenu">写真の位置情報</label>
       </div>
       <div class="kaigyo">
-        <label>取得ファイル形式の初期値</label><br/>
-        <input type="checkbox" id="pdf" name="file_setting"/>
-        <label for="pdf" class="requestFile">3Dデータ(PDF)</label>
-        <input type="checkbox" id="las" name="file_setting">
-        <label for="las" class="requestFile">点群データ(LAS)</label>
-        <input type="checkbox" id="heimenzu" name="file_setting"/>
-        <label for="heimenzu" class="requestFile">平面図(DXF)</label>
-        <input type="checkbox" id="oudanzu" name="file_setting">
-        <label for="oudanzu" class="requestFile">断面図(DXF)</label>
+        <label class="sys-change-content">希望成果品の初期値</label><br/>
+        <div class="flex-box request-filetype"></div>
       </div>
       <div id="confBtnDiv" class="chengeBtn">
         <button id="conf-save" class="commonbtn">保存</button>
@@ -103,15 +102,15 @@
     <!--パスワード変更画面-->
     <div id="changeDiv">
       <div class="kaigyo">
-        <label>現在のパスワード</label>
+        <label class="sys-change-content">現在のパスワード</label>
         <input id="present-password" type="password"/>
       </div>
       <div class="kaigyo">
-        <label>新しいパスワード</label>
+        <label class="sys-change-content">新しいパスワード</label>
         <input id="new-password" type="password"/>
       </div>
       <div class="kaigyo">
-        <label>新しいパスワード(再入力)</label>
+        <label class="sys-change-content">新しいパスワード(再入力)</label>
         <input id="retype-password" type="password"/>
       </div>
       <!--エラー表示用Div-->
@@ -123,129 +122,59 @@
     </div>
     <!--投稿部分-->
     <div id="formDiv">
-      <label >会社ID</label>
+      <label class="sys-change-content">会社ID</label>
       <div class="white-space-wrap"><label><input id="kaishaid" type="text" readonly/></label></div>
-      <label>タイトル</label>
+      <label class="sys-change-content">タイトル</label>
       <span class="fontred">*</span><br/>
       <div class="white-space-wrap"><input id="title" type="text"/></div>
-      <label>投稿内容</label>
+      <label class="sys-change-content">投稿内容</label>
       <div class="white-space-wrap"><input id="naiyo" type="text"/></div>
-      <label>場所</label>
+      <label class="sys-change-content">場所</label>
       <span class="fontred">*</span>
       <button class="locate_conpact">▲ 閉じる</button>
       <div id="mapviewDiv"></div>
       <div id="gridDiv">場所を指定してください</div>
-      <label>住所</label>
+      <label class="sys-change-content">住所</label>
       <div class="white-space-wrap"><input id="jusho" type="text"/></div>
-      <label>備考</label>
+      <label class="sys-change-content">現場区分</label>
+      <div class="white-space-wrap flex-box" id="genbakubun"></div>
+      <label class="sys-change-content">管情報</label><br/>
+      <span>※入力内容は図面作成に反映されます</span>
+      <div class="white-space-wrap"><textarea id="kaninfo"></textarea></div>
+      <label class="sys-change-content">座標情報(単位:m)</label><br>
+      <span>※LAS座標付与を希望する場合のみ記入してください<br>
+      ※別途座標データを添付する場合は入力不要です</span>
+      <div class="white-space-wrap"><textarea id="zahyojoho"></textarea></div>
+      <label class="sys-change-content">備考</label>
       <div class="white-space-wrap"><input id="bikou" type="text"/></div>
       <div class="white-space-wrap"><input id="email" type="text" class="hidden_email" hidden/></div>
+      <label class="sys-change-content">投稿ファイル選択</label><br/>
+      <span>※各ファイル1GBまで</spanl><br/>
       <div id="attachmentDiv">
-        <div class="white-space-wrap"><label>投稿区分</label><label for="trigger" class="open_btn esri-icon-question">撮影のヒント</label></div>
-        <input type="radio" name="attachment" id="image" value="image" checked>
-        <label for="image" class="radiomenu">写真</label>
-        <input type="radio" name="attachment" id="movie" value="movie">
-        <label for="movie" class="radiomenu">動画</label>
-        <div id="upload_images" class="select_attachment">
-          <input id="images-select" type="file" accept="image/*" multiple/>
-          <button id="imagebtn"><img src="./src/img/camera.png"></img><span class="margin-left-5">写真の選択</span></button>
-          <label id="images_label"></label>
-          <table id="imageGallery_tbl">
-            <tr>
-              <th class="_wid10">No</th>
-              <th class="_wid20"></th>
-              <th class="_wid30">ファイル名</th>
-              <th class="_wid10">サイズ</th>
-              <th class="_wid20">状況</th>
-              <th class="wid10px">
-                <div class="center">
-                  <input class="delbtn" type="button" id="delAllBtn" value="全削除">
-                </div>
-              </th>
-            </tr>
-          </table>
-          <span id="image_uploading">0</span>
-        </div>
-        <div id="upload_movie" class="select_attachment">
-          <table>
-            <tr>
-              <th class="wid150"></th>
-              <th class="widauto">ファイル名</th>
-              <th class="wid80">サイズ</th>
-              <th class="wid150">状況</th>
-            </tr>
-            <tr>
-              <td>
-                <button id="moviebtn1">
-                  <img src="./src/img/movie.drawio.png" class="image-height"/>
-                  <span class="sentaku-margin">選択</span>
-                </button>
-              </td>
-              <td>
-                <span id="movie_filename_1"></span>
-              </td>
-              <td>
-                <span id="movie_size_1"></span>
-              </td>
-              <td>
-                <span id="movie_status_1"></span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <button id="moviebtn2">
-                  <img src="./src/img/movie.drawio.png" class="image-height"/>
-                  <span class="sentaku-margin">選択</span>
-                </button>
-              </td>
-              <td>
-                <span id="movie_filename_2"></span>
-              </td>
-              <td>
-                <span id="movie_size_2"></span>
-              </td>
-              <td>
-                <span id="movie_status_2"></span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <button id="moviebtn3">
-                  <img src="./src/img/movie.drawio.png" class="image-height"/>
-                  <span class="sentaku-margin">選択</span>
-                </button>
-              </td>
-              <td>
-                <span id="movie_filename_3"></span>
-              </td>
-              <td>
-                <span id="movie_size_3"></span>
-              </td>
-              <td>
-                <span id="movie_status_3"></span>
-              </td>
-            </tr>
-          </table>
-          <label id="movie_upload_id_1" hidden></label>
-          <input id="movie-select1" type="file" accept="video/*" hidden/>
-          <label id="movie_upload_id_2" hidden></label>
-          <input id="movie-select2" type="file" accept="video/*" hidden/>
-          <label id="movie_upload_id_3" hidden></label>
-          <input id="movie-select3" type="file" accept="video/*" hidden/>
+        <label for="popup_help2_trigger" class="open_btn esri-icon-question">許可されているファイル</label>
+        <div id="upload_file" class="select_attachment">
+          <input id="file_select" type="file" multiple hidden/>
+          <button id="filebtn"><span class="esri-icon-documentation"></span><span class="margin-left-5 sys-change-content">ファイルの選択</span></button>
+          <label id="file_label"></label>
+          <div id="file_table">
+            <div class="row flex-box">
+              <div class="no">No</div>
+              <div class="flex-box attrib">
+                <div class="name">ファイル名</div>
+                <div class="size">サイズ</div>
+                <div class="status">状況</div>
+              </div>
+              <div class="delete h-center">
+                <input class="file_delbtn" type="button" id="file_del_all_btn" value="全削除">
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div id="requestFileDiv">
-        <div class="white-space-wrap"><label>取得ファイル形式</label></div>
-        <input type="checkbox" id="requestFile-PDF" name="select-requestFile">
-        <label for="requestFile-PDF" class="requestFile">3Dデータ(PDF)</label>
-        <input type="checkbox" id="requestFile-LAS" name="select-requestFile">
-        <label for="requestFile-LAS" class="requestFile">点群データ(LAS)</label>
-        <!--  <input type="checkbox" id="requestFile-OBJ" name="select-requestFile">
-        <label for="requestFile-OBJ" class="requestFile">OBJ</label> -->
-        <input type="checkbox" id="requestFile-DWG-heimen" name="select-requestFile">
-        <label for="requestFile-DWG-heimen" class="requestFile">平面図(DXF)</label>
-        <input type="checkbox" id="requestFile-DWG-oudan" name="select-requestFile">
-        <label for="requestFile-DWG-oudan" class="requestFile">断面図(DXF)</label>
+        <label class="sys-change-content">希望成果品</label><br/>
+        <div class="white-space-wrap"><span>※☑があるもののみ作成されます</span></div>
+        <div class="flex-box request-filetype"></div>
       </div>
       <div id="buttonDiv">
         <button id="sendbtn" class="commonbtn">送信</button>
@@ -266,70 +195,64 @@
     <!--登録情報編集-->
     <div id="viewformDiv">
       <div class="margin-bottom-10">
-        <label>タイトル</label>
+        <label class="sys-change-content">タイトル</label>
         <span class="fontred">*</span>
         <div class="white-space-wrap"><input id="viewtitle" type="text" disabled/></div>
-        <label>投稿内容</label>
+        <label class="sys-change-content">投稿内容</label>
         <div class="white-space-wrap"><input id="viewnaiyo" type="text" disabled/></div>
         <div class="kaigyo">
-          <label>場所</label>
+          <label class="sys-change-content">場所</label>
           <span class="fontred">*</span>
           <button class="locate_conpact">▲ 閉じる</button>
         </div>
         <div id="viewmapviewDiv"></div>
-        <label>住所</label>
+        <label class="sys-change-content">住所</label>
         <div class="white-space-wrap"><input id="viewjusho" type="text" disabled/></div>
-        <label>備考</label>
+        <label class="sys-change-content">現場区分</label>
+        <div class="white-space-wrap flex-box" id="viewgenbakubun"></div>
+        <label class="sys-change-content">管情報</label>
+        <div class="white-space-wrap"><textarea id="viewkaninfo" disabled></textarea></div>
+        <label class="sys-change-content">座標情報</label>
+        <div class="white-space-wrap"><textarea id="viewzahyojoho"></textarea></div>
+        <label class="sys-change-content">備考</label>
         <div class="white-space-wrap"><input id="viewbikou" type="text" disabled/></div>
       </div>
       <div class="margin-bottom-10">
-        <div class="white-space-wrap"><label>取得ファイル形式</label></div>
-        <input type="checkbox" id="viewrequestFile-PDF" name="select-requestFile">
-        <label for="viewrequestFile-PDF" class="requestFile">3Dデータ(PDF)</label>
-        <input type="checkbox" id="viewrequestFile-LAS" name="select-requestFile">
-        <label for="viewrequestFile-LAS" class="requestFile">点群データ(LAS)</label>
-        <!-- <input type="checkbox" id="viewrequestFile-OBJ" name="select-requestFile">
-        <label for="viewrequestFile-OBJ" class="requestFile">OBJ</label> -->
-        <input type="checkbox" id="viewrequestFile-DWG-heimen" name="select-requestFile">
-        <label for="viewrequestFile-DWG-heimen" class="requestFile">平面図(DXF)</label>
-        <input type="checkbox" id="viewrequestFile-DWG-oudan" name="select-requestFile">
-        <label for="viewrequestFile-DWG-oudan" class="requestFile">断面図(DXF)</label>
+        <label class="sys-change-content">希望成果品</label><br/>
+        <div class="white-space-wrap"><span>※☑があるもののみ作成されます</span></div>
+        <div class="flex-box request-filetype"></div>
         <input id="viewobjectid" type="text" hidden/>
         <input id="viewstatus" type="text" hidden/>
         <input id="viewscene_itemid" type="text" hidden/>
       </div>
       <div class="margin-bottom-10">
         <div id="viewheaderbuttonDiv">
-          <button id="editform_show" class="esri-icon-edit">
-          登録情報の編集
-          </button>
+          <button id="editform_show" class="esri-icon-edit">登録情報の編集</button>
           <button id="edit_send" class="sendbtn">登録</button>
           <button id="edit_cancel" class="sendbtn">キャンセル</button>
         </div>
       </div>
       <div id="making_scene" class="esri-icon-time-clock">
-        <label>３Ｄシーン</label>
+        <label class="sys-change-content">３Ｄシーン</label>
         <span id="status_text"></span>
       </div>
       <div id="viewscene">
-        <label>３Ｄシーン</label>
+        <label class="sys-change-content">３Ｄシーン</label>
         <div id="sceneviewDiv"></div>
         <div id="measure_widget" class="widget_scene">
-          <label>計測ツール</label>
+          <label class="sys-change-content">計測ツール</label>
           <button class="action-button esri-icon-measure-line" id="distanceButton" type="button" title="距離計測"></button>
           <button class="action-button esri-icon-measure-area" id="areaButton" type="button" title="面積計測"></button>
           <button class="action-button esri-icon-erase" id="clearButton" type="button" title="クリア"></button>
         </div>
       </div>
-      <div id="pdf_attachmentDiv"></div><br/>
-      <div id="las_attachmentDiv"></div><br/>
-      <div id="dwg_attachmentDiv"></div><br/>
-      <div class="white-space-wrap"><label>添付ファイル</label></div>
+      <div id="div_request_filetype_attachment"></div>
+      <div class="white-space-wrap"><label class="sys-change-content">添付ファイル</label><label for="popup_help2_trigger" class="open_btn esri-icon-question">許可されているファイル</label></div>
       <div id="attachmentlistDiv"></div>
       <span id="backbtn-view" class="backbtn"><i class="esri-icon-up-arrow"></i></span>
       <span id="bottombtn-view" class="bottombtn"><i class="esri-icon-down-arrow"></i></span>
       <div id="viewfooterbuttonDiv">
-        <button id="addattachment">添付ファイルの追加(10MB以内)</button>
+        <button id="addattachment" class="sys-change-content">添付ファイルの追加</button>
         <input id="addattachment-select" type="file" accept="*" hidden/>
         <button class="returnmenu commonbtn">戻る</button>
       </div>
@@ -344,28 +267,16 @@
       <button class="returnmenu commonbtn">戻る</button>
     </div>
     <div class="popup_wrap">
-      <input id="trigger" type="checkbox">
+      <input id="popup_help2_trigger" type="checkbox">
       <div class="popup_overlay">
-        <label for="trigger" class="popup_trigger"></label>
+        <label for="popup_help2_trigger" class="popup_trigger"></label>
         <div class="popup_content">
-          <label for="trigger" class="close_btn">×</label>
+          <label for="popup_help2_trigger" class="close_btn">×</label>
           <h2>
-            <img src="./src/img/help.png" class="help-Image"/>
-            撮影のヒント
+            <img src="./src/img/help.png" class="help-Image"/><span>サポートされているファイル形式</span>
           </h2>
-          <span>
-            <div class="kaigyo">動画サイズは、HD(1280×720)を推奨しています。</div>
-            <div class="kaigyo">カメラモードになった時に、「設定」から「サイズ」をご確認ください。</div>
-            <div class="kaigyo">（機種により若干設定場所が異なります）</div>
-          </span>
-          <div class="margin-top">        
-            <label>◆撮影のコツ◆</label><br/>
-              <span>
-              <div class="kaigyo">まず、真上から道路部分を含め撮影し、それから穴の部分を底辺を含め</div>
-              <div class="kaigyo">360°撮影するときれいに3D化されます。</div>
-            </span>
-            <img src="./src/img/photographer.png" class="photographer-Image"/>
-          </div>
+          <div id="file_extension_list" class="margin-top flex-box"></div>
+          <div style="font-weight: bold;">※上記ファイル以外はZIPファイルにしてください</div>
         </div>
       </div>
     </div>
