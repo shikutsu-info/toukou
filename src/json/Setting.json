@@ -72,7 +72,7 @@
         "RFT02"
       ],
       "downloaded_key": "RFT02_DL",
-      "link_text": "点群データ座標なしダウンロード",
+      "link_text": "点群データダウンロード",
       "field_name": "Request_filetype02",
       "checkbox_label": "点群データ(.las)/座標なし"
     },
@@ -82,7 +82,7 @@
         "RFT03"
       ],
       "downloaded_key": "RFT03_DL",
-      "link_text": "点群データ座標付与ダウンロード",
+      "link_text": "点群データダウンロード",
       "field_name": "Request_filetype03",
       "checkbox_label": "点群データ(.las)/座標付与"
     },
