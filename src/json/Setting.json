@@ -68,6 +68,7 @@
     {
       "visible": true,
       "keyword": [
+        "LAS",
         "RFT02"
       ],
       "downloaded_key": "RFT02_DL",
@@ -88,6 +89,7 @@
     {
       "visible": true,
       "keyword": [
+        "平面図",
         "RFT04"
       ],
       "downloaded_key": "RFT04_DL",
@@ -98,6 +100,7 @@
     {
       "visible": true,
       "keyword": [
+        "断面図",
         "RFT05"
       ],
       "downloaded_key": "RFT05_DL",
