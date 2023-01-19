@@ -31,7 +31,7 @@
     <div class="kaigyo">
       <label class="sys-change-content">新たに投稿する</label><br />
       <button id="show_form" class="esri-icon-edit">投稿する</button><br />
-      <button id="show_help" class="esri-icon-question commonbtn">ヘルプ</button>
+      <button id="show_help" class="esri-icon-question commonbtn">ご利用ガイド</button>
     </div>
     <div class="white-space-wrap"><label class="sys-change-content">過去の投稿を確認する</label></div>
     <input type="radio" name="history" id="history-list" value="history-list" checked />
@@ -199,12 +199,9 @@
       <div class="white-space-wrap"><input id="viewjusho" type="text" disabled /></div>
       <label class="sys-change-content">現場区分</label>
       <div class="white-space-wrap flex-box" id="viewgenbakubun"></div>
-      <label class="sys-change-content">管情報</label><br />
-      <span>※入力内容は図面作成に反映されます</span>
+      <label class="sys-change-content">管情報</label>
       <div class="white-space-wrap"><textarea id="viewkaninfo" disabled></textarea></div>
-      <label class="sys-change-content">座標情報(単位:m)</label><br>
-      <span>※LAS座標付与を希望する場合のみ記入してください<br>
-        ※別途座標データを添付する場合は入力不要です</span>
+      <label class="sys-change-content">座標情報</label>
       <div class="white-space-wrap"><textarea id="viewzahyojoho"></textarea></div>
       <label class="sys-change-content">備考</label>
       <div class="white-space-wrap"><input id="viewbikou" type="text" disabled /></div>
@@ -298,20 +295,6 @@
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
         </iframe>
       </calcite-label><br />
-    </div>
-  </div>
-  <div class="popup_wrap">
-    <input id="popup_help2_trigger" type="checkbox">
-    <div class="popup_overlay">
-      <label for="popup_help2_trigger" class="popup_trigger"></label>
-      <div class="popup_content">
-        <label for="popup_help2_trigger" class="close_btn">×</label>
-        <h2>
-          <img src="./src/img/help.png" class="help-Image" /><span>サポートされているファイル形式</span>
-        </h2>
-        <div id="file_extension_list" class="margin-top flex-box"></div>
-        <div style="font-weight: bold;">※上記ファイル以外はZIPファイルにしてください</div>
-      </div>
     </div>
   </div>
   <div class="popup_wrap">
