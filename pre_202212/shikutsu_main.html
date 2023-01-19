@@ -30,7 +30,7 @@
   <div id="mainDiv">
     <div class="kaigyo">
       <label class="sys-change-content">新たに投稿する</label><br />
-      <button id="show_form" class="esri-icon-edit">投稿する</button>
+      <button id="show_form" class="esri-icon-edit">投稿する</button><br />
       <button id="show_help" class="esri-icon-question commonbtn">ヘルプ</button>
     </div>
     <div class="white-space-wrap"><label class="sys-change-content">過去の投稿を確認する</label></div>
@@ -254,7 +254,6 @@
   <div id="helpDiv">
     <button class="returnmenu commonbtn">戻る</button>
     <h2>
-      <img src="./src/img/help.png" class="help-Image" />
       しくつ君　ご利用ガイド
     </h2>
     <div style="font-weight: bold;">
@@ -299,6 +298,20 @@
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
         </iframe>
       </calcite-label><br />
+    </div>
+  </div>
+  <div class="popup_wrap">
+    <input id="popup_help2_trigger" type="checkbox">
+    <div class="popup_overlay">
+      <label for="popup_help2_trigger" class="popup_trigger"></label>
+      <div class="popup_content">
+        <label for="popup_help2_trigger" class="close_btn">×</label>
+        <h2>
+          <img src="./src/img/help.png" class="help-Image" /><span>サポートされているファイル形式</span>
+        </h2>
+        <div id="file_extension_list" class="margin-top flex-box"></div>
+        <div style="font-weight: bold;">※上記ファイル以外はZIPファイルにしてください</div>
+      </div>
     </div>
   </div>
   <div class="popup_wrap">
