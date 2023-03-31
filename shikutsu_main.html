@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://js.arcgis.com/4.20/esri/css/main.css" />
   <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/1.0.0-beta.99/calcite.css" />
   <link rel="stylesheet" href="./css/shikutsu_main.css" />
-  <title>しくつ君投稿アプリ</title>
+  <title>掘削状況3D管理アプリ　ちかデジ</title>
 </head>
 
 <body>
@@ -29,7 +29,7 @@
   <!--メイン画面-->
   <div id="mainDiv">
     <div class="kaigyo">
-      <label class="sys-change-content">新たに投稿する</label><br />
+      <label class="sys-change-content">動画を投稿する</label><br />
       <button id="show_form" class="esri-icon-edit">投稿する</button><br />
       <button id="show_help" class="esri-icon-question commonbtn">ご利用ガイド</button>
     </div>
@@ -127,10 +127,10 @@
     <label class="sys-change-content">現場区分</label>
     <div class="white-space-wrap flex-box" id="genbakubun"></div>
     <label class="sys-change-content">管情報</label><br />
-    <span>※入力内容は図面作成に反映されます</span>
+    <span>※入力内容は平面図・断面図・3Dモデリングに反映されます</span>
     <div class="white-space-wrap"><textarea id="kaninfo"></textarea></div>
     <label class="sys-change-content">座標情報(単位:m)</label><br>
-    <span>※LAS座標付与を希望する場合のみ記入してください<br>
+    <span>※座標付与を希望する場合のみ記入してください<br>
       ※別途座標データを添付する場合は入力不要です</span>
     <div class="white-space-wrap"><textarea id="zahyojoho"></textarea></div>
     <label class="sys-change-content">備考</label>
@@ -200,10 +200,10 @@
       <label class="sys-change-content">現場区分</label>
       <div class="white-space-wrap flex-box" id="viewgenbakubun"></div>
       <label class="sys-change-content">管情報</label><br />
-      <span>※入力内容は図面作成に反映されます</span>
+      <span>※入力内容は平面図・断面図・3Dモデリングに反映されます</span>
       <div class="white-space-wrap"><textarea id="viewkaninfo" disabled></textarea></div>
       <label class="sys-change-content">座標情報(単位:m)</label><br>
-      <span>※LAS座標付与を希望する場合のみ記入してください<br>
+      <span>※座標付与を希望する場合のみ記入してください<br>
         ※別途座標データを添付する場合は入力不要です</span>
       <div class="white-space-wrap"><textarea id="viewzahyojoho"></textarea></div>
       <label class="sys-change-content">備考</label>
@@ -231,7 +231,7 @@
     <div id="viewscene">
       <label class="sys-change-content">３Ｄシーン</label>
       <div id="sceneviewDiv"></div>
-      <div id="measure_widget" class="widget_scene">
+      <div id="measure_widget" class="widget_scene" hidden>
         <label class="sys-change-content">計測ツール</label>
         <button class="action-button esri-icon-measure-line" id="distanceButton" type="button" title="距離計測"></button>
         <button class="action-button esri-icon-measure-area" id="areaButton" type="button" title="面積計測"></button>
@@ -254,7 +254,7 @@
   <div id="helpDiv">
     <button class="returnmenu commonbtn">戻る</button>
     <h2>
-      しくつ君　ご利用ガイド
+      掘削状況3D管理アプリ　ちかデジ　ご利用ガイド
     </h2>
     <div style="font-weight: bold;">
       <calcite-label>ご利用ガイド(ALL再生)
@@ -271,8 +271,8 @@
         </iframe>
       </calcite-label><br />
       <calcite-label>
-        2.しくつ君サインイン<br />
-        <iframe title="2.しくつ君サインイン" src="https://www.youtube.com/embed/lZHB2pCSaik" frameborder="0" allowfullscreen
+        2.サインイン<br />
+        <iframe title="2.サインイン" src="https://www.youtube.com/embed/lZHB2pCSaik" frameborder="0" allowfullscreen
           class="help_movie"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
         </iframe>
