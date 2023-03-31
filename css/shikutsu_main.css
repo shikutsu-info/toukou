@@ -508,9 +508,9 @@ label{
   margin-left: 10px;
 }
 .header_img { 
-  max-width: 1500px;
+  width: 900px;
   /* padding-right: 20px; */
-  height: 140px;
+  /* height: 140px; */
   display: block;
 }
 
