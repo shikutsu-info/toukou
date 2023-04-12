@@ -2262,6 +2262,7 @@ var historyTable = {
         }
       });
       $("#viewzahyofuyo input").each(function () {
+        this.checked = false;
         if (this.value == features[0].attributes["ZahyoFuyo"]) {
           this.checked = true;
           return false;
