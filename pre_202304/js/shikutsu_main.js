@@ -1722,7 +1722,7 @@ require([
     // $("#genbakubun").val("");
     $("#genbakubun input[type='radio']:eq(0)").prop("checked", true);
     $("#zahyojoho").val("");
-    $("#zahyofuyo input[type='radio']:eq(0)").prop("checked", true);
+    $("#zahyofuyo input[type='radio']:eq('0')").prop("checked", true);
 
     view.graphics.removeAll();
 
