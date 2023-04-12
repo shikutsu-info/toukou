@@ -110,9 +110,9 @@
         "RFT06"
       ],
       "downloaded_key": "RFT06_DL",
-      "link_text": "CAD+LAS統合ダウンロード",
+      "link_text": "CAD+点群データ統合ダウンロード",
       "field_name": "Request_filetype06",
-      "checkbox_label": "CAD+LAS統合(.dwg)"
+      "checkbox_label": "CAD+点群データ統合(.dwg)"
     },
     {
       "visible": true,
@@ -256,11 +256,11 @@
     "ZahyoFuyo": [
       {
         "value": "0",
-        "text": "なし"
+        "text": "しない"
       },
       {
         "value": "1",
-        "text": "あり"
+        "text": "する"
       }
     ]
   },
