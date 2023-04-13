@@ -1499,6 +1499,7 @@ require([
       // "GenbaKubun": $("#genbakubun").val(),
       "GenbaKubun": $("#genbakubun input[type='radio']:checked").val(),
       "ZahyoJoho": $("#zahyojoho").val(),
+      "ZahyoFuyo": $("#zahyofuyo input[type='radio']:checked").val(),
       "Email": email,
       "Status": 0
     };
@@ -1721,6 +1722,7 @@ require([
     // $("#genbakubun").val("");
     $("#genbakubun input[type='radio']:eq(0)").prop("checked", true);
     $("#zahyojoho").val("");
+    $("#zahyofuyo input[type='radio']:eq('0')").prop("checked", true);
 
     view.graphics.removeAll();
 
@@ -1758,7 +1760,8 @@ require([
       "kaninfo": $('#viewkaninfo').val(),
       "zahyojoho": $("#viewzahyojoho").val(),
       // "genbakubun": $("#viewgenbakubun").val()
-      "genbakubun": $("#viewgenbakubun input[type='radio']:checked").val()
+      "genbakubun": $("#viewgenbakubun input[type='radio']:checked").val(),
+      "zahyofuyo": $("#viewzahyofuyo input[type='radio']:checked").val()
     };
 
     // 要否ファイルチェックボックスのチェック状態からパラメータ作成
@@ -2258,6 +2261,13 @@ var historyTable = {
           $("#viewformDiv .request-filetype input[type='checkbox']").eq(index).prop("checked", (features[0].attributes[item.field_name] == 1 ? true : false));
         }
       });
+      $("#viewzahyofuyo input").each(function () {
+        this.checked = false;
+        if (this.value == features[0].attributes["ZahyoFuyo"]) {
+          this.checked = true;
+          return false;
+        }
+      });
 
       $('#viewobjectid').val(objectid);
       $('#viewstatus').val(features[0].attributes["Status"]);
@@ -2612,6 +2622,10 @@ function change_view_enable(flg) {
       elem.disabled = false;
     });
 
+    $("#viewzahyofuyo").find("input").each(function () {
+      this.disabled = false;
+    });
+
     $('#editform_show').css('display', 'none');
     $('#edit_send').css('display', 'block');
     $('#edit_cancel').css('display', 'block');
@@ -2636,6 +2650,10 @@ function change_view_enable(flg) {
     // 要否ファイルチェックボックスを無効状態に設定
     $("#viewformDiv .request-filetype input[type='checkbox']").each(function (idx, elem) {
       elem.disabled = true;
+    });
+
+    $("#viewzahyofuyo").find("input").each(function () {
+      this.disabled = true;
     });
 
     $('#editform_show').css('display', 'block');
@@ -2744,6 +2762,10 @@ function set_config(config) {
   // 閲覧情報のセレクトタグの設定
   // create_select_option(select_option_list.GenbaKubun, $("#viewgenbakubun"));
   create_radio_list(select_option_list.GenbaKubun, $("#viewgenbakubun"), "radiomenu");
+
+  // 座標付与セレクトの設定
+  create_radio_list(select_option_list.ZahyoFuyo, $("#zahyofuyo"), "radiomenu");
+  create_radio_list(select_option_list.ZahyoFuyo, $("#viewzahyofuyo"), "radiomenu");
 
   // 特定会社ID時の内容変更
   replace_switch_kaisha_id(switch_naiyo_kaisha_id_list);
