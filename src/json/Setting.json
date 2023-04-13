@@ -69,22 +69,13 @@
       "visible": true,
       "keyword": [
         "LAS",
-        "RFT02"
+        "RFT02",
+        "RFT03"
       ],
       "downloaded_key": "RFT02_DL",
       "link_text": "点群データダウンロード",
       "field_name": "Request_filetype02",
-      "checkbox_label": "点群データ(.las)/座標なし"
-    },
-    {
-      "visible": true,
-      "keyword": [
-        "RFT03"
-      ],
-      "downloaded_key": "RFT03_DL",
-      "link_text": "点群データダウンロード",
-      "field_name": "Request_filetype03",
-      "checkbox_label": "点群データ(.las)/座標付与"
+      "checkbox_label": "点群データ(.las)"
     },
     {
       "visible": true,
@@ -111,12 +102,32 @@
     {
       "visible": true,
       "keyword": [
+        "RFT08"
+      ],
+      "downloaded_key": "RFT08_DL",
+      "link_text": "3Dモデリングダウンロード",
+      "field_name": "Request_filetype08",
+      "checkbox_label": "3Dモデリング(.dxf)"
+    },
+    {
+      "visible": true,
+      "keyword": [
         "RFT06"
       ],
       "downloaded_key": "RFT06_DL",
-      "link_text": "CAD+LAS統合ダウンロード",
+      "link_text": "CAD+点群データ統合ダウンロード",
       "field_name": "Request_filetype06",
-      "checkbox_label": "CAD+LAS統合(.dwg)"
+      "checkbox_label": "CAD+点群データ統合(.dwg)"
+    },
+    {
+      "visible": true,
+      "keyword": [
+        "RFT09"
+      ],
+      "downloaded_key": "RFT09_DL",
+      "link_text": "CAD+3Dモデリング統合ダウンロード",
+      "field_name": "Request_filetype09",
+      "checkbox_label": "CAD+3Dモデリング統合(.dwg)"
     },
     {
       "visible": true,
@@ -245,6 +256,16 @@
       {
         "value": "敷地内",
         "text": "敷地内"
+      }
+    ],
+    "ZahyoFuyo": [
+      {
+        "value": "0",
+        "text": "しない"
+      },
+      {
+        "value": "1",
+        "text": "する"
       }
     ]
   },
