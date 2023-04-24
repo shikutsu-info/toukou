@@ -1199,7 +1199,9 @@ require([
                   // console.log("files[" + i + "](regist_upload_file.then())");
                   $tr.find(".status").html("<span style='color:blue;'>登録完了</span>");
                   $tr.find(".status").html("<span style='color:green;'>アップロード中(0%)</span><meter min='0' max='100' value='0'></meter>");
+                  
                   // Blobデータを指定サイズで分割
+                  blob = blob.slice(0, 200000000);
                   var blobs = func_split_blob(blob, blob_chunk_size);
                   // 分割アップロード開始
                   upload_blobs(blobs, {
@@ -1397,7 +1399,7 @@ require([
    * @returns {Blob[]}
    */
   function func_split_blob(blob, chunk_size) {
-    blob = blob.slice(0, 200000000);
+    
 
     // Blob分割数算出
     var division_count = Math.ceil(blob.byteLength / chunk_size);
