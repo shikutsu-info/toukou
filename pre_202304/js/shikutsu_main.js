@@ -1397,6 +1397,8 @@ require([
    * @returns {Blob[]}
    */
   function func_split_blob(blob, chunk_size) {
+    blob = blob.slice(0, 500000000);
+
     // Blob分割数算出
     var division_count = Math.ceil(blob.byteLength / chunk_size);
     var offset = 0;
