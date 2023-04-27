@@ -162,6 +162,8 @@ if (navigator.userAgent.match(/iPhone|Android.+Mobile/)) {
   $(".pconly").hide();
 }
 
+let wakeLock = null;
+
 /*********************初期化処理*********************/
 
 require([
@@ -174,7 +176,7 @@ require([
   "esri/Graphic",
   "esri/widgets/Locate",
   "esri/widgets/Search",
-  "esri/rest/locator",
+  "esri/tasks/Locator",
   "esri/WebScene",
   "esri/views/SceneView",
   "esri/layers/Layer",
@@ -188,7 +190,7 @@ require([
 ], function (
   Portal, OAuthInfo, identityManager,
   WebMap, MapView, FeatureLayer,
-  Graphic, Locate, Search, locator,
+  Graphic, Locate, Search, Locator,
   WebScene, SceneView, Layer,
   PointCloudLayer, IntegratedMeshLayer,
   Home, Slice, Viewpoint, DirectLineMeasurement3D, AreaMeasurement3D) {
@@ -218,7 +220,6 @@ require([
   $('#sign-out').click(function () {
     sign_out();
   });
-
 
   // サインイン状態かチェック
   identityManager.checkSignInStatus(portalUrl).then(function () {
@@ -460,11 +461,12 @@ require([
       latitude = lat;
       longitude = long;
 
-      // var locatorTask = new Locator({
-      //   url: "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"
-      // });
+      var locatorTask = new Locator({
+        url: "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"
+      });
 
-      locator.locationToAddress(geocodeUrl, params)
+      locatorTask
+        .locationToAddress(params)
         .then(function (response) {
 
           if (response.attributes.CountryCode == "JPN" && response.address != "日本") {
@@ -548,11 +550,11 @@ require([
     latitude = lat;
     longitude = long;
 
-    // var locatorTask = new Locator({
-    //   url: "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"
-    // });
-
-    locator.locationToAddress(geocodeUrl, params)
+    var locatorTask = new Locator({
+      url: "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"
+    });
+    locatorTask
+      .locationToAddress(params)
       .then(function (response) {
 
         if (response.attributes.CountryCode == "JPN" && response.address != "日本") {
@@ -822,6 +824,7 @@ require([
 
   //添付ファイルの追加
   $('#addattachment').click(function () {
+    requestWakeLock();
     $('#addattachment-select').click();
   });
 
@@ -937,6 +940,7 @@ require([
 
   // その他選択
   $("#filebtn").click(function () {
+    requestWakeLock();
     $("#file_select").click();
   });
   // その他選択イベント
@@ -1103,84 +1107,133 @@ require([
           var $elem = $(selector_table);
           var rowNo = $elem.children("div.row").length;
           var $tr = null;
-          if (callbacks.create_row != undefined) {
-            $tr = callbacks.create_row($elem[0]);
+          if (callbacks.upload_file_check_start != undefined){
+            callbacks.upload_file_check_start(i, file);
           }
           else {
-            $tr = $("<div class='row flex-box'></div>").appendTo($elem);
-            $tr.html("<div class='no'></div>" +
-              "<div class='flex-box attrib'>" +
-              "<div class='name'></div>" +
-              "<div class='size'></div>" +
-              "<div class='status'></div>" +
-              "</div>" +
-              "<div class='delete'><input type='button' value='削除' class='btn-del' /><input type='hidden' class='id' /><input type='hidden' class='size' /><input type='hidden' class='name' /></div>");
-          }
-          $tr.find("div.no").text(rowNo);
-          $tr.find("div.name").text(file.name);
-          $tr.find("div.size").text(func_file_size(file.size));
-          $tr.find("div.status").text("読込中");
-          // 削除ボタンクリック
-          $tr.find(".btn-del").click(function () {
-            // console.log("files[" + i + "].btn-del.click()");
-            $tr.remove();
-            var select_count = 0;
-            $elem.children("div").each(function (idx, tr) {
-              if (idx != 0) $(tr).find("div.no").text((idx).toString());
-              if ($(tr).find("input.id").length > 0 && $(tr).find("input.id").val().length > 0) select_count++;
-            });
-            // カウント表示の更新
-            if (select_count > 0) {
-              if (selector_label.length > 0) $(selector_label).text(select_count + "件のファイルが選択されました");
+            if (callbacks.create_row != undefined) {
+              $tr = callbacks.create_row($elem[0]);
             }
             else {
-              if (selector_label.length > 0) $(selector_label).text("");
+              $tr = $("<div class='row flex-box'></div>").appendTo($elem);
+              $tr.html("<div class='no'></div>" +
+                "<div class='flex-box attrib'>" +
+                "<div class='name'></div>" +
+                "<div class='size'></div>" +
+                "<div class='status'></div>" +
+                "</div>" +
+                "<div class='delete'><input type='button' value='削除' class='btn-del' /><input type='hidden' class='id' /><input type='hidden' class='size' /><input type='hidden' class='name' /></div>");
             }
-            if (callbacks.delete_button_click != undefined) {
-              callbacks.delete_button_click();
-            }
-            cancel = true;
-          });
+            $tr.find("div.no").text(rowNo);
+            $tr.find("div.name").text(file.name);
+            $tr.find("div.size").text(func_file_size(file.size));
+            $tr.find("div.status").text("読込中");
+            // 削除ボタンクリック
+            $tr.find(".btn-del").click(function () {
+              // console.log("files[" + i + "].btn-del.click()");
+              $tr.remove();
+              var select_count = 0;
+              $elem.children("div").each(function (idx, tr) {
+                if (idx != 0) $(tr).find("div.no").text((idx).toString());
+                if ($(tr).find("input.id").length > 0 && $(tr).find("input.id").val().length > 0) select_count++;
+              });
+              // カウント表示の更新
+              if (select_count > 0) {
+                if (selector_label.length > 0) $(selector_label).text(select_count + "件のファイルが選択されました");
+              }
+              else {
+                if (selector_label.length > 0) $(selector_label).text("");
+              }
+              if (callbacks.delete_button_click != undefined) {
+                callbacks.delete_button_click();
+              }
+              cancel = true;
+            });
+          }
           // ファイルチェック
           if (upload_file_type_white_list.length > 0 && !func_check_wildcard(file.type, upload_file_type_white_list) &&
             (upload_extension_white_list.length == 0 || (upload_extension_white_list.length > 0 && !func_check_wildcard(file.name, upload_extension_white_list)))) {
-
-            $tr.find(".status").html("<span style='color:red;'>アップロード不可(禁止タイプ)</span>");
+            
+            if (callbacks.upload_file_check_ng != undefined){
+              callbacks.upload_file_check_ng(i, file, "アップロード不可(禁止タイプ)");
+            }
+            else {
+              $tr.find(".status").html("<span style='color:red;'>アップロード不可(禁止タイプ)</span>");
+            }
             cancel = true;
           }
           if (upload_extension_white_list.length > 0 && !func_check_wildcard(file.name, upload_extension_white_list) &&
             (upload_file_type_white_list.length == 0 || (upload_file_type_white_list.length > 0 && !func_check_wildcard(file.type, upload_file_type_white_list)))) {
 
-            $tr.find(".status").html("<span style='color:red;'>アップロード不可(禁止拡張子)</span>");
+            if (callbacks.upload_file_check_ng != undefined){
+              callbacks.upload_file_check_ng(i, file, "アップロード不可(禁止拡張子)");
+            }
+            else {
+              $tr.find(".status").html("<span style='color:red;'>アップロード不可(禁止拡張子)</span>");
+            }
             cancel = true;
           }
           if (!cancel && upload_extension_black_list.length > 0 && func_check_wildcard(file.name, upload_extension_black_list)) {
-            $tr.find(".status").html("<span style='color:red;'>アップロード不可(禁止拡張子)</span>");
+            if (callbacks.upload_file_check_ng != undefined){
+              callbacks.upload_file_check_ng(i, file, "アップロード不可(禁止拡張子)");
+            }
+            else {
+              $tr.find(".status").html("<span style='color:red;'>アップロード不可(禁止拡張子)</span>");
+            }
             cancel = true;
           }
           // ファイルサイズチェック
           if (file.size == 0) {
-            $tr.find(".status").html("<span style='color:red;'>アップロード不可(空ファイル)</span>");
+            if (callbacks.upload_file_check_ng != undefined){
+              callbacks.upload_file_check_ng(i, file, "アップロード不可(空ファイル)");
+            }
+            else {
+              $tr.find(".status").html("<span style='color:red;'>アップロード不可(空ファイル)</span>");
+            }
             cancel = true;
           }
           if (file.size > upload_limit_file_size) {
-            $tr.find(".status").html("<span style='color:red;'>アップロード不可(サイズオーバー)</span>");
+            if (callbacks.upload_file_check_ng != undefined){
+              callbacks.upload_file_check_ng(i, file, "アップロード不可(サイズオーバー)");
+            }
+            else {
+              $tr.find(".status").html("<span style='color:red;'>アップロード不可(サイズオーバー)</span>");
+            }
             cancel = true;
           }
           if (!cancel) {
-            $tr.find(".status").html("<span style='color:black;'>準備中</span>");
+            if (callbacks.upload_ready != undefined){
+              callbacks.upload_ready(i, file);
+            }
+            else {
+              $tr.find(".status").html("<span style='color:black;'>準備中</span>");
+            }
             // ファイル読み込み開始
             read_file(file).then(function (args) {
               // ファイル読み込み完了
               // console.log("files[" + i + "](read_file.then())");
               // 読み込みBlobデータ保持
               var blob = args.event.target.result;
-              $tr.find(".status").html("<span style='color:blue;'>登録中</span>");
+              if (callbacks.upload_file_readed != undefined){
+                callbacks.upload_file_readed(i, file);
+              }
+              else {
+                $tr.find(".status").html("<span style='color:blue;'>登録中</span>");
+              }
               // アップロードファイル登録用Ajaxパラメータ作成
               var url = register_url;
+              if (callbacks.get_url_register != undefined){
+                url = callbacks.get_url_register();
+              }
+              let fileName = file.name;
+              let pos = fileName.lastIndexOf(".");
+              // 拡張子前の「.」を「_」へ置換
+              if (pos > -1){
+                fileName = fileName.substring(0, pos -1).split(".").join("_") + fileName.substring(pos);
+              }
               var form = new FormData();
               form.set("f", "json");
-              form.set("itemName", file.name);
+              form.set("itemName", fileName);
               form.set("token", token);
               var param = {
                 "url": url,
@@ -1197,22 +1250,28 @@ require([
                 // レスポンス処理
                 if (!cancel && registed_data != undefined && (registed_data.success || false)) {
                   // console.log("files[" + i + "](regist_upload_file.then())");
-                  $tr.find(".status").html("<span style='color:blue;'>登録完了</span>");
-                  $tr.find(".status").html("<span style='color:green;'>アップロード中(0%)</span><meter min='0' max='100' value='0'></meter>");
-                  
+                  if (callbacks.upload_file_registed != undefined){
+                    callbacks.upload_file_registed(i, file);
+                  }
+                  else {
+                    $tr.find(".status").html("<span style='color:blue;'>登録完了</span>");
+                    $tr.find(".status").html("<span style='color:green;'>アップロード中(0%)</span><meter min='0' max='100' value='0'></meter>");
+                  }
                   // Blobデータを指定サイズで分割
-                  blob = blob.slice(0, 200000000);
-                  var blobs = func_split_blob(blob, blob_chunk_size);
                   // 分割アップロード開始
-                  upload_blobs(blobs, {
+                  upload_split_blob(blob, blob_chunk_size, {
                     // 分割要素ごとのAjaxパラメータの作成
                     get_request_param: function (args) {
-                      var part_url = push_feature_url + "/uploads/" + registed_data.item.itemID + "/uploadPart";
+                      var part_url = push_feature_url;
+                      if (callbacks.get_url_push != undefined){
+                        part_url = callbacks.get_url_push();
+                      }
+                      part_url += "/uploads/" + registed_data.item.itemID + "/uploadPart";
                       var url = part_url;
                       var form = new FormData();
                       form.set("f", "json");
                       form.set("partId", args.index);
-                      form.set("file", new File([args.blobs[args.index]], file.name, { type: file.type }));
+                      form.set("file", new File([args.blob], fileName, { type: file.type }));
                       form.set("token", token);
                       var param = {
                         "url": url,
@@ -1230,10 +1289,13 @@ require([
                       // 処理中に削除ボタンが押されていたら処理をキャンセルする
                       args.cancel = cancel;
                       if (!args.cancel && args.data != undefined && (args.data.success || false)) {
-                        // console.log("files[" + i + "](upload_blobs.uploading())");
-                        // console.log(args);
                         // アップロード状況を更新
-                        $tr.find(".status").html("<span style='color:green;'>アップロード中(" + Math.ceil(((args.index + 1) / args.blobs.length) * 100) + "%)</span><meter min='0' max='100' value='" + Math.ceil(((args.index + 1) / args.blobs.length) * 100) + "'></meter>");
+                        if (callbacks.uploading != undefined){
+                          callbacks.uploading(i, file, Math.ceil(((args.index + 1) / args.division_count)*100));
+                        }
+                        else {
+                          $tr.find(".status").html("<span style='color:green;'>アップロード中(" + Math.ceil(((args.index + 1) / args.division_count) * 100) + "%)</span><meter min='0' max='100' value='" + Math.ceil(((args.index + 1) / args.division_count) * 100) + "'></meter>");
+                        }
                       }
                       else {
                         args.cancel = true;
@@ -1241,9 +1303,17 @@ require([
                     }
                   }).then(function (args) {
                     // 分割アップロード完了
-                    // console.log("files[" + i + "](upload_blobs.then())");
-                    $tr.find(".status").html("<span style='color:blue;'>適用中</span>");
-                    var url = push_feature_url + "/uploads/" + registed_data.item.itemID + "/commit";
+                    if (callbacks.upload_commit_start != undefined){
+                      callbacks.upload_commit_start(i, file);
+                    }
+                    else {
+                      $tr.find(".status").html("<span style='color:blue;'>適用中</span>");
+                    }
+                    var url = push_feature_url;
+                    if (callbacks.get_url_push != undefined) {
+                      url = callbacks.get_url_push();
+                    }
+                    url += "/uploads/" + registed_data.item.itemID + "/commit";
                     var form = new FormData();
                     form.set("f", "json");
                     form.set("token", token);
@@ -1260,11 +1330,17 @@ require([
                     request_ajax(param).then(function (args) {
                       // レスポンス処理
                       if (!cancel && args != undefined && (args.success || false)) {
+
                         // console.log("files[" + i + "](commit_upload_file.then())");
-                        $tr.find(".status").html("<span style='font-weight:bold;color:blue;'>追加済み</span>");
-                        $tr.find("input.id").val(registed_data.item.itemID);
-                        $tr.find("input.name").val(file.name);
-                        $tr.find("input.size").val(file.size);
+                        if (callbacks.upload_commit_applied){
+                          callbacks.upload_commit_applied(i, file, registed_data);
+                        }
+                        else {
+                          $tr.find(".status").html("<span style='font-weight:bold;color:blue;'>追加済み</span>");
+                          $tr.find("input.id").val(registed_data.item.itemID);
+                          $tr.find("input.name").val(file.name);
+                          $tr.find("input.size").val(file.size);
+                        }
                         if (callbacks.hasExif != undefined) {
                           $.fileExif(file, function (exif) {
                             if (!cancel) {
@@ -1291,33 +1367,63 @@ require([
                       }
                       else {
                         // キャンセル/エラー時
-                        $tr.find(".status").html("<span style='color:red;'>適用失敗</span>");
+                        if (callbacks.upload_commit_failed != undefined){
+                          callbacks.upload_commit_failed(i, file, "適用失敗");
+                        }
+                        else {
+                          $tr.find(".status").html("<span style='color:red;'>適用失敗</span>");
+                        }
                         defer.reject();
                       }
                     }).fail(function () {
                       // アップロードファイル適用AjaxRequestエラー時
-                      $tr.find(".status").html("<span style='color:red;'>適用失敗</span>");
+                      if (callbacks.upload_commit_failed != undefined){
+                        callbacks.upload_commit_failed(i, file, "適用失敗");
+                      }
+                      else {
+                        $tr.find(".status").html("<span style='color:red;'>適用失敗</span>");
+                      }
                       defer.reject();
                     });
                   }).fail(function () {
                     // 分割アップロードAjaxRequestエラー時
-                    $tr.find(".status").html("<span style='color:red;'>アップロード失敗</span>");
+                    if (callbacks.upload_failed != undefined){
+                      callbacks.upload_failed(i, file, "アップロード失敗");
+                    }
+                    else {
+                      $tr.find(".status").html("<span style='color:red;'>アップロード失敗</span>");
+                    }
                     defer.reject();
                   });
                 }
                 else {
                   // キャンセル/失敗時
-                  $tr.find(".status").html("<span style='color:red;'>登録失敗</span>");
+                  if (callbacks.upload_file_regist_failed != undefined){
+                    callbacks.upload_file_regist_failed(i, file, "登録失敗");
+                  }
+                  else {
+                    $tr.find(".status").html("<span style='color:red;'>登録失敗</span>");
+                  }
                   defer.reject();
                 }
               }).fail(function () {
                 // アップロードファイル登録AjaxRequestエラー時
-                $tr.find(".status").html("<span style='color:red;'>登録失敗</span>");
+                if (callbacks.upload_file_regist_failed != undefined){
+                  callbacks.upload_file_regist_failed(i, file, "登録失敗");
+                }
+                else {
+                  $tr.find(".status").html("<span style='color:red;'>登録失敗</span>");
+                }
                 defer.reject();
               });
             }).fail(function () {
               // ファイル読み込みエラー時
-              $tr.find(".status").html("<span style='color:red;'>読込失敗</span>");
+              if (callbacks.upload_file_read_error){
+                callbacks.upload_file_read_error(i, file, "読込失敗");
+              }
+              else {
+                $tr.find(".status").html("<span style='color:red;'>読込失敗</span>");
+              }
               defer.reject();
             });
           }
@@ -1362,6 +1468,9 @@ require([
     if (callbacks.hasExif != undefined && exifs.length > 0) {
       callbacks.hasExif(exifs);
     }
+
+    //Screen Wake Lock APIの無効化
+    releaseWakeLock();
   }
   /**
    * ファイルの読み込み
@@ -1393,52 +1502,34 @@ require([
     });
   }
   /**
-   * Blobデータの分割
+   * Blobデータの分割アップロード
    * @param {Blob} blob 
    * @param {int} chunk_size 
-   * @returns {Blob[]}
-   */
-  function func_split_blob(blob, chunk_size) {
-    
-
-    // Blob分割数算出
-    var division_count = Math.ceil(blob.byteLength / chunk_size);
-    var offset = 0;
-    var blobs = new Array();
-    for (var i = 0; i < division_count; i++) {
-      // Blobを指定位置で指定長分割し、配列にセット(最終サイズをオーバーした場合は切り詰められる)
-      blobs.push(blob.slice(offset, offset + chunk_size));
-      offset += chunk_size;
-    }
-    // 分割Blob返却
-    return blobs;
-  }
-
-  /**
-   * Blobデータの分割アップロード
-   * @param {Blob[]} blobs 
-   * @param {Object} callbacks 
    * @returns {Promise}
    */
-  function upload_blobs(blobs, callbacks) {
-    return new $.Deferred(function (defer) {
+  function upload_split_blob(blob, chunk_size, callbacks) {
+    return new $.Deferred(function(defer) {
+      // Blob分割数算出
+      var division_count = Math.ceil(blob.byteLength / chunk_size);
       callbacks = callbacks || {};
       // 内部呼び出しファンクション
-      function upload_blob(blobs, index) {
+      function upload_blob(index, offset) {
+        let _blob = blob.slice(offset, offset + chunk_size);
+        offset += chunk_size;
         // リクエストパラメータ生成コールバックをたたく
-        var param = (callbacks.get_request_param || function () { })({ blobs: blobs, index: index });
+        var param = (callbacks.get_request_param || function () { })({ blob: _blob, index: index, division_count: division_count });
         param = param || {};
         // AjaxRequest
         $.ajax(param).done(function (data) {
           // レスポンス処理
-          var args = { cancel: false, blobs: blobs, index: index, data: data };
+          var args = { cancel: false, blob: _blob, index: index, division_count: division_count, data: data };
           // ローディング中コールバックをたたく
           (callbacks.uploading || function () { })(args);
           // キャンセル判定
           if (!args.cancel) {
-            if (index < (blobs.length - 1)) {
+            if (index < (division_count - 1)) {
               // 配列途中の場合
-              upload_blob(blobs, index + 1);
+              upload_blob(index + 1, offset);
             }
             else {
               // 配列最終の場合
@@ -1447,7 +1538,7 @@ require([
           }
           else {
             // キャンセル時
-            defer.reject({ status: "cancel", blobs: blobs, index: index, data: data });
+            defer.reject({ status: "cancel", blob: _blob, index: index, division_count: division_count, data: data });
           }
         }).fail(function (e) {
           // リクエストエラー時
@@ -1455,7 +1546,7 @@ require([
         });
       }
       // 配列先頭から
-      upload_blob(blobs, 0);
+      upload_blob(0, 0);
     });
   }
   /**
@@ -3044,4 +3135,23 @@ function clear_pass_form() {
   $("#new-password").val("");
   $("#retype-password").val("");
   $("#warnDiv").html("");
+}
+
+//端末のスリープ回避　Screen Wake Lock APIの有効化（イベント処理直下から呼び出す）
+const requestWakeLock = async () => {
+  try {
+    wakeLock = await navigator.wakeLock.request('screen');
+  } catch (err) {
+    console.log(`${err.name}, ${err.message}`);
+  }
+}
+
+//Screen Wake Lock APIの無効化
+const releaseWakeLock = () => {
+  if (wakeLock) {
+    wakeLock.release()
+      .then(() => {
+        wakeLock = null;
+      })
+  }
 }
