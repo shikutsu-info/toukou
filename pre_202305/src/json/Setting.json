@@ -267,7 +267,7 @@
       }
     },
     "en": {
-      "header-img-path": "<img class=\"header_img\" src=\"./src/img/header.svg\" /><img class=\"header_small_img\" src=\"./src/img/header_small.svg\" />",
+      "header-img-path": "<img class=\"header_img\" src=\"./src/img/header_en.svg\" /><img class=\"header_small_img\" src=\"./src/img/header_small_en.svg\" />",
       "init_latitude": 38.895,
       "init_longitude": -77.036,
       "anonymouspanel-button": "Sign in",
