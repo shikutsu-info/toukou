@@ -1,0 +1,895 @@
+{
+  "webappId" : "U9Z7si0Dpc1vGi3P",
+  "get_kaisha_url": "https://services9.arcgis.com/7Y7Ln4IMda1fVxtt/arcgis/rest/services/CHIKADIGI_FS_SOLA_04/FeatureServer/1",
+  "layer_id": "0",
+  "history_webmap_id": "2055600aa8fe44619e4af203181a54ea",
+  "basemap_id": "accf3eff22254ed69e23afeb094a4881",
+  "basescene_id": "f4bed046f9f74cf28af3f712949719b0",
+  "creator_field": "created_user",
+  "create_date_field": "created_date",
+  
+  "user_setting": {
+    "toko": "1",
+    "Request_filetype01": "1"
+  },
+  "ngCharacters": [
+    "\\",
+    "/",
+    ":",
+    "*",
+    "?",
+    "\"",
+    "<",
+    ">",
+    "|"
+  ],
+  "list_lang_select_item":[
+    {
+      "value":"ja",
+      "html":"日本語"
+    },
+    {
+      "value":"en",
+      "html":"English"
+    },
+    {
+      "value":"deu",
+      "html":"Deutsch"
+    }
+  ],
+  "languages":{
+    "ja": {
+      "header-img":"./src/img/header.svg",
+      "header-small-img":"./src/img/header_small.svg",
+
+      "init_latitude": 35.682,
+      "init_longitude": 139.75, 
+      "init_zoom": 10,
+
+      "anonymouspanel-button":"サインイン",
+      "anonymouspanel-headline":"言語設定：",
+      
+      "header-title": "掘削状況3D管理アプリ　ちかデジ",
+      "header-button-signout":"サインアウト",
+      "header-companyname":"契約企業：",
+            
+      "maindiv-tag-videos":"動画<br/>投稿",
+      "maindiv-tag-files":"ファイル<br/>共有",
+      "maindiv-tag-settings":"設定",
+      "maindiv-headline-posting":"動画を投稿する",
+      "maindiv-button-posting":"投稿する",
+      "maindiv-button-guide":"ご利用ガイド",
+      "maindiv-radio-list":"リスト",
+      "maindiv-radio-map":"マップ",
+      "maindiv-map-label-name":"投稿者名",
+      "maindiv-map-label-adress":"住所",
+      "maindiv-map-label-remark":"備考",
+      "maindiv-map-label-date":"投稿日時",
+      "maindiv-map-btn-view":"閲覧",
+      "maindiv-map-btn-del":"削除",
+      "maindiv-headline-history":"過去の投稿を確認する",
+      "maindiv-toolmenu-headline":"並べ替え",
+      "maindiv-th-title":"タイトル（試掘名)",
+      "maindiv-th-date":"投稿日時",
+      "maindiv-th-name":"投稿者名",
+      "maindiv-th-adress":"住所　　",
+      "maindiv-th-remark":"備考　　",
+      "maindiv-th-conf":"確認　　",
+      "maindiv-tbl-btn-view":"閲覧",
+      "maindiv-tbl-btn-del":"削除",
+      "maindiv-confmsg-del":"削除しますか？",
+
+      "uploadattach-headline1":"ファイルをアップロードする",
+      "uploadattach-btn-upload":"アップロード",
+      "uploadattach-annotation":" ※統合用図面データ等はこちら",
+      "uploadattach-headline2":"ユーザー アップロード",
+      "uploadattach-headline3":"ジオ・サーチ アップロード",
+      "file-name":"ファイル名",
+      "upload-date":"アップロード日時",
+      "upload-stat":"アップロード状況",
+      "regist-start":"登録開始",
+      "userid":"利用者ID",
+      "confirm":"確認",
+      "uploadattach-tbl-btn-dl":"ダウンロード",
+      "uploadattach-tbl-btn-del":"削除",
+      "uploadattach-confmsg-del":"削除しますか？",
+
+      "settings-headline1":"ユーザー設定を変更する",
+      "settings-headline2":"パスワードを変更する",
+      "settings-btn-chgconf":"変更する",
+      "settings-btn-chgpass":"変更する",
+
+      "userconf-headline1":"投稿データの位置指定",
+      "userconf-radio-menu1":"端末のGPS",
+      "userconf-radio-menu2":"写真の位置情報",
+      "userconf-headline2":"希望成果品の初期値",
+      "userconf-btn-saving":"保存",
+      "userconf-btn-return":"戻る",
+      "userconf-msg-saving":"保存が完了しました。",
+
+      "changediv-headline1":"現在のパスワード",
+      "changediv-headline2":"新しいパスワード",
+      "changediv-headline3":"新しいパスワード(再入力)",
+      "changediv-msg-nopwd":"現在のパスワードが入力されていません。",
+      "changediv-msg-nonewpwd":"新しいパスワードが入力されていません。",
+      "changediv-msg-norepwd":"新しいパスワード（再入力）が入力されていません。",
+      "changediv-msg-samepwd":"現在のパスワードと新しいパスワードが一致しています。",
+      "changediv-msg-nomatch":"新しいパスワードと再入力したパスワードが一致しません。",
+      "changediv-msg-wrongpwd":"現在のパスワードが間違っています。",
+      "changediv-msg-failconf":"現在のパスワードの確認に失敗しました。",
+      
+
+      "warndiv-btn-saving":"パスワードの変更",
+      "warndiv-btn-return":"戻る",
+      "warndiv-msg-fail":"パスワードの変更に失敗しました。",
+      
+
+      "formdiv-headline1":"会社ID",
+      "formdiv-headline2":"タイトル（試掘名)",
+      "formdiv-headline3":"投稿者名",
+      "formdiv-headline4":"場所",
+      "formdiv-btn-close":"▲ 閉じる",
+      "formdiv-btn-open":"▼ 開く",
+      "formdiv-griddiv-annotation":"場所を指定してください",
+      "formdiv-griddiv-lat":"緯度:",
+      "formdiv-griddiv-long":"経度:",
+      "formdiv-headline5":"住所",
+      "formdiv-headline6":"現場区分",
+      "formdiv-headline7":"管情報",
+      "formdiv-annotation1":"※入力内容は平面図・断面図・3Dモデリングに反映されます",
+      "formdiv-headline8":"座標情報(単位:m)",
+      "formdiv-annotation2":"※座標付与を希望する場合のみ記入してください<br>※別途座標データを添付する場合は入力不要です",
+      "formdiv-headline9":"備考",
+      "formdiv-headline10":"投稿ファイル選択",
+      "formdiv-annotation3":"※各ファイル1GBまで",
+      "formdiv--btn-extensions":"許可されているファイル",
+      "formdiv-tbl-btn-select":"ファイルの選択",
+      "formdiv-tbl-row1":"No",
+      "formdiv-tbl-row2":"ファイル名",
+      "formdiv-tbl-row3":"サイズ",
+      "formdiv-tbl-row4":"状況",
+      "formdiv-tbl-stat-load":"読込中",
+      "formdiv-tbl-stat-type":"アップロード不可(禁止タイプ)",
+      "formdiv-tbl-stat-extension":"アップロード不可(禁止拡張子)",
+      "formdiv-tbl-stat-empty":"アップロード不可(空ファイル)",
+      "formdiv-tbl-stat-oversize":"アップロード不可(サイズオーバー)",
+      "formdiv-tbl-stat-prepar":"準備中",
+      "formdiv-tbl-stat-regist":"登録中",
+      "formdiv-tbl-stat-registcomp":"登録完了",
+      "formdiv-tbl-stat-upload":"アップロード中",
+      "formdiv-tbl-stat-apply":"適用中",
+      "formdiv-tbl-stat-add":"追加済み",
+      "formdiv-tbl-stat-applyfail":"適用失敗",
+      "formdiv-tbl-stat-uploadfail":"アップロード失敗",
+      "formdiv-tbl-stat-registfail":"登録失敗",
+      "formdiv-tbl-stat-loadfail":"読込失敗",
+      "formdiv-tbl-msg-filenum1":"{0}件の{1}が選択されました",
+      "formdiv-tbl-msg-filenum2":"件のファイルが選択されました",
+      "formdiv-tbl-button":"全削除",
+      "formdiv-headline11":"希望成果品",
+      "formdiv-annotation4":"※☑があるもののみ作成されます",
+      "formdiv-headline12":"座標付与(点群データ/3Dモデリング)",
+      "formdiv-annotation5":"※有償となります",
+      "formdiv-btn-send":"送信",
+      "formdiv-btn-sending":"送信中",
+      "formdiv-btn-clear":"クリア",
+      "formdiv-btn-return":"戻る",
+      "formdiv-btn-del":"削除",
+      "formdiv-confmsg-location":"選択した画像から位置情報が検出されました。地図を移動させますか？",
+      "formdiv-func-argument":"ファイル",
+
+      "completediv-msg":"正常に投稿されました",
+      "completediv-btn-return":"戻る",
+
+      
+      "viewformdiv-headline1":"タイトル（試掘名)",
+      "viewformdiv-headline2":"投稿者名",
+      "viewformdiv-headline3":"場所",
+      "viewformdiv-btn-close":"▲ 閉じる",
+      "viewformdiv-btn-open":"▼ 開く",
+      "viewformdiv-headline4":"住所",
+      "viewformdiv-headline5":"現場区分",
+      "viewformdiv-headline6":"管情報",
+      "viewformdiv-annotation1":"※入力内容は平面図・断面図・3Dモデリングに反映されます",
+      "viewformdiv-headline7":"座標情報(単位:m)",
+      "viewformdiv-annotation2":"※座標付与を希望する場合のみ記入してください<br>※別途座標データを添付する場合は入力不要です",
+      "viewformdiv-headline8":"備考",
+      "viewformdiv-headline9":"希望成果品",
+      "viewformdiv-annotation3":"※☑があるもののみ作成されます",
+      "viewformdiv-headline10":"座標付与(点群データ/3Dモデリング)",
+      "viewformdiv-annotation4":"※有償となります",
+      "viewformdiv-btn-edit":"登録情報の編集",
+      "viewformdiv-btn-send":"登録",
+      "viewformdiv-btn-cancel":"キャンセル",
+      "viewformdiv-headline11":"３Ｄシーン",
+      "viewformdiv-headline12":"３Ｄシーン",
+      "viewformdiv-measuretool-title":"計測ツール",
+      "viewformdiv-measuretool-distance":"距離計測",
+      "viewformdiv-measuretool-area":"面積計測",
+      "viewformdiv-measuretool-clear":"クリア",
+      "viewformdiv-headline13":"添付ファイル",
+      "viewformdiv-btn-allowed":"許可されているファイル",
+      "viewformdiv-link-download":"ダウンロード",
+      "viewformdiv-btn-del":"削除",
+      "viewformdiv-btn-add":"添付ファイルの追加",
+      "viewformdiv-btn-return":"戻る",
+      "viewformdiv-func-argument":"添付",
+
+      "helpdiv-btn-return":"戻る",
+      "helpdiv-headline1":"掘削状況3D管理アプリ　ちかデジ　ご利用ガイド",
+      "helpdiv-headline2":"ご利用ガイド(ALL再生)",
+      "helpdiv-headline3":"1.現地撮影",
+      "helpdiv-headline4":"2.サインイン",
+      "helpdiv-headline5":"3.動画データの投稿",
+      "helpdiv-headline6":"4.作成データの閲覧・保存",
+      "helpdiv-headline7":"5.3D PDFの操作",
+      
+      "popup-headline":"サポートされているファイル形式",
+      "popup-annotation":"上記ファイル以外はZIPファイルにしてください",
+
+      "alert-invalidurl":"指定したURLでは本システムは利用できません。",
+      "alert-signout":"サインアウトしました",
+      "alert-failureurl":"URLの取得に失敗しました。",
+      "alert-user":"システムを利用できるユーザーではありません",
+      "alert-nodata":"選択した情報は存在しないか削除されています",
+      "alert-companyid":"会社IDが指定されていないため送信できません",
+      "alert-title":"タイトルは必須です",
+      "alert-ngchara":"入力項目には禁止文字が入力されています",
+      "alert-size1":"投稿ファイルの合計サイズが上限(",
+      "alert-size2":")を超えています",
+      "alert-location":"場所が指定されていません",
+      "alert-deliverables":"希望成果品が指定されていません",
+      "alert-changepass":" パスワードを変更しました。再ログインしてください。",
+
+      "upload-info-added":"追加済み",
+      "upload-info-fail":"追加失敗",
+      "upload-info-apply":"適用中",
+      "upload-info-uploding":"アップロード中",
+      "upload-info-Regist":"登録中",
+      "upload-info-prep":"準備中",
+
+      "list_order_select_item": [
+        {
+          "value": "",
+          "html": "未設定"
+        },
+        {
+          "value": "Title",
+          "html": "タイトル(試掘名)"
+        },
+        {
+          "value": "created_date",
+          "html": "投稿日時(昇順)"
+        },
+        {
+          "value": "created_date desc",
+          "html": "投稿日時(降順)"
+        },
+        {
+          "value": "created_user",
+          "html": "投稿者名(昇順)"
+        },
+        {
+          "value": "created_user desc",
+          "html": "投稿者名(降順)"
+        }
+      ],
+      "select_option_list": {
+        "GenbaKubun": [
+          {
+            "value": "車道部",
+            "text": "車道部"
+          },
+          {
+            "value": "歩道部",
+            "text": "歩道部"
+          },
+          {
+            "value": "歩車道部",
+            "text": "歩車道部"
+          },
+          {
+            "value": "敷地内",
+            "text": "敷地内"
+          }
+        ],
+        "ZahyoFuyo": [
+          {
+            "value": "0",
+            "text": "しない"
+          },
+          {
+            "value": "1",
+            "text": "する"
+          }
+        ]
+      },
+
+      "default_value_formDiv": {
+        "kaninfo": "管①　管種：　　管径Φ：\r\n管②　管種：　　管径Φ：\r\n管③　管種：　　管径Φ：\r\n管④　管種：　　管径Φ：\r\n管⑤　管種：　　管径Φ：",
+        "zahyojoho": "座標①　　x：　　　y：　　　z：\r\n座標②　　x：　　　y：　　　z：\r\n座標③　　x：　　　y：　　　z："
+      }
+
+    },
+    "en": {
+      "header-img":"./src/img/header_en.svg",
+      "header-small-img":"./src/img/header_small_en.svg",
+
+      "init_latitude": 38.895,
+      "init_longitude": -77.036, 
+      "init_zoom": 10,
+
+      "anonymouspanel-button":"Sign in",
+      "anonymouspanel-headline":"Language：",
+
+      "header-title": "Drinlling Status 3D Mgmt App　TikaDigi",
+      "header-button-signout":"Sign out",
+      "header-companyname":"Contractor:",
+      
+      "maindiv-tag-videos":"Video<br/>Posting",
+      "maindiv-tag-files":"File<br/>Sharing",
+      "maindiv-tag-settings":"Settings",
+      "maindiv-headline-posting":"Video Posting",
+      "maindiv-button-posting":"Posting",
+      "maindiv-button-guide":"User's Guide",
+      "maindiv-radio-list":"List",
+      "maindiv-radio-map":"Map",
+      "maindiv-map-label-name":"Created_user",
+      "maindiv-map-label-adress":"Adress",
+      "maindiv-map-label-remark":"Remark",
+      "maindiv-map-label-date":"Posting date",
+      "maindiv-map-btn-view":"View",
+      "maindiv-map-btn-del":"Delete",
+      "maindiv-headline-history":"Check past postings",
+      "maindiv-toolmenu-headline":"Sort by",
+      "maindiv-th-title":"Title (name of exploration)",
+      "maindiv-th-date":"Posting date",
+      "maindiv-th-name":"Created_user",
+      "maindiv-th-adress":"Adress",
+      "maindiv-th-remark":"Remark",
+      "maindiv-th-conf":"Confirmation",
+      "maindiv-tbl-btn-view":"View",
+      "maindiv-tbl-btn-del":"Delete",
+      "maindiv-confmsg-del":"Delete it?",
+
+      "uploadattach-headline1":"Upload Files",
+      "uploadattach-btn-upload":"Uploads",
+      "uploadattach-annotation":" ※Here is the integrated drawing data, etc.",
+      "uploadattach-headline2":"User Uploads",
+      "uploadattach-headline3":"GEO-SEARCH Uploads",
+      "file-name":"File name",
+      "upload-date":"Upload Date",
+      "upload-stat":"Upload Status",
+      "regist-start":"Registration Start",
+      "userid":"User ID",
+      "confirm":"Confirm",
+      "uploadattach-tbl-btn-dl":"Donwload",
+      "uploadattach-tbl-btn-del":"Delete",
+      "uploadattach-confmsg-del":"Delete it?",
+
+      "settings-headline1":"Changing user settings",
+      "settings-headline2":"Change Password",
+      "settings-btn-chgconf":"Modify",
+      "settings-btn-chgpass":"Modify",
+
+      "userconf-headline1":"Positioning of submission data",
+      "userconf-radio-menu1":"The GPS of the device",
+      "userconf-radio-menu2":"EXIF information of the photo",
+      "userconf-headline2":"Initial value of the deliverable",
+      "userconf-btn-saving":"Saving",
+      "userconf-btn-return":"Return",
+      "userconf-msg-saving":"Saving is completed.",
+
+      "changediv-headline1":"Current Password",
+      "changediv-headline2":"New Password",
+      "changediv-headline3":"New Password (Retype)",
+      "changediv-msg-nopwd":"Current password not entered.",
+      "changediv-msg-nonewpwd":"New password not entered.",
+      "changediv-msg-norepwd":"New password (re-enter)  not entered.",
+      "changediv-msg-samepwd":"Current and new passwords match.",
+      "changediv-msg-nomatch":"New password does not match the password you re-entered.",
+      "changediv-msg-wrongpwd":"Current password is incorrect.",
+      "changediv-msg-failconf":"Failed to confirm current password.",
+
+      "warndiv-btn-saving":"Saving",
+      "warndiv-btn-return":"Return",
+      "warndiv-msg-fail":"Failed to change password.",
+      
+
+      "formdiv-headline1":"Company ID",
+      "formdiv-headline2":"Title (name of exploration)",
+      "formdiv-headline3":"Contributor's Name",
+      "formdiv-headline4":"Location",
+      "formdiv-btn-close":"▲ Close",
+      "formdiv-btn-open":"▼ Open",
+      "formdiv-griddiv-annotation":"Please specify location",
+      "formdiv-griddiv-lat":"Latitude:",
+      "formdiv-griddiv-long":"Longitude:",
+      "formdiv-headline5":"Address",
+      "formdiv-headline6":"Field classification",
+      "formdiv-headline7":"Pipe Spec",
+      "formdiv-annotation1":"※The input contents are reflected in floor plans, cross sections, and 3D modeling",
+      "formdiv-headline8":"Coordinate information (unit: m)",
+      "formdiv-annotation2":"※Please fill in only if you wish to assign coordinates<br>※No entry is required if you attach the coordinate data separately",
+      "formdiv-headline9":"Remarks",
+      "formdiv-headline10":"File Selection",
+      "formdiv-annotation3":"※Up to 1 GB for each file",
+      "formdiv--btn-extensions":"Allowed extensions",
+      "formdiv-tbl-btn-select":"File Selection",
+      "formdiv-tbl-row1":"No",
+      "formdiv-tbl-row2":"File",
+      "formdiv-tbl-row3":"Size",
+      "formdiv-tbl-row4":"Status",
+      "formdiv-tbl-stat-load":"Loading",
+      "formdiv-tbl-stat-type":"Not uploadable (prohibited type)",
+      "formdiv-tbl-stat-extension":"Not uploadable (prohibited extensions)",
+      "formdiv-tbl-stat-empty":"Not uploadable (empty file)",
+      "formdiv-tbl-stat-oversize":"Not uploadable (oversize)",
+      "formdiv-tbl-stat-prepar":"Preparing",
+      "formdiv-tbl-stat-regist":"Registering",
+      "formdiv-tbl-stat-registcomp":"Registration Completed",
+      "formdiv-tbl-stat-upload":"Uploading ",
+      "formdiv-tbl-stat-apply":"Applying ",
+      "formdiv-tbl-stat-add":"Added",
+      "formdiv-tbl-stat-applyfail":"Failure to apply",
+      "formdiv-tbl-stat-uploadfail":"Upload failure",
+      "formdiv-tbl-stat-registfail":"Registration failure",
+      "formdiv-tbl-stat-loadfail":"Loading failure",
+      "formdiv-tbl-msg-filenum1":"{0} {1} selected",
+      "formdiv-tbl-msg-filenum2":"file selected",
+      "formdiv-tbl-button":"Delete all",
+      "formdiv-headline11":"Desired deliverables",
+      "formdiv-annotation4":"※Only those with ☑ will be created",
+      "formdiv-headline12":"Coordinate assignment (point cloud data/3D modeling)",
+      "formdiv-annotation5":"※It will be charged",
+      "formdiv-btn-send":"Send",
+      "formdiv-btn-sending":"Sending",
+      "formdiv-btn-clear":"Clear",
+      "formdiv-btn-return":"Return",
+      "formdiv-btn-del":"Delete",
+      "formdiv-confmsg-location":"Location information was detected in the selected image. Would you like to move the map?",
+      "formdiv-func-argument":"file",
+
+      "completediv-msg":"Posted successfully",
+      "completediv-btn-return":"Return",
+
+      
+      "viewformdiv-headline1":"Title (name of exploration)",
+      "viewformdiv-headline2":"Contributor's Name",
+      "viewformdiv-headline3":"Location",
+      "viewformdiv-btn-close":"▲ Close",
+      "viewformdiv-btn-open":"▼ Open",
+      "viewformdiv-headline4":"Address",
+      "viewformdiv-headline5":"Field classification",
+      "viewformdiv-headline6":"Pipe Spec",
+      "viewformdiv-annotation1":"※The input contents are reflected in floor plans, cross sections, and 3D modeling",
+      "viewformdiv-headline7":"Coordinate information (unit: m)",
+      "viewformdiv-annotation2":"※Please fill in only if you wish to assign coordinates<br>※No entry is required if you attach the coordinate data separately",
+      "viewformdiv-headline8":"Remarks",
+      "viewformdiv-headline9":"Desired deliverables",
+      "viewformdiv-annotation3":"※Only those with ☑ will be created",
+      "viewformdiv-headline10":"Coordinate assignment (point cloud data/3D modeling)",
+      "viewformdiv-annotation4":"※It will be charged",
+      "viewformdiv-btn-edit":"Edit",
+      "viewformdiv-btn-send":"Send",
+      "viewformdiv-btn-cancel":"Cancel",
+      "viewformdiv-headline11":"3D Scene",
+      "viewformdiv-headline12":"3D Scene",
+      "viewformdiv-measuretool-title":"Measurement Tools",
+      "viewformdiv-measuretool-distance":"Distance meas.",
+      "viewformdiv-measuretool-area":"Area meas.",
+      "viewformdiv-measuretool-clear":"Clear",
+      "viewformdiv-headline13":"Attachments",
+      "viewformdiv-btn-allowed":"Allowed extensions",
+      "viewformdiv-link-download":"Download",
+      "viewformdiv-btn-del":"Delete",
+      "viewformdiv-btn-add":"Add Attachments",
+      "viewformdiv-btn-return":"Return",
+      "viewformdiv-func-argument":"attachment",
+
+      "helpdiv-btn-return":"Return",
+      "helpdiv-headline1":"TikaDigi User's Guide",
+      "helpdiv-headline2":"User's Guide (ALL Playback)",
+      "helpdiv-headline3":"1. On-Site Photography",
+      "helpdiv-headline4":"2. Sign in",
+      "helpdiv-headline5":"3. Video data posting",
+      "helpdiv-headline6":"4. Viewing and saving of created data",
+      "helpdiv-headline7":"5. 3D PDF Manipulation",
+      
+      "popup-headline":"Supported File Formats",
+      "popup-annotation":"※All other files except those listed above should be in a ZIP file.",
+
+      "alert-invalidurl":"This system is not available at the specified URL.",
+      "alert-signout":"Signed out",
+      "alert-failureurl":"Failed to retrieve URL.",
+      "alert-user":"You are not a system-enabled user",
+      "alert-nodata":"The selected information does not exist or has been deleted",
+      "alert-companyid":"Unable to send because company ID is not specified",
+      "alert-title":"Title is required",
+      "alert-ngchara":"Prohibited characters are entered in the input fields",
+      "alert-size1":"Total size of submitted files exceeds the limit(",
+      "alert-size2":")",
+      "alert-location":"Location not specified",
+      "alert-deliverables":"Deliverables are not specified",
+      "alert-changepass":" Password changed. Please log in again.",
+
+      "upload-info-added":"Added",
+      "upload-info-fail":"Addition Failure",
+      "upload-info-apply":"Applying",
+      "upload-info-uploding":"Uploding",
+      "upload-info-Regist":"Registering",
+      "upload-info-prep":"Preparing",
+
+      "list_order_select_item": [
+        {
+          "value": "",
+          "html": "unset"
+        },
+        {
+          "value": "Title",
+          "html": "Title (name of exploration)"
+        },
+        {
+          "value": "created_date",
+          "html": "Posting date (asc)"
+        },
+        {
+          "value": "created_date desc",
+          "html": "Posting date (desc)"
+        },
+        {
+          "value": "created_user",
+          "html": "Poster Name(asc)"
+        },
+        {
+          "value": "created_user desc",
+          "html": "Poster Name(desc)"
+        }
+      ],
+      "select_option_list": {
+        "GenbaKubun": [
+          {
+            "value": "車道部",
+            "text": "roadway area"
+          },
+          {
+            "value": "歩道部",
+            "text": "sidewalk area"
+          },
+          {
+            "value": "歩車道部",
+            "text": "road section"
+          },
+          {
+            "value": "敷地内",
+            "text": "premises"
+          }
+        ],
+        "ZahyoFuyo": [
+          {
+            "value": "0",
+            "text": "No"
+          },
+          {
+            "value": "1",
+            "text": "Select"
+          }
+        ]
+      },
+
+      "default_value_formDiv": {
+        "kaninfo": "pipe①　type：　　diameterΦ：\r\npipe②　type：　　diameterΦ：\r\npipe③　type：　　diameterΦ：\r\npipe④　type：　　diameterΦ：\r\npipe⑤　type：　　diameterΦ：",
+        "zahyojoho": "Coord①　　x：　　　y：　　　z：\r\nCoord②　　x：　　　y：　　　z：\r\nCoord③　　x：　　　y：　　　z："
+      }
+
+      
+    }
+  },
+
+  "blob_chunk_size": 10485760,
+  "upload_limit_file_size": 1073741824,
+  "upload_limit_total_file_size": 100000000000,
+  "upload_file_type_white_list": [
+    "movie/*",
+    "image/*"
+  ],
+  "upload_extension_white_list": [
+    "*.7z",
+    "*.aif",
+    "*.avi",
+    "*.bmp",
+    "*.csv",
+    "*.doc",
+    "*.docx",
+    "*.dot",
+    "*.ecw",
+    "*.emf",
+    "*.eps",
+    "*.geojson",
+    "*.gif",
+    "*.gml",
+    "*.gpkg",
+    "*.gtar",
+    "*.gz",
+    "*.img",
+    "*.j2k",
+    "*.jp2",
+    "*.jpc",
+    "*.jpe",
+    "*.jpeg",
+    "*.jpf",
+    "*.jpg",
+    "*.json",
+    "*.m4a",
+    "*.mdb",
+    "*.mid",
+    "*.mov",
+    "*.mp2",
+    "*.mp3",
+    "*.mp4",
+    "*.mpa",
+    "*.mpe",
+    "*.mpeg",
+    "*.mpg",
+    "*.mpv2",
+    "*.pdf",
+    "*.png",
+    "*.ppt",
+    "*.pptx",
+    "*.ps",
+    "*.psd",
+    "*.qt",
+    "*.ra",
+    "*.ram",
+    "*.raw",
+    "*.rmi",
+    "*.sid",
+    "*.tar",
+    "*.tgz",
+    "*.tif",
+    "*.tiff",
+    "*.txt",
+    "*.vrml",
+    "*.wav",
+    "*.wma",
+    "*.wmf",
+    "*.wmv",
+    "*.wps",
+    "*.xls",
+    "*.xlsx",
+    "*.xlt",
+    "*.xml",
+    "*.zip"
+  ],
+  "request_filetype_setting": [
+    {
+      "visible": true,
+      "keyword": [
+        "PDF",
+        "RFT01"
+      ],
+      "downloaded_key": "RFT01_DL",
+      "link_text": {
+        "ja": "PDFダウンロード",
+        "en": "Download PDF"
+      },
+      "field_name": "Request_filetype01",
+      "checkbox_label": {
+        "ja":"3Dデータ(.pdf)",
+        "en":"3D Data(.pdf)"
+      }
+    },
+    {
+      "visible": true,
+      "keyword": [
+        "LAS",
+        "RFT02",
+        "RFT03"
+      ],
+      "downloaded_key": "RFT02_DL",
+      "link_text":{
+        "ja":"点群データダウンロード",
+        "en":"Download Point Cloud Data"
+      }, 
+      "field_name": "Request_filetype02",
+      "checkbox_label": {
+        "ja":"点群データ(.las)",
+        "en":"Point Cloud Data(.las)"
+      }
+    },
+    {
+      "visible": true,
+      "keyword": [
+        "平面図",
+        "RFT04"
+      ],
+      "downloaded_key": "RFT04_DL",
+      "link_text":{
+        "ja":"平面図ダウンロード",
+        "en":"Download Floor Plan"
+      }, 
+      "field_name": "Request_filetype04",
+      "checkbox_label":{
+        "ja":"平面図(.dxf)",
+        "en":"Floor Plan(.dxf)"
+      }
+    },
+    {
+      "visible": true,
+      "keyword": [
+        "断面図",
+        "RFT05"
+      ],
+      "downloaded_key": "RFT05_DL",
+      "link_text": {
+        "ja":"断面図ダウンロード",
+        "en":"Download Cross Section"
+      },
+      "field_name": "Request_filetype05",
+      "checkbox_label":{
+        "ja":"断面図(.dxf)",
+        "en":"Cross Section(.dxf)"
+      }
+    },
+    {
+      "visible": true,
+      "keyword": [
+        "RFT08"
+      ],
+      "downloaded_key": "RFT08_DL",
+      "link_text":{
+        "ja":"3Dモデリングダウンロード",
+        "en":"Download 3D Modeling"
+      }, 
+      "field_name": "Request_filetype08",
+      "checkbox_label":{
+        "ja":"3Dモデリング(.dxf)",
+        "en":"3D Modeling(.dxf)"
+      }
+    },
+    {
+      "visible": true,
+      "keyword": [
+        "RFT06"
+      ],
+      "downloaded_key": "RFT06_DL",
+      "link_text":{
+        "ja":"CAD+点群データ統合ダウンロード",
+        "en":"Download CAD+Point Cloud Data"
+      }, 
+      "field_name": "Request_filetype06",
+      "checkbox_label":{
+        "ja":"CAD+点群データ統合(.dwg)",
+        "en":"CAD+Point Cloud(.dwg)"
+      }
+    },
+    {
+      "visible": true,
+      "keyword": [
+        "RFT09"
+      ],
+      "downloaded_key": "RFT09_DL",
+      "link_text":{
+        "ja":"CAD+3Dモデリング統合ダウンロード",
+        "en":"Download CAD+3D Modeling"
+      }, 
+      "field_name": "Request_filetype09",
+      "checkbox_label":{
+        "ja":"CAD+3Dモデリング統合(.dwg)",
+        "en":"CAD+3D Modeling(.dwg)"
+      }
+    },
+    {
+      "visible": true,
+      "keyword": [
+        "RFT07"
+      ],
+      "downloaded_key": "RFT07_DL",
+      "link_text": {
+        "ja":"ARダウンロード",
+        "en":"Download AR"
+      },
+      "field_name": "Request_filetype07",
+      "checkbox_label": {
+        "ja":"AR(.png)",
+        "en":"AR(.png)"
+      }
+    }
+  ],
+
+  "upload_extension_black_list": [],
+  
+  "allow_users": [
+    "test_fukuzawa"
+  ],
+
+  "switch_naiyo_kaisha_id_list": [
+    {
+      "ids": [
+        "GS_chubu",
+        "GS_fukuoka",
+        "GS_hokkaido",
+        "GS_osaka",
+        "GS_tohoku",
+        "GS_tokyo",
+        "S0502"
+      ],
+      "change_content": {
+        "ja":{
+          "投稿者名": "顧客会社名／投稿者名／工事番号"
+        },
+        "en":{
+          "Created_user": "Client Company／Created_user／No"
+        }
+        
+      },
+      "default_value": {
+        "ja":{
+          "naiyo": "顧客会社名：\n投稿者名：\n工事番号："
+        },
+        "en":{
+          "naiyo": "Client Company：\nCreated_user：\nNo.："
+        }
+        
+      },
+      "textarea_ids": [
+        "naiyo",
+        "viewnaiyo"
+      ],
+      "list_order_select_item": {
+        "ja":[
+          {
+            "value": "",
+            "html": "未設定"
+          },
+          {
+            "value": "Title",
+            "html": "タイトル(試掘名)"
+          },
+          {
+            "value": "created_date",
+            "html": "投稿日時(昇順)"
+          },
+          {
+            "value": "created_date desc",
+            "html": "投稿日時(降順)"
+          },
+          {
+            "value": "created_user",
+            "html": "顧客会社名／投稿者名(昇順)"
+          },
+          {
+            "value": "created_user desc",
+            "html": "顧客会社名／投稿者名(降順)"
+          }
+        ],
+        "en":[
+          {
+            "value": "",
+            "html": "unset"
+          },
+          {
+            "value": "Title",
+            "html": "Title (name of exploration)"
+          },
+          {
+            "value": "created_date",
+            "html": "Posting date (asc)"
+          },
+          {
+            "value": "created_date desc",
+            "html": "Posting date (desc)"
+          },
+          {
+            "value": "created_user",
+            "html": "Client Company/ Created_user (asc)"
+          },
+          {
+            "value": "created_user desc",
+            "html": "Client Company/ Created_user (desc)"
+          }
+        ]
+      }
+    }
+  ]
+}
