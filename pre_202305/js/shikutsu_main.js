@@ -3476,24 +3476,22 @@ function display_attachment(){
 
           let $list = null;
           let admin_user = false;
-          // 管理アップロード+ユーザー対象アップロード
-          if (attrib["KanriUpload"] != undefined && attrib["KanriUpload"] == "1"
-           && ((riyoshaId == _user && riyoshaId != creator) || (userLicenseType !== "Editor" && riyoshaId != creator))){
-            $list = $list_user;
+          // 管理アップロード
+          if (attrib["KanriUpload"] != undefined && attrib["KanriUpload"] == "1"){
+            // ライセンスがEditorの場合には利用者Idの一致するデータを表示
+            // ライセンスがEditor以外の場合には全て表示
+            if ((userLicenseType == "Editor" && attrib["RiyoshaID"] == user) || (userLicenseType !== "Editor")){
+              $list = $list_admin;
+              admin_user = ($.inArray(user, allow_users) > -1);
+            }
           }
-          // 管理アップロード+管理者アップロード
-          // else if (attrib["KanriUpload"] != undefined && attrib["KanriUpload"] == "1" && attrib["RiyoshaID"] == creator){
-          else if (attrib["KanriUpload"] != undefined && attrib["KanriUpload"] == "1" && (attrib["RiyoshaID"] || "").length == 0){
-            $list = $list_admin;
-            admin_user = ($.inArray(user, allow_users) > -1);
-          }
-          // ユーザーアップロード+Creator閲覧
-          else if (userLicenseType !== "Editor") {
-            $list = $list_user;
-          }
-          // ユーザーアップロード+Editor閲覧
-          else if (userLicenseType === "Editor" && user === attrib["RiyoshaID"]){
-            $list = $list_user;
+          // ユーザーアップロード
+          else {
+            // ライセンスがEditorの場合には利用者Idの一致するデータを表示
+            // ライセンスがEditor以外の場合には全て表示
+            if ((userLicenseType == "Editor" && attrib["RiyoshaID"] == user) || (userLicenseType !== "Editor")){
+              $list = $list_user;
+            }
           }
           if ($list != null){
             let $row = $("<div></div>").addClass("row flex-box").appendTo($list);
