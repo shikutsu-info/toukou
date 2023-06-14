@@ -3479,11 +3479,11 @@ function display_attachment(){
           // 管理アップロード+ユーザー対象アップロード
           if (attrib["KanriUpload"] != undefined && attrib["KanriUpload"] == "1"
            && ((riyoshaId == _user && riyoshaId != creator) || (userLicenseType !== "Editor" && riyoshaId != creator))){
-            $list = $list_user;
+            $list = $list_admin;
           }
           // 管理アップロード+管理者アップロード
           // else if (attrib["KanriUpload"] != undefined && attrib["KanriUpload"] == "1" && attrib["RiyoshaID"] == creator){
-          else if (attrib["KanriUpload"] != undefined && attrib["KanriUpload"] == "1"){
+          else if (attrib["KanriUpload"] != undefined && attrib["KanriUpload"] == "1" && (attrib["RiyoshaID"] || "").length == 0){
             $list = $list_admin;
             admin_user = ($.inArray(user, allow_users) > -1);
           }
