@@ -17,8 +17,8 @@
   <button id="sign-out" class="commonbtn small-width sticky-btn header-button-signout">サインアウト</button>
   <!--ヘッダー部分-->
   <div id="titlePanel">
-    <img class="header_img" src="./src/img/header.svg" />
-    <img class="header_small_img" src="./src/img/header_small.svg" />
+    <img class="header_img" src="./src/img/header_ja.svg" />
+    <img class="header_small_img" src="./src/img/header_small_ja.svg" />
     <span class="header-companyname">契約企業：</span>
     <span id="KaishaName"></span>
   </div>
@@ -36,8 +36,8 @@
   <div id="mainDiv">
     <calcite-tabs position="bottom" layout="center">
       <calcite-tab-nav slot="title-group">
-        <calcite-tab-title icon-start="video-plus" selected class="maindiv-tag-videos">動画<br/>投稿</calcite-tab-title>
-        <calcite-tab-title icon-start="attachment-plus" class="maindiv-tag-files">ファイル<br/>共有</calcite-tab-title>
+        <calcite-tab-title icon-start="video-plus" selected class="maindiv-tag-videos">動画<br />投稿</calcite-tab-title>
+        <calcite-tab-title icon-start="attachment-plus" class="maindiv-tag-files">ファイル<br />共有</calcite-tab-title>
         <calcite-tab-title icon-start="gear" class="maindiv-tag-settings">設定</calcite-tab-title>
       </calcite-tab-nav>
       <calcite-tab>
@@ -46,7 +46,8 @@
           <button id="show_form" class="esri-icon-edit maindiv-button-posting">投稿する</button><br />
           <button id="show_help" class="esri-icon-question commonbtn maindiv-button-guide">ご利用ガイド</button>
         </div>
-        <div class="white-space-wrap"><label class="sys-change-content maindiv-headline-history">過去の投稿を確認する</label></div>
+        <div class="white-space-wrap"><label class="sys-change-content maindiv-headline-history">過去の投稿を確認する</label>
+        </div>
         <input type="radio" name="history" id="history-list" value="history-list" checked />
         <label for="history-list" class="radiomenu maindiv-radio-list">リスト</label>
         <input type="radio" name="history" id="history-map" value="history-map" />
@@ -170,8 +171,9 @@
     <span class="fontred">*</span>
     <button class="locate_conpact formdiv-btn-close">▲ 閉じる</button>
     <div id="mapviewDiv"></div>
-    <div id="gridDiv" class="formdiv-griddiv-annotation" >場所を指定してください</div>
-    <div id="gridDiv2"><span class="formdiv-griddiv-lat">緯度:</span><span id="gridDiv2_1"></span><span>　</span><span class="formdiv-griddiv-long">経度:</span><span id="gridDiv2_2"></span></div>
+    <div id="gridDiv" class="formdiv-griddiv-annotation">場所を指定してください</div>
+    <div id="gridDiv2"><span class="formdiv-griddiv-lat">緯度:</span><span id="gridDiv2_1"></span><span>　</span><span
+        class="formdiv-griddiv-long">経度:</span><span id="gridDiv2_2"></span></div>
     <label class="sys-change-content formdiv-headline5">住所</label>
     <div class="white-space-wrap"><input id="jusho" type="text" /></div>
     <label class="sys-change-content formdiv-headline6">現場区分</label>
@@ -188,44 +190,44 @@
     <div class="white-space-wrap"><input id="email" type="text" class="hidden_email" hidden /></div>
     <label class="sys-change-content formdiv-headline10">投稿ファイル選択</label><br />
     <span class="formdiv-annotation3">※各ファイル1GBまで</span><br />
-      <div id="attachmentDiv">
-        <label for="popup_help2_trigger" class="open_btn esri-icon-question formdiv--btn-extensions">許可されているファイル</label>
-        <div id="upload_file" class="select_attachment">
-          <input id="file_select" type="file" multiple hidden />
-          <button id="filebtn"><span class="esri-icon-documentation"></span><span
-              class="margin-left-5 sys-change-content formdiv-tbl-btn-select">ファイルの選択</span></button>
-          <label id="file_label"></label>
-          <div id="file_table">
-            <div class="row flex-box">
-              <div class="no formdiv-tbl-row1">No</div>
-              <div class="flex-box attrib">
-                <div class="name formdiv-tbl-row2">ファイル名</div>
-                <div class="size formdiv-tbl-row3">サイズ</div>
-                <div class="status formdiv-tbl-row4">状況</div>
-              </div>
-              <div class="delete h-center">
-                <input class="file_delbtn" type="button" id="file_del_all_btn" value="全削除">
-              </div>
+    <div id="attachmentDiv">
+      <label for="popup_help2_trigger" class="open_btn esri-icon-question formdiv--btn-extensions">許可されているファイル</label>
+      <div id="upload_file" class="select_attachment">
+        <input id="file_select" type="file" multiple hidden />
+        <button id="filebtn"><span class="esri-icon-documentation"></span><span
+            class="margin-left-5 sys-change-content formdiv-tbl-btn-select">ファイルの選択</span></button>
+        <label id="file_label"></label>
+        <div id="file_table">
+          <div class="row flex-box">
+            <div class="no formdiv-tbl-row1">No</div>
+            <div class="flex-box attrib">
+              <div class="name formdiv-tbl-row2">ファイル名</div>
+              <div class="size formdiv-tbl-row3">サイズ</div>
+              <div class="status formdiv-tbl-row4">状況</div>
+            </div>
+            <div class="delete h-center">
+              <input class="file_delbtn" type="button" id="file_del_all_btn" value="全削除">
             </div>
           </div>
         </div>
       </div>
-      <div id="requestFileDiv">
-        <label class="sys-change-content formdiv-headline11">希望成果品</label><br />
-        <div class="white-space-wrap formdiv-annotation4"><span>※☑があるもののみ作成されます</span></div>
-        <div class="flex-box request-filetype"></div>
-        <br />
-        <label class="sys-change-content formdiv-headline12">座標付与(点群データ/3Dモデリング)</label><br />
-        <div class=""><span class="formdiv-annotation5">※有償となります</span></div>
-        <div class="white-space-wrap flex-box" id="zahyofuyo"></div>
-      </div>
-      <div id="buttonDiv">
-        <button id="sendbtn" class="commonbtn formdiv-btn-send">送信</button>
-        <button id="clearbtn" class="commonbtn formdiv-btn-clear">クリア</button>
-        <button class="returnmenu commonbtn formdiv-btn-return">戻る</button>
-      </div>
-      <span id="backbtn-form" class="backbtn"><i class="esri-icon-up-arrow"></i></span>
-      <span id="bottombtn-form" class="bottombtn"><i class="esri-icon-down-arrow"></i></span>
+    </div>
+    <div id="requestFileDiv">
+      <label class="sys-change-content formdiv-headline11">希望成果品</label><br />
+      <div class="white-space-wrap formdiv-annotation4"><span>※☑があるもののみ作成されます</span></div>
+      <div class="flex-box request-filetype"></div>
+      <br />
+      <label class="sys-change-content formdiv-headline12">座標付与(点群データ/3Dモデリング)</label><br />
+      <div class=""><span class="formdiv-annotation5">※有償となります</span></div>
+      <div class="white-space-wrap flex-box" id="zahyofuyo"></div>
+    </div>
+    <div id="buttonDiv">
+      <button id="sendbtn" class="commonbtn formdiv-btn-send">送信</button>
+      <button id="clearbtn" class="commonbtn formdiv-btn-clear">クリア</button>
+      <button class="returnmenu commonbtn formdiv-btn-return">戻る</button>
+    </div>
+    <span id="backbtn-form" class="backbtn"><i class="esri-icon-up-arrow"></i></span>
+    <span id="bottombtn-form" class="bottombtn"><i class="esri-icon-down-arrow"></i></span>
   </div>
   <!--投稿完了画面-->
   <div id="completeDiv">
@@ -297,8 +299,8 @@
       </div>
     </div>
     <div id="div_request_filetype_attachment"></div>
-    <div class="white-space-wrap"><label class="sys-change-content viewformdiv-headline13">添付ファイル</label><label for="popup_help2_trigger"
-        class="open_btn esri-icon-question viewformdiv-btn-allowed">許可されているファイル</label></div>
+    <div class="white-space-wrap"><label class="sys-change-content viewformdiv-headline13">添付ファイル</label><label
+        for="popup_help2_trigger" class="open_btn esri-icon-question viewformdiv-btn-allowed">許可されているファイル</label></div>
     <div id="attachmentlistDiv"></div>
     <span id="backbtn-view" class="backbtn"><i class="esri-icon-up-arrow"></i></span>
     <span id="bottombtn-view" class="bottombtn"><i class="esri-icon-down-arrow"></i></span>
@@ -382,7 +384,7 @@
           <img src="./src/img/help.png" class="help-Image" /><span class="popup-headline">サポートされているファイル形式</span>
         </h2>
         <div id="file_extension_list" class="margin-top flex-box"></div>
-        <div class="popup-annotation" style="font-weight: bold;" >※上記ファイル以外はZIPファイルにしてください</div>
+        <div class="popup-annotation" style="font-weight: bold;">※上記ファイル以外はZIPファイルにしてください</div>
       </div>
     </div>
   </div>
