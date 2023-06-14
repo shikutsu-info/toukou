@@ -3483,7 +3483,7 @@ function display_attachment(){
           }
           // 管理アップロード+管理者アップロード
           // else if (attrib["KanriUpload"] != undefined && attrib["KanriUpload"] == "1" && attrib["RiyoshaID"] == creator){
-          else if (attrib["KanriUpload"] != undefined && attrib["KanriUpload"] == "1" && riyoshaId != creator){
+          else if (attrib["KanriUpload"] != undefined && attrib["KanriUpload"] == "1" && riyoshaId == creator){
             $list = $list_admin;
             admin_user = ($.inArray(user, allow_users) > -1);
           }
