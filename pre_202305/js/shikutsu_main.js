@@ -73,7 +73,7 @@ var photoLatLng = {
 let isMobile = false;
 
 // 文言置き換え用設定
-var set_lang = {}; 
+var set_lang = {};
 
 // アップロードファイルサイズ単体上限
 var upload_limit_file_size = 0;
@@ -119,9 +119,9 @@ if (param != null) {
 }
 
 // langパラメータ値取得  
-var lang = (()=>{
+var lang = (() => {
   var param = location.search.match(/lang=(.*?)(&|$)/);
-  if (param != undefined && param.length > 1){
+  if (param != undefined && param.length > 1) {
     return param[1];
   }
   else {
@@ -211,11 +211,11 @@ require([
   Graphic, Locate, Search, Locator,
   WebScene, SceneView, Layer,
   PointCloudLayer, IntegratedMeshLayer,
-  Home, Slice, Viewpoint, DirectLineMeasurement3D, AreaMeasurement3D,intl) {
+  Home, Slice, Viewpoint, DirectLineMeasurement3D, AreaMeasurement3D, intl) {
 
   //ArcGISAPIの言語設定
   intl.setLocale(lang);
-    
+
 
   var portalUrl = "https://www.arcgis.com/sharing";
   var geocodeUrl = "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer";
@@ -275,10 +275,10 @@ require([
         contentType: false,
         dataType: 'json',
         async: false
-      }).done((data)=>{
+      }).done((data) => {
         url_push_attachment = data.url;
         url_attachment_register = url_push_attachment + "/uploads/register";
-      }).fail(()=>{
+      }).fail(() => {
         alert(func_undefined_to_blank(set_lang["alert-failureurl"]));
       });
     }).fail(function (data) {
@@ -349,7 +349,7 @@ require([
         height: 500
       }
     };
-    
+
     var viewAction = {
       title: func_undefined_to_blank(set_lang["maindiv-map-btn-view"]),
       id: "view-this",
@@ -389,7 +389,7 @@ require([
             type: "fields",
             fieldInfos: [{
               fieldName: "Naiyo",
-              label: func_undefined_to_blank(set_lang["maindiv-map-label-name"]) 
+              label: func_undefined_to_blank(set_lang["maindiv-map-label-name"])
             }, {
               fieldName: "Jusho",
               label: func_undefined_to_blank(set_lang["maindiv-map-label-adress"])
@@ -404,7 +404,7 @@ require([
 
       const labelClass = {
         labelExpressionInfo: {
-          expression: "\"" + func_undefined_to_blank(set_lang["maindiv-map-label-date"]) + "\\n\" + Text($feature." + create_date_field + ", 'Y/MM/DD HH:mm')" 
+          expression: "\"" + func_undefined_to_blank(set_lang["maindiv-map-label-date"]) + "\\n\" + Text($feature." + create_date_field + ", 'Y/MM/DD HH:mm')"
         },
         labelPlacement: "above-center",
         maxScale: 0,
@@ -509,9 +509,9 @@ require([
         .locationToAddress(params)
         .then(function (response) {
 
-        //if (response.attributes.CountryCode == "JPN" && response.address != "日本") { 
+          //if (response.attributes.CountryCode == "JPN" && response.address != "日本") { 
           jusho = response.address;
-         // } else {
+          // } else {
           //  jusho = "";
           //}
 
@@ -569,7 +569,7 @@ require([
     sceneview.ui.add(homeButton, "top-left");
 
     sceneview.ui.add("measure_widget", "top-right");
-    
+
   }
 
   var graphic_rendar = function (lat, long) {
@@ -601,7 +601,7 @@ require([
         //if (response.attributes.CountryCode == "JPN" && response.address != "日本") {
         jusho = response.address;
         //} else {
-          //jusho = "";
+        //jusho = "";
         //}
         $("#gridDiv2_1").text(Math.round(latitude * 100000) / 100000);
         $("#gridDiv2_2").text(Math.round(longitude * 100000) / 100000);
@@ -623,7 +623,7 @@ require([
   /*********************イベント処理*********************/
   // 新規投稿
   $('#show_form').click(function () {
-    form_clear(); 
+    form_clear();
     // 初期値設定
     func_default_value_setting(default_value_formDiv, $("#formDiv"));
     each_switch_kaisha_id_setting(switch_naiyo_kaisha_id_list, function (setting) {
@@ -718,13 +718,13 @@ require([
 
     // サイズチェック
     if (size > upload_limit_total_file_size) {
-      alert(func_undefined_to_blank(set_lang["alert-size1"]) + func_file_size(upload_limit_total_file_size) + func_undefined_to_blank(set_lang["alert-size2"])); 
+      alert(func_undefined_to_blank(set_lang["alert-size1"]) + func_file_size(upload_limit_total_file_size) + func_undefined_to_blank(set_lang["alert-size2"]));
       return;
     }
 
     //現在地の指定チェック
     if (latitude == null || longitude == null) {
-      alert(func_undefined_to_blank(set_lang["alert-location"])); 
+      alert(func_undefined_to_blank(set_lang["alert-location"]));
       return;
     }
 
@@ -998,7 +998,7 @@ require([
       // Exif情報処理
       hasExif: function (exifs) {
         if (user_setting.toko == "1" && !isMobile && exifs.length > 0) { // ユーザー設定がExifの時かつPC端末の場合
-          if (confirm(func_undefined_to_blank(set_lang["formdiv-confmsg-location"])) != false) { 
+          if (confirm(func_undefined_to_blank(set_lang["formdiv-confmsg-location"])) != false) {
             // 地図を画像の位置に移動
             view.goTo({
               center: [exifs[0].lng, exifs[0].lat],
@@ -1155,7 +1155,7 @@ require([
           var $elem = $(selector_table);
           var rowNo = $elem.children("div.row").length;
           var $tr = null;
-          if (callbacks.upload_file_check_start != undefined){
+          if (callbacks.upload_file_check_start != undefined) {
             callbacks.upload_file_check_start(i, file);
           }
           else {
@@ -1170,7 +1170,7 @@ require([
                 "<div class='size'></div>" +
                 "<div class='status'></div>" +
                 "</div>" +
-                "<div class='delete'><input type='button' value='" + func_undefined_to_blank(set_lang["formdiv-btn-del"]) + "' class='btn-del' /><input type='hidden' class='id' /><input type='hidden' class='size' /><input type='hidden' class='name' /></div>"); 
+                "<div class='delete'><input type='button' value='" + func_undefined_to_blank(set_lang["formdiv-btn-del"]) + "' class='btn-del' /><input type='hidden' class='id' /><input type='hidden' class='size' /><input type='hidden' class='name' /></div>");
             }
             $tr.find("div.no").text(rowNo);
             $tr.find("div.name").text(file.name);
@@ -1201,8 +1201,8 @@ require([
           // ファイルチェック
           if (upload_file_type_white_list.length > 0 && !func_check_wildcard(file.type, upload_file_type_white_list) &&
             (upload_extension_white_list.length == 0 || (upload_extension_white_list.length > 0 && !func_check_wildcard(file.name, upload_extension_white_list)))) {
-            
-            if (callbacks.upload_file_check_ng != undefined){
+
+            if (callbacks.upload_file_check_ng != undefined) {
               callbacks.upload_file_check_ng(i, file, func_undefined_to_blank(set_lang["formdiv-tbl-stat-type"]));
             }
             else {
@@ -1213,7 +1213,7 @@ require([
           if (upload_extension_white_list.length > 0 && !func_check_wildcard(file.name, upload_extension_white_list) &&
             (upload_file_type_white_list.length == 0 || (upload_file_type_white_list.length > 0 && !func_check_wildcard(file.type, upload_file_type_white_list)))) {
 
-            if (callbacks.upload_file_check_ng != undefined){
+            if (callbacks.upload_file_check_ng != undefined) {
               callbacks.upload_file_check_ng(i, file, func_undefined_to_blank(set_lang["formdiv-tbl-stat-extension"]));
             }
             else {
@@ -1222,7 +1222,7 @@ require([
             cancel = true;
           }
           if (!cancel && upload_extension_black_list.length > 0 && func_check_wildcard(file.name, upload_extension_black_list)) {
-            if (callbacks.upload_file_check_ng != undefined){
+            if (callbacks.upload_file_check_ng != undefined) {
               callbacks.upload_file_check_ng(i, file, func_undefined_to_blank(set_lang["formdiv-tbl-stat-extension"]));
             }
             else {
@@ -1232,7 +1232,7 @@ require([
           }
           // ファイルサイズチェック
           if (file.size == 0) {
-            if (callbacks.upload_file_check_ng != undefined){
+            if (callbacks.upload_file_check_ng != undefined) {
               callbacks.upload_file_check_ng(i, file, func_undefined_to_blank(set_lang["formdiv-tbl-stat-empty"]));
             }
             else {
@@ -1241,7 +1241,7 @@ require([
             cancel = true;
           }
           if (file.size > upload_limit_file_size) {
-            if (callbacks.upload_file_check_ng != undefined){
+            if (callbacks.upload_file_check_ng != undefined) {
               callbacks.upload_file_check_ng(i, file, func_undefined_to_blank(set_lang["formdiv-tbl-stat-oversize"]));
             }
             else {
@@ -1250,7 +1250,7 @@ require([
             cancel = true;
           }
           if (!cancel) {
-            if (callbacks.upload_ready != undefined){
+            if (callbacks.upload_ready != undefined) {
               callbacks.upload_ready(i, file);
             }
             else {
@@ -1262,7 +1262,7 @@ require([
               // console.log("files[" + i + "](read_file.then())");
               // 読み込みBlobデータ保持
               var blob = args.event.target.result;
-              if (callbacks.upload_file_readed != undefined){
+              if (callbacks.upload_file_readed != undefined) {
                 callbacks.upload_file_readed(i, file);
               }
               else {
@@ -1270,14 +1270,14 @@ require([
               }
               // アップロードファイル登録用Ajaxパラメータ作成
               var url = register_url;
-              if (callbacks.get_url_register != undefined){
+              if (callbacks.get_url_register != undefined) {
                 url = callbacks.get_url_register();
               }
               let fileName = file.name;
               let pos = fileName.lastIndexOf(".");
               // 拡張子前の「.」を「_」へ置換
-              if (pos > -1){
-                fileName = fileName.substring(0, pos -1).split(".").join("_") + fileName.substring(pos);
+              if (pos > -1) {
+                fileName = fileName.substring(0, pos - 1).split(".").join("_") + fileName.substring(pos);
               }
               var form = new FormData();
               form.set("f", "json");
@@ -1298,7 +1298,7 @@ require([
                 // レスポンス処理
                 if (!cancel && registed_data != undefined && (registed_data.success || false)) {
                   // console.log("files[" + i + "](regist_upload_file.then())");
-                  if (callbacks.upload_file_registed != undefined){
+                  if (callbacks.upload_file_registed != undefined) {
                     callbacks.upload_file_registed(i, file);
                   }
                   else {
@@ -1311,7 +1311,7 @@ require([
                     // 分割要素ごとのAjaxパラメータの作成
                     get_request_param: function (args) {
                       var part_url = push_feature_url;
-                      if (callbacks.get_url_push != undefined){
+                      if (callbacks.get_url_push != undefined) {
                         part_url = callbacks.get_url_push();
                       }
                       part_url += "/uploads/" + registed_data.item.itemID + "/uploadPart";
@@ -1338,8 +1338,8 @@ require([
                       args.cancel = cancel;
                       if (!args.cancel && args.data != undefined && (args.data.success || false)) {
                         // アップロード状況を更新
-                        if (callbacks.uploading != undefined){
-                          callbacks.uploading(i, file, Math.ceil(((args.index + 1) / args.division_count)*100));
+                        if (callbacks.uploading != undefined) {
+                          callbacks.uploading(i, file, Math.ceil(((args.index + 1) / args.division_count) * 100));
                         }
                         else {
                           $tr.find(".status").html("<span style='color:green;'>" + func_undefined_to_blank(set_lang["formdiv-tbl-stat-upload"]) + "(" + Math.ceil(((args.index + 1) / args.division_count) * 100) + "%)</span><meter min='0' max='100' value='" + Math.ceil(((args.index + 1) / args.division_count) * 100) + "'></meter>");
@@ -1351,7 +1351,7 @@ require([
                     }
                   }).then(function (args) {
                     // 分割アップロード完了
-                    if (callbacks.upload_commit_start != undefined){
+                    if (callbacks.upload_commit_start != undefined) {
                       callbacks.upload_commit_start(i, file);
                     }
                     else {
@@ -1380,7 +1380,7 @@ require([
                       if (!cancel && args != undefined && (args.success || false)) {
 
                         // console.log("files[" + i + "](commit_upload_file.then())");
-                        if (callbacks.upload_commit_applied){
+                        if (callbacks.upload_commit_applied) {
                           callbacks.upload_commit_applied(i, file, registed_data);
                         }
                         else {
@@ -1415,7 +1415,7 @@ require([
                       }
                       else {
                         // キャンセル/エラー時
-                        if (callbacks.upload_commit_failed != undefined){
+                        if (callbacks.upload_commit_failed != undefined) {
                           callbacks.upload_commit_failed(i, file, func_undefined_to_blank(set_lang["formdiv-tbl-stat-applyfail"]));
                         }
                         else {
@@ -1425,17 +1425,17 @@ require([
                       }
                     }).fail(function () {
                       // アップロードファイル適用AjaxRequestエラー時
-                      if (callbacks.upload_commit_failed != undefined){
+                      if (callbacks.upload_commit_failed != undefined) {
                         callbacks.upload_commit_failed(i, file, func_undefined_to_blank(set_lang["formdiv-tbl-stat-applyfail"]));
                       }
                       else {
-                        $tr.find(".status").html("<span style='color:red;'>" + func_undefined_to_blank(set_lang["formdiv-tbl-stat-applyfail"] )+ "</span>");
+                        $tr.find(".status").html("<span style='color:red;'>" + func_undefined_to_blank(set_lang["formdiv-tbl-stat-applyfail"]) + "</span>");
                       }
                       defer.reject();
                     });
                   }).fail(function () {
                     // 分割アップロードAjaxRequestエラー時
-                    if (callbacks.upload_failed != undefined){
+                    if (callbacks.upload_failed != undefined) {
                       callbacks.upload_failed(i, file, func_undefined_to_blank(set_lang["formdiv-tbl-stat-uploadfail"]));
                     }
                     else {
@@ -1446,7 +1446,7 @@ require([
                 }
                 else {
                   // キャンセル/失敗時
-                  if (callbacks.upload_file_regist_failed != undefined){
+                  if (callbacks.upload_file_regist_failed != undefined) {
                     callbacks.upload_file_regist_failed(i, file, func_undefined_to_blank(set_lang["formdiv-tbl-stat-registfail"]));
                   }
                   else {
@@ -1456,7 +1456,7 @@ require([
                 }
               }).fail(function () {
                 // アップロードファイル登録AjaxRequestエラー時
-                if (callbacks.upload_file_regist_failed != undefined){
+                if (callbacks.upload_file_regist_failed != undefined) {
                   callbacks.upload_file_regist_failed(i, file, func_undefined_to_blank(set_lang["formdiv-tbl-stat-registfail"]));
                 }
                 else {
@@ -1466,7 +1466,7 @@ require([
               });
             }).fail(function () {
               // ファイル読み込みエラー時
-              if (callbacks.upload_file_read_error){
+              if (callbacks.upload_file_read_error) {
                 callbacks.upload_file_read_error(i, file, func_undefined_to_blank(set_lang["formdiv-tbl-stat-loadfail"]));
               }
               else {
@@ -1496,7 +1496,7 @@ require([
     $(selector_table).children("div").each(function (idx, elem) {
       if ($(elem).find("input.id").length > 0 && $(elem).find("input.id").val().length > 0) select_count++;
     });
-    
+
     if (select_count > 0) {
       if (selector_label.length > 0) {
         //$(selector_label).text(eval(func_undefined_to_blank(set_lang["formdiv-tbl-msg-filenum1"])))
@@ -1561,7 +1561,7 @@ require([
    * @returns {Promise}
    */
   function upload_split_blob(blob, chunk_size, callbacks) {
-    return new $.Deferred(function(defer) {
+    return new $.Deferred(function (defer) {
       // Blob分割数算出
       var division_count = Math.ceil(blob.byteLength / chunk_size);
       callbacks = callbacks || {};
@@ -1888,6 +1888,13 @@ require([
       }
     });
 
+    $("#zahyofuyo input").each(function () {
+      if (this.value == user_setting.zahyofuyo) {
+        this.checked = true;
+        return false;
+      }
+    });
+
     $('#sendbtn').html(func_undefined_to_blank(set_lang["formdiv-btn-send"]));
   }
 
@@ -2023,6 +2030,13 @@ require([
         $("#user_conf .request-filetype input[type='checkbox']").eq(index).prop("checked", (user_setting[item.field_name] == "1" ? true : false));
       }
     });
+
+    $("#settingzahyofuyo input").each(function () {
+      if (this.value == user_setting.zahyofuyo) {
+        this.checked = true;
+        return false;
+      }
+    });
   }
 
   /**
@@ -2043,6 +2057,8 @@ require([
         user_setting[item.field_name] = $("#user_conf .request-filetype input[type='checkbox']").eq(index).prop("checked") ? "1" : "0";
       }
     });
+    var zahyofuyo = $('input:radio[name="settingzahyofuyo"]:checked').val();// チェックがついたほうのvalueを取得
+    user_setting.zahyofuyo = zahyofuyo;
     // jsonに変換
     var cookie_data = JSON.stringify(user_setting);
     // cookieに保存
@@ -2147,23 +2163,23 @@ require([
     });
   }
   // アップロードボタンクリック
-  $("#upload_attachment").on("click", function(){
+  $("#upload_attachment").on("click", function () {
     requestWakeLock();
     $("#attachment_file").click();
   });
 
   // ファイル選択後
-  $("#attachment_file").on("change", function(){
+  $("#attachment_file").on("change", function () {
     let commitIds = new Array();
     let $list_user = $("#attachment_list_user .file-list");
     // ファイル選択
     upload_files(this.files, "#attachment_list_user .file-list", "#attachment_file", "", null, {
-      begin: function() {
+      begin: function () {
         form_disabled(true);
       },
       // ファイルチェック開始 
-      upload_file_check_start: function(idx, file) {
-        let $row = $("<div id='uploading_row"+idx+"'></div>").addClass("row flex-box").appendTo($list_user);
+      upload_file_check_start: function (idx, file) {
+        let $row = $("<div id='uploading_row" + idx + "'></div>").addClass("row flex-box").appendTo($list_user);
         let $col = $("<div></div>").addClass("file-name flex-box").appendTo($row);
         $("<div></div>").addClass("title").text(func_undefined_to_blank(set_lang["file-name"])).appendTo($col);
         $("<div></div>").addClass("value").text(file.name).appendTo($col);
@@ -2172,66 +2188,66 @@ require([
         $("<div></div>").addClass("value").text(func_undefined_to_blank(set_lang["regist-start"])).appendTo($col);
       },
       // ファイルチェックNG
-      upload_file_check_ng: function(idx, file, status){
-        let $div = $("#uploading_row"+idx).find(".upload-status .value");
+      upload_file_check_ng: function (idx, file, status) {
+        let $div = $("#uploading_row" + idx).find(".upload-status .value");
         $div.empty();
         $("<span style='color:red'></span>").text(status).appendTo($div);
       },
       // アップロード準備
-      upload_ready: function(idx) {
-        let $div = $("#uploading_row"+idx).find(".upload-status .value");
+      upload_ready: function (idx) {
+        let $div = $("#uploading_row" + idx).find(".upload-status .value");
         $div.empty();
         $("<span style='color:blue;'></span>").text(func_undefined_to_blank(set_lang["upload-info-prep"])).appendTo($div);
       },
       // アップロード開始
-      upload_file_readed: function(idx, file) {
-        let $div = $("#uploading_row"+idx).find(".upload-status .value");
+      upload_file_readed: function (idx, file) {
+        let $div = $("#uploading_row" + idx).find(".upload-status .value");
         $div.empty();
         $("<span style='color:blue;'></span>").text(func_undefined_to_blank(set_lang["upload-info-Regist"])).appendTo($div);
       },
       // ファイル読み込みエラー
-      upload_file_read_error: function(idx, file, status) {
-        let $div = $("#uploading_row"+idx).find(".upload-status .value");
+      upload_file_read_error: function (idx, file, status) {
+        let $div = $("#uploading_row" + idx).find(".upload-status .value");
         $div.empty();
         $("<span style='color:red;'></span>").text(status).appendTo($div);
       },
       // 登録URL取得
-      get_url_register: function() {
+      get_url_register: function () {
         return url_attachment_register;
       },
       // アップロードファイル登録完了
-      upload_file_registed: function(idx, file) {
-        let $div = $("#uploading_row"+idx).find(".upload-status .value");
+      upload_file_registed: function (idx, file) {
+        let $div = $("#uploading_row" + idx).find(".upload-status .value");
         $div.empty();
         $("<span style='color:green;'>" + func_undefined_to_blank(set_lang["upload-info-uploding"]) + "(0%)</span><meter min='0' max='100' value='0'></meter>").appendTo($div);
       },
       // アップロードファイル登録失敗
-      upload_file_regist_failed: function(idx, file, status) {
-        let $div = $("#uploading_row"+idx).find(".upload-status .value");
+      upload_file_regist_failed: function (idx, file, status) {
+        let $div = $("#uploading_row" + idx).find(".upload-status .value");
         $div.empty();
         $("<span style='color:red;'></span>").text(status).appendTo($div);
       },
       // 登録URL取得
-      get_url_push: function() {
+      get_url_push: function () {
         return url_push_attachment;
       },
       // アップロード中
-      uploading: function(idx, file, prog) {
-        let $div = $("#uploading_row"+idx).find(".upload-status .value");
-        $div.find("span").text(func_undefined_to_blank(set_lang["upload-info-uploding"]) + "("+ prog +"%)");
+      uploading: function (idx, file, prog) {
+        let $div = $("#uploading_row" + idx).find(".upload-status .value");
+        $div.find("span").text(func_undefined_to_blank(set_lang["upload-info-uploding"]) + "(" + prog + "%)");
         $div.find("meter").val(prog);
       },
       // アップロードファイル適用開始
-      upload_commit_start: function(idx, file) {
-        let $div = $("#uploading_row"+idx).find(".upload-status .value");
+      upload_commit_start: function (idx, file) {
+        let $div = $("#uploading_row" + idx).find(".upload-status .value");
         $div.empty();
         $("<span style='color:blue;'></span>").text(func_undefined_to_blank(set_lang["upload-info-apply"])).appendTo($div);
       },
       // アップロードファイル適用完了
-      upload_commit_applied: async function(idx, file, e) {
+      upload_commit_applied: async function (idx, file, e) {
         commitIds.push(e.item.itemID);
-        await (function() {
-          return new $.Deferred(async function(defer) {
+        await (function () {
+          return new $.Deferred(async function (defer) {
             let form = new FormData();
             let feature = {
               "attributes": {
@@ -2251,8 +2267,8 @@ require([
               contentType: false,
               dataType: 'json',
               async: false
-            }).then(async function(data) {
-              if (data != undefined && data.addResults != undefined && data.addResults.length > 0 && data.addResults[0].success){
+            }).then(async function (data) {
+              if (data != undefined && data.addResults != undefined && data.addResults.length > 0 && data.addResults[0].success) {
                 let form = new FormData();
                 form.set('f', 'json');
                 form.set('uploadId', e.item.itemID);
@@ -2266,26 +2282,26 @@ require([
                   contentType: false,
                   dataType: 'json',
                   async: false
-                }).then(function(data) {
-                  let $div = $("#uploading_row"+idx).find(".upload-status .value");
+                }).then(function (data) {
+                  let $div = $("#uploading_row" + idx).find(".upload-status .value");
                   $div.empty();
                   $("<span style='font-weight:bold;color:blue;'></span>").text(func_undefined_to_blank(set_lang["upload-info-added"])).appendTo($div);
                   defer.resolve();
-                }).fail(function(data) {
-                  let $div = $("#uploading_row"+idx).find(".upload-status .value");
+                }).fail(function (data) {
+                  let $div = $("#uploading_row" + idx).find(".upload-status .value");
                   $div.empty();
                   $("<span style='font-weight:bold;color:red;'></span>").text(func_undefined_to_blank(set_lang["upload-info-fail"])).appendTo($div);
                   defer.reject();
                 });
               }
               else {
-                let $div = $("#uploading_row"+idx).find(".upload-status .value");
+                let $div = $("#uploading_row" + idx).find(".upload-status .value");
                 $div.empty();
                 $("<span style='font-weight:bold;color:red;'></span>").text(func_undefined_to_blank(set_lang["upload-info-fail"])).appendTo($div);
                 defer.reject();
               }
-            }).fail(function(data) {
-              let $div = $("#uploading_row"+idx).find(".upload-status .value");
+            }).fail(function (data) {
+              let $div = $("#uploading_row" + idx).find(".upload-status .value");
               $div.empty();
               $("<span style='font-weight:bold;color:red;'></span>").text(func_undefined_to_blank(set_lang["upload-info-fail"])).appendTo($div);
               defer.reject();
@@ -2294,19 +2310,19 @@ require([
         })();
       },
       // アップロードファイル適用失敗
-      upload_commit_failed: function(idx, file, status) {
-        let $div = $("#uploading_row"+idx).find(".upload-status .value");
+      upload_commit_failed: function (idx, file, status) {
+        let $div = $("#uploading_row" + idx).find(".upload-status .value");
         $div.empty();
         $("<span style='color:red;'></span>").text(status).appendTo($div);
       },
       // アップロード失敗
-      upload_failed: function(idx, file, status) {
-        let $div = $("#uploading_row"+idx).find(".upload-status .value");
+      upload_failed: function (idx, file, status) {
+        let $div = $("#uploading_row" + idx).find(".upload-status .value");
         $div.empty();
         $("<span style='color:red;'></span>").text(status).appendTo($div);
       },
       // 全完了のタイミング
-      complete: function(){
+      complete: function () {
         display_attachment();
         form_disabled(false);
       }
@@ -2357,14 +2373,14 @@ var historyTable = {
 
     this.changePage(this.current_page);
   },
-  loadHead: function () { 
+  loadHead: function () {
     let strRowHead = document.getElementById("tableHead");
     strRowHead.innerHTML = `<tr class="row-head">
           <th class="sys-change-content">${func_undefined_to_blank(set_lang["maindiv-th-title"])}</th>
           <th class="sys-change-content">${func_undefined_to_blank(set_lang["maindiv-th-date"])}</th>
           <th class="sys-change-content">${func_undefined_to_blank(set_lang["maindiv-th-name"])}</th>
           <th class="sys-change-content">${func_undefined_to_blank(set_lang["maindiv-th-adress"])}</th>
-          <th class="sys-change-content">${func_undefined_to_blank(set_lang["maindiv-th-remark"] )}</th>
+          <th class="sys-change-content">${func_undefined_to_blank(set_lang["maindiv-th-remark"])}</th>
           <th class="sys-change-content">${func_undefined_to_blank(set_lang["maindiv-th-conf"])}</th>
         </tr>`;
 
@@ -2445,13 +2461,13 @@ var historyTable = {
           var naiyo = features[i].attributes["Naiyo"];
           var jusho = features[i].attributes["Jusho"];
           var bikou = features[i].attributes["Bikou"];
-          
+
           tr_html += '<tr>';
           tr_html += '<td data-label=' + func_undefined_to_blank(set_lang["maindiv-th-title"]) + '>' + title + '　</td>';
           tr_html += '<td data-label=' + func_undefined_to_blank(set_lang["maindiv-th-date"]) + '>' + str_createdate + '　</td>';
           tr_html += '<td data-label=' + func_undefined_to_blank(set_lang["maindiv-th-name"]) + '>' + naiyo + '　</td>';
           tr_html += '<td data-label=' + func_undefined_to_blank(set_lang["maindiv-th-adress"]) + '>' + jusho + '　</td>';
-          tr_html += '<td data-label=' + func_undefined_to_blank(set_lang["maindiv-th-remark"])+ '>' + bikou + '　</td>';
+          tr_html += '<td data-label=' + func_undefined_to_blank(set_lang["maindiv-th-remark"]) + '>' + bikou + '　</td>';
           tr_html += '<td data-label=' + func_undefined_to_blank(set_lang["maindiv-th-conf"]) + '>'
           tr_html += '<input id="view" type="button" value="' + func_undefined_to_blank(set_lang["maindiv-tbl-btn-view"]) + '" onclick="historyTable.viewForm(' + objectid + ')"/>';
           tr_html += '<input id="del" type="button" value="' + func_undefined_to_blank(set_lang["maindiv-tbl-btn-del"]) + '" onclick="historyTable.deleteRow(' + objectid + ')"/>';
@@ -2460,7 +2476,7 @@ var historyTable = {
 
           tableBody.append(tr_html);
 
-         // 特定会社ID時設定置き換え
+          // 特定会社ID時設定置き換え
           each_switch_kaisha_id_setting(switch_naiyo_kaisha_id_list, function (setting) {
             func_change_attr_replace(func_undefined_to_blank(setting["change_content"][lang]), tableBody.find("tr:last").find("td"), "data-label");
             console.log();
@@ -2526,7 +2542,7 @@ var historyTable = {
 
       // 存在・削除確認
       if (features.length == 0) {
-        alert(func_undefined_to_blank(set_lang["alert-nodata"])); 
+        alert(func_undefined_to_blank(set_lang["alert-nodata"]));
         this.refreshRow();
         return;
       }
@@ -2678,8 +2694,8 @@ var historyTable = {
         else {
           att_html += att_name + '<br/><a target="_blank" rel="noopener noreferrer"  href="' + att_url + '">' + func_undefined_to_blank(set_lang["viewformdiv-link-download"]) + '</a><br/>';
         }
-        
-        att_html += '<input class="delbtn " type="button" id="delBtn' + att_id + '" value="' + func_undefined_to_blank(set_lang["viewformdiv-btn-del"]) +'" onclick="historyTable.deleteattachent(' + objectid + ', ' + att_id + ')"/>';
+
+        att_html += '<input class="delbtn " type="button" id="delBtn' + att_id + '" value="' + func_undefined_to_blank(set_lang["viewformdiv-btn-del"]) + '" onclick="historyTable.deleteattachent(' + objectid + ', ' + att_id + ')"/>';
         att_html += '<br/><br/>'
       }
 
@@ -2716,7 +2732,7 @@ var historyTable = {
 
   deleteRow: function (objectid) {
 
-    if (!window.confirm(func_undefined_to_blank(set_lang["maindiv-confmsg-del"]))) { 
+    if (!window.confirm(func_undefined_to_blank(set_lang["maindiv-confmsg-del"]))) {
       return;
     }
 
@@ -2992,24 +3008,31 @@ function set_config(config) {
   basescene_id = config.basescene_id;
   creator_field = config.creator_field;
   create_date_field = config.create_date_field;
-  
+
   // 許可ユーザーの設定
   allow_users = config.allow_users || [];
-  for(let i = 0;i<allow_users.length;i++){
+  for (let i = 0; i < allow_users.length; i++) {
     allow_users[i] = allow_users[i].toLowerCase();
   }
 
   // 取得言語が無ければlangに「ja」を設定
-  if (config.languages[lang] == undefined){
+  if (config.languages[lang] == undefined) {
     lang = "ja";
   }
   //サインイン画面から言語設定を選択、言語切り替え
   list_lang_select_item = config.list_lang_select_item;
   create_list_order_select(list_lang_select_item, $("#select_lang"));
-  $("#select_lang").val(lang) 
+  $("#select_lang").val(lang)
   $("#select_lang").change(function () {
     var select_lang = $(this).val();
-    var redirect_url = location.origin + location.pathname +  "?field:KaishaID=" + decodeURIComponent(param[1]) + "&lang=" + select_lang + "#";
+    var redirect_url = location.origin + location.pathname + "?field:KaishaID=" + decodeURIComponent(param[1]) + "&lang=" + select_lang + "#";
+    window.location.href = redirect_url;
+  });
+  create_list_order_select(list_lang_select_item, $("#setting_select_lang"));
+  $("#setting_select_lang").val(lang)
+  $("#setting_select_lang").change(function () {
+    var setting_select_lang = $(this).val();
+    var redirect_url = location.origin + location.pathname + "?field:KaishaID=" + decodeURIComponent(param[1]) + "&lang=" + setting_select_lang + "#";
     window.location.href = redirect_url;
   });
   //言語設定に応じてmapの初期位置設定
@@ -3063,7 +3086,7 @@ function set_config(config) {
   $("#select_order").change(function () {
     historyTable.changePage(0);
   });
-  
+
 
   // 要否ファイルチェックボックス作成 ユーザー設定部
   create_request_filetype_check(request_filetype_setting, $("#user_conf .request-filetype"), "setting-request-filetype", "setting_", "requestFile sys-change-content");
@@ -3084,6 +3107,7 @@ function set_config(config) {
   // 座標付与セレクトの設定
   create_radio_list(select_option_list.ZahyoFuyo, $("#zahyofuyo"), "radiomenu");
   create_radio_list(select_option_list.ZahyoFuyo, $("#viewzahyofuyo"), "radiomenu");
+  create_radio_list(select_option_list.ZahyoFuyo, $("#settingzahyofuyo"), "radiomenu");
 
   // 特定会社ID時の内容変更
   replace_switch_kaisha_id(switch_naiyo_kaisha_id_list);
@@ -3170,29 +3194,29 @@ function func_change_content_replace(settings, $div) {
  * @param {Object[]} settings 
  */
 function func_change_lang(settings) {
-  for(let obj in settings){
+  for (let obj in settings) {
     let $elem = $("." + obj);
     var content = settings[obj];
-    if($elem.length > 0){
+    if ($elem.length > 0) {
       $elem.html(content);
     }
   }
   //ヘッダー画像
-  $(".header_img").attr("src",func_undefined_to_blank(settings["header-img"] ));
-  $(".header_small_img").attr("src",func_undefined_to_blank(settings["header-small-img"]));
+  $(".header_img").attr("src", func_undefined_to_blank(settings["header-img"]));
+  $(".header_small_img").attr("src", func_undefined_to_blank(settings["header-small-img"]));
   //投稿画面全削除ボタン
-  $("#file_del_all_btn").attr("value",func_undefined_to_blank(settings["formdiv-tbl-button"]));
+  $("#file_del_all_btn").attr("value", func_undefined_to_blank(settings["formdiv-tbl-button"]));
   //ユーザーガイド画面iframeのタイトル
-  $("#helpMovieTitle1").attr("title",func_undefined_to_blank(settings["helpdiv-headline2"]));
-  $("#helpMovieTitle2").attr("title",func_undefined_to_blank(settings["helpdiv-headline3"]));
-  $("#helpMovieTitle3").attr("title",func_undefined_to_blank(settings["helpdiv-headline4"]));
-  $("#helpMovieTitle4").attr("title",func_undefined_to_blank(settings["helpdiv-headline5"]));
-  $("#helpMovieTitle5").attr("title",func_undefined_to_blank(settings["helpdiv-headline6"]));
+  $("#helpMovieTitle1").attr("title", func_undefined_to_blank(settings["helpdiv-headline2"]));
+  $("#helpMovieTitle2").attr("title", func_undefined_to_blank(settings["helpdiv-headline3"]));
+  $("#helpMovieTitle3").attr("title", func_undefined_to_blank(settings["helpdiv-headline4"]));
+  $("#helpMovieTitle4").attr("title", func_undefined_to_blank(settings["helpdiv-headline5"]));
+  $("#helpMovieTitle5").attr("title", func_undefined_to_blank(settings["helpdiv-headline6"]));
   //計測ツール
   $("#measureToolTilte").text(func_undefined_to_blank(settings["viewformdiv-measuretool-title"]));
-  $("#distanceButton").attr("title",func_undefined_to_blank(settings["viewformdiv-measuretool-distance"]));
-  $("#areaButton").attr("title",func_undefined_to_blank(settings["viewformdiv-measuretool-area"]));
-  $("#clearButton").attr("title",func_undefined_to_blank(settings["viewformdiv-measuretool-clear"]));
+  $("#distanceButton").attr("title", func_undefined_to_blank(settings["viewformdiv-measuretool-distance"]));
+  $("#areaButton").attr("title", func_undefined_to_blank(settings["viewformdiv-measuretool-area"]));
+  $("#clearButton").attr("title", func_undefined_to_blank(settings["viewformdiv-measuretool-clear"]));
 }
 
 /**
@@ -3200,8 +3224,8 @@ function func_change_lang(settings) {
  * @param {object} key 
  * @return {string}
  */
-function func_undefined_to_blank(key){
-  return  key || ""
+function func_undefined_to_blank(key) {
+  return key || ""
 }
 
 /**
@@ -3402,7 +3426,7 @@ function clear_pass_form() {
 /**
  * ファイル共有一覧の表示
  */
-function display_attachment(){
+function display_attachment() {
   var form = new FormData();
   form.set('f', 'json');
   form.set('returnGeometry', false);
@@ -3435,7 +3459,7 @@ function display_attachment(){
     let objectIds = new Array();
     let features = data.features || [];
     let dic_attrib = new Object();
-    for (let feature of features){
+    for (let feature of features) {
       let attrib = feature.attributes || {};
       let objectId = attrib["OBJECTID"];
       objectIds.push(objectId);
@@ -3460,14 +3484,14 @@ function display_attachment(){
       console.log(data);
       let attachmentGroups = data.attachmentGroups || [];
       attachmentGroups = attachmentGroups.reverse();
-      for (let attachmentGroup of attachmentGroups){
+      for (let attachmentGroup of attachmentGroups) {
         let attachmentInfos = attachmentGroup["attachmentInfos"] || [];
-        if (attachmentInfos.length > 0){
+        if (attachmentInfos.length > 0) {
           let attachmentInfo = attachmentInfos[0];
           let attrib = dic_attrib[attachmentGroup["parentObjectId"]] || {};
           // 作成者取得
           let creator = attrib["Creator"];
-          if (creator == undefined){
+          if (creator == undefined) {
             creator = attrib["created_user"];
           }
           creator = (creator || "").toLowerCase();
@@ -3478,7 +3502,7 @@ function display_attachment(){
           let admin_user = false;
           // 管理アップロード+ユーザー対象アップロード
           if (attrib["KanriUpload"] != undefined && attrib["KanriUpload"] == "1"
-           && ((riyoshaId == _user && riyoshaId != creator) || (userLicenseType !== "Editor" && riyoshaId != creator))){
+            && ((riyoshaId == _user && riyoshaId != creator) || (userLicenseType !== "Editor" && riyoshaId != creator))) {
             $list = $list_admin;
           }
           // 管理アップロード+管理者アップロード
@@ -3492,10 +3516,10 @@ function display_attachment(){
             $list = $list_user;
           }
           // ユーザーアップロード+Editor閲覧
-          else if (userLicenseType === "Editor" && user === attrib["RiyoshaID"]){
+          else if (userLicenseType === "Editor" && user === attrib["RiyoshaID"]) {
             $list = $list_user;
           }
-          if ($list != null){
+          if ($list != null) {
             let $row = $("<div></div>").addClass("row flex-box").appendTo($list);
             let $col = $("<div></div>").addClass("file-name flex-box").appendTo($row);
             $header.children(":eq(0)").clone().addClass("title").appendTo($col);
@@ -3504,13 +3528,13 @@ function display_attachment(){
             $header.children(":eq(1)").clone().addClass("title").appendTo($col);
             // created_dateが存在しない場合はCreationDateを参照する
             let creationDate = attrib["created_date"];
-            if (creationDate == undefined){
+            if (creationDate == undefined) {
               creationDate = attrib["CreationDate"];
             }
             $("<div></div>").addClass("value").text(formatDate(new Date(creationDate), 'yyyy/MM/dd HH:mm')).appendTo($col);
             $col = $("<div></div>").addClass("userid flex-box").appendTo($row);
             $header.children(":eq(2)").clone().addClass("title").appendTo($col);
-            if (attrib["KanriUpload"] != "1"){
+            if (attrib["KanriUpload"] != "1") {
               $("<div></div>").addClass("value").text(attrib["RiyoshaID"]).appendTo($col);
             }
             else {
@@ -3520,7 +3544,7 @@ function display_attachment(){
             $header.children(":eq(3)").clone().addClass("title").appendTo($col);
             $col = $("<div></div>").addClass("value").appendTo($col);
             let $button = $("<input type='button' value='" + func_undefined_to_blank(set_lang["uploadattach-tbl-btn-dl"]) + "' />").appendTo($col);
-            $button.on("click", ()=>{
+            $button.on("click", () => {
               // ダウンロード
               let href = url_push_attachment + "/" + layer_id + "/" + attrib["OBJECTID"] + "/attachments/" + attachmentInfo["id"] + "?token=" + token;
               download(href, attachmentInfo["name"], attachmentInfo["contentType"]);
@@ -3531,17 +3555,17 @@ function display_attachment(){
               if (userLicenseType === "Creator") {
                 $button_delete = $("<input type='button' value='" + func_undefined_to_blank(set_lang["uploadattach-tbl-btn-del"]) + "' />").appendTo($col);
               }
-              else if (admin_user){
+              else if (admin_user) {
                 $button_delete = $("<input type='button' value='" + func_undefined_to_blank(set_lang["uploadattach-tbl-btn-del"]) + "' />").appendTo($col);
               }
             }
             else {
               $button_delete = $("<input type='button' value='" + func_undefined_to_blank(set_lang["uploadattach-tbl-btn-del"]) + "' />").appendTo($col);
             }
-            if ($button_delete != null){
-              $button_delete.on("click", ()=>{
-                if (!window.confirm(func_undefined_to_blank(set_lang["uploadattach-confmsg-del"]))){
-                  return ;
+            if ($button_delete != null) {
+              $button_delete.on("click", () => {
+                if (!window.confirm(func_undefined_to_blank(set_lang["uploadattach-confmsg-del"]))) {
+                  return;
                 }
                 form_disabled(true);
                 let form = new FormData();
@@ -3561,7 +3585,7 @@ function display_attachment(){
                   display_attachment();
                 }).fail(function (data) {
                   // console.log(data);
-                }).always(()=>{
+                }).always(() => {
                   form_disabled(false);
                 });
               });
@@ -3569,10 +3593,10 @@ function display_attachment(){
           }
         }
       }
-    }).fail(function(data) {
+    }).fail(function (data) {
 
     })
-  }).fail(()=>{
+  }).fail(() => {
 
   });
 }
@@ -3606,10 +3630,10 @@ function download(url, fileName, contentType, caption) {
   let xhr = new XMLHttpRequest();
   xhr.open("GET", url, true);
   xhr.responseType = "blob";
-  xhr.onload = function(e) {
-    if (this.status == 200){
+  xhr.onload = function (e) {
+    if (this.status == 200) {
       let urlUtil = window.URL || window.webkitURL;
-      let blob = new Blob([this.response], {"type": contentType});
+      let blob = new Blob([this.response], { "type": contentType });
       let itemUrl = urlUtil.createObjectURL(blob);
       let link = document.createElement("a");
       link.href = itemUrl;
@@ -3629,13 +3653,13 @@ function download(url, fileName, contentType, caption) {
  * @param {Array} arguments 引き数配列
  * @returns 変換後文字列
  */
-$.format = function() {
+$.format = function () {
   let target = "";
-  if (arguments.length > 0){
+  if (arguments.length > 0) {
     target = arguments[0];
-    for(let i = 1;i< arguments.length;i++){
+    for (let i = 1; i < arguments.length; i++) {
       let value = "";
-      if (arguments[i] != undefined){
+      if (arguments[i] != undefined) {
         value = arguments[i].toString();
       }
       target = target.replace("{" + (i - 1).toString() + "}", value);

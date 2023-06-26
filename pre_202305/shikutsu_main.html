@@ -43,6 +43,7 @@
       <calcite-tab>
         <div class="kaigyo">
           <label class="sys-change-content maindiv-headline-posting">動画を投稿する</label><br />
+          <label class="maindiv-annotation fontred">※箇所ごとの個別投稿はこちら</label><br />
           <button id="show_form" class="esri-icon-edit maindiv-button-posting">投稿する</button><br />
           <button id="show_help" class="esri-icon-question commonbtn maindiv-button-guide">ご利用ガイド</button>
         </div>
@@ -78,8 +79,8 @@
         <div class="upload-attachment">
           <div class="kaigyo">
             <label class="sys-change-content uploadattach-headline1">ファイルをアップロードする</label><br />
+            <label id="upload_attachment_comment" class="uploadattach-annotation fontred">※統合用図面データ等はこちら</label><br />
             <button id="upload_attachment" class="esri-icon-edit uploadattach-btn-upload">アップロード</button>
-            <span id="upload_attachment_comment" class="uploadattach-annotation">※統合用図面データ等はこちら</span>
             <input id="attachment_file" type="file" multiple hidden />
           </div>
           <div id="attachment_list_user">
@@ -115,12 +116,16 @@
           <label class="settings-headline2">パスワードを変更する</label><br />
           <button id="change-password" class="esri-icon-key  settings-btn-chgpass">変更する</button>
         </div>
+        <div class="kaigyo">
+          <span class="anonymouspanel-headline">言語設定</span>
+          <select id="setting_select_lang"></select>
+        </div>
       </calcite-tab>
     </calcite-tabs>
   </div>
   <!--ユーザー設定画面-->
   <div id="user_conf">
-    <div class="kaigyo pconly">
+    <div class="kaigyo pconly" hidden>
       <label class="sys-change-content userconf-headline1">投稿データの位置指定</label><br />
       <input type="radio" id="gps" value="0" name="toko_setting" />
       <label for="gps" class="radiomenu userconf-radio-menu1">端末のGPS</label>
@@ -130,6 +135,10 @@
     <div class="kaigyo">
       <label class="sys-change-content userconf-headline2">希望成果品の初期値</label><br />
       <div class="flex-box request-filetype"></div>
+    </div>
+    <div class="kaigyo">
+      <label class="sys-change-content userconf-headline3">座標付与の初期値</label><br />
+      <div class="white-space-wrap flex-box" id="settingzahyofuyo"></div>
     </div>
     <div id="confBtnDiv" class="changeBtn">
       <button id="conf-save" class="commonbtn userconf-btn-saving">保存</button>
