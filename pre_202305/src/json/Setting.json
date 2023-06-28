@@ -39,38 +39,6 @@
     {
       "value": "zh-TW",
       "html": "繁體中文（中国語（繁体)）"
-    },
-    {
-      "value": "ko",
-      "html": "한국어（韓国）"
-    },
-    {
-      "value": "it",
-      "html": "Italiano（イタリア）"
-    },
-    {
-      "value": "fr",
-      "html": "Français（フランス）"
-    },
-    {
-      "value": "de",
-      "html": "Deutsch（ドイツ）"
-    },
-    {
-      "value": "es",
-      "html": "Español（スペイン）"
-    },
-    {
-      "value": "nl",
-      "html": "Nederlands（オランダ）"
-    },
-    {
-      "value": "ru",
-      "html": "Русский（ロシア）"
-    },
-    {
-      "value": "pt",
-      "html": "Português（ポルトガル）"
     }
   ],
   "languages": {
@@ -104,6 +72,7 @@
       "maindiv-toolmenu-headline": "並べ替え",
       "maindiv-th-title": "タイトル（試掘名)",
       "maindiv-th-date": "投稿日時",
+      "maindiv-th-user": "利用者ID",
       "maindiv-th-name": "投稿者名",
       "maindiv-th-adress": "住所　　",
       "maindiv-th-remark": "備考　　",
@@ -356,6 +325,7 @@
       "maindiv-toolmenu-headline": "Sort",
       "maindiv-th-title": "Title (Excavation Site)",
       "maindiv-th-date": "Posting date",
+      "maindiv-th-user": "User ID",
       "maindiv-th-name": "Name of User",
       "maindiv-th-adress": "Address",
       "maindiv-th-remark": "Remarks",
@@ -608,6 +578,7 @@
       "maindiv-toolmenu-headline": "排序",
       "maindiv-th-title": "标题（试挖名）",
       "maindiv-th-date": "上传时间",
+      "maindiv-th-user": "用户标识",
       "maindiv-th-name": "上传者姓名",
       "maindiv-th-adress": "地址　　",
       "maindiv-th-remark": "备注",
@@ -860,6 +831,7 @@
       "maindiv-toolmenu-headline": "排序",
       "maindiv-th-title": "標題（試挖名稱）",
       "maindiv-th-date": "上傳時間",
+      "maindiv-th-user": "用戶標識",
       "maindiv-th-name": "上傳者姓名",
       "maindiv-th-adress": "地址",
       "maindiv-th-remark": "備註",
@@ -1112,6 +1084,7 @@
       "maindiv-toolmenu-headline": "정렬",
       "maindiv-th-title": "제목 (테스트 굴삭명)",
       "maindiv-th-date": "게시일자",
+      "maindiv-th-user": "사용자 ID",
       "maindiv-th-name": "작성자 이름",
       "maindiv-th-adress": "주소　　",
       "maindiv-th-remark": "비고",
@@ -1364,6 +1337,7 @@
       "maindiv-toolmenu-headline": "sorta",
       "maindiv-th-title": "Titolo (nome esplorativo)",
       "maindiv-th-date": "Pubblicato il",
+      "maindiv-th-user": "ID utente",
       "maindiv-th-name": "Nome dell'autore",
       "maindiv-th-adress": "indirizzo　　",
       "maindiv-th-remark": "osservazioni　　",
@@ -1616,6 +1590,7 @@
       "maindiv-toolmenu-headline": "Trier par",
       "maindiv-th-title": "Titre (nom de l'investigation)",
       "maindiv-th-date": "Date de publication",
+      "maindiv-th-user": "Identifiant",
       "maindiv-th-name": "Nom de l’auteur",
       "maindiv-th-adress": "Adresse",
       "maindiv-th-remark": "Remarques　　",
@@ -1868,6 +1843,7 @@
       "maindiv-toolmenu-headline": "sortieren",
       "maindiv-th-title": "Titel (explorativer Name)",
       "maindiv-th-date": "Veröffentlicht am",
+      "maindiv-th-user": "Benutzer-ID",
       "maindiv-th-name": "Name des Autors",
       "maindiv-th-adress": "Adresse　　",
       "maindiv-th-remark": "Bemerkungen　　",
@@ -2120,6 +2096,7 @@
       "maindiv-toolmenu-headline": "ordenar",
       "maindiv-th-title": "Título (nombre exploratorio)",
       "maindiv-th-date": "Publicado el",
+      "maindiv-th-user": "ID de usuario",
       "maindiv-th-name": "Nombre del autor",
       "maindiv-th-adress": "dirección　　",
       "maindiv-th-remark": "observaciones　　",
@@ -2372,6 +2349,7 @@
       "maindiv-toolmenu-headline": "Sorteer op",
       "maindiv-th-title": "Titel (naam graafwerk)",
       "maindiv-th-date": "Datum inzending",
+      "maindiv-th-user": "Gebruikersnaam",
       "maindiv-th-name": "Naam inzender",
       "maindiv-th-adress": "Adres",
       "maindiv-th-remark": "Opmerkingen　　",
@@ -2624,6 +2602,7 @@
       "maindiv-toolmenu-headline": "Сортировать по",
       "maindiv-th-title": "Название раскопок",
       "maindiv-th-date": "Дата загрузки",
+      "maindiv-th-user": "Идентификатор пользователя",
       "maindiv-th-name": "Автор",
       "maindiv-th-adress": "Адрес　　",
       "maindiv-th-remark": "Примечания　　",
@@ -2876,6 +2855,7 @@
       "maindiv-toolmenu-headline": "Classificar por",
       "maindiv-th-title": "Título (nome da exploração)",
       "maindiv-th-date": "Data de lançamento",
+      "maindiv-th-user": "ID de utilizador",
       "maindiv-th-name": "Nome do Autor",
       "maindiv-th-adress": "Endereço　　",
       "maindiv-th-remark": "Comentários　　",
