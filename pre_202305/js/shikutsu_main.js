@@ -2378,6 +2378,7 @@ var historyTable = {
     strRowHead.innerHTML = `<tr class="row-head">
           <th class="sys-change-content">${func_undefined_to_blank(set_lang["maindiv-th-title"])}</th>
           <th class="sys-change-content">${func_undefined_to_blank(set_lang["maindiv-th-date"])}</th>
+          <th class="sys-change-content">${func_undefined_to_blank(set_lang["maindiv-th-user"])}</th>
           <th class="sys-change-content">${func_undefined_to_blank(set_lang["maindiv-th-name"])}</th>
           <th class="sys-change-content">${func_undefined_to_blank(set_lang["maindiv-th-adress"])}</th>
           <th class="sys-change-content">${func_undefined_to_blank(set_lang["maindiv-th-remark"])}</th>
@@ -2456,6 +2457,7 @@ var historyTable = {
 
           var objectid = features[i].attributes["OBJECTID"];
           var title = features[i].attributes["Title"];
+          var created_user = features[i].attributes["created_user"];
           var createdate = features[i].attributes[create_date_field];
           var str_createdate = formatDate(new Date(createdate), 'yyyy/MM/dd HH:mm');
           var naiyo = features[i].attributes["Naiyo"];
@@ -2465,6 +2467,7 @@ var historyTable = {
           tr_html += '<tr>';
           tr_html += '<td data-label=' + func_undefined_to_blank(set_lang["maindiv-th-title"]) + '>' + title + '　</td>';
           tr_html += '<td data-label=' + func_undefined_to_blank(set_lang["maindiv-th-date"]) + '>' + str_createdate + '　</td>';
+          tr_html += '<td data-label=' + func_undefined_to_blank(set_lang["maindiv-th-user"]) + '>' + created_user + '　</td>';
           tr_html += '<td data-label=' + func_undefined_to_blank(set_lang["maindiv-th-name"]) + '>' + naiyo + '　</td>';
           tr_html += '<td data-label=' + func_undefined_to_blank(set_lang["maindiv-th-adress"]) + '>' + jusho + '　</td>';
           tr_html += '<td data-label=' + func_undefined_to_blank(set_lang["maindiv-th-remark"]) + '>' + bikou + '　</td>';
@@ -3507,7 +3510,7 @@ function display_attachment() {
           }
           // 管理アップロード+管理者アップロード
           // else if (attrib["KanriUpload"] != undefined && attrib["KanriUpload"] == "1" && attrib["RiyoshaID"] == creator){
-          else if (attrib["KanriUpload"] != undefined && attrib["KanriUpload"] == "1" && riyoshaId == creator){
+          else if (attrib["KanriUpload"] != undefined && attrib["KanriUpload"] == "1" && riyoshaId == creator) {
             $list = $list_admin;
             admin_user = ($.inArray(user, allow_users) > -1);
           }
