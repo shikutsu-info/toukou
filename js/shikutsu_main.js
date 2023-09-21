@@ -943,25 +943,26 @@ require([
     var ngCharaFlg = false;
 
     var title = $('#title');
-    var naiyo = $('#naiyo');
-    var jusho = $('#jusho');
-    var kaninfo = $('#kaninfo');
-    var bikou = $('#bikou');
-    var zahyojoho = $("#zahyojoho");
+    //var naiyo = $('#naiyo');
+    //var jusho = $('#jusho');
+    //var kaninfo = $('#kaninfo');
+    //var bikou = $('#bikou');
+    //var zahyojoho = $("#zahyojoho");
 
     if (mode === 1) {
       title = $('#viewtitle');
-      naiyo = $('#viewnaiyo');
-      jusho = $('#viewjusho');
-      kaninfo = $('#viewkaninfo');
-      bikou = $('#viewbikou');
-      zahyojoho = $("#viewzahyojoho");
+      //naiyo = $('#viewnaiyo');
+      //jusho = $('#viewjusho');
+      //kaninfo = $('#viewkaninfo');
+      //bikou = $('#viewbikou');
+      //zahyojoho = $("#viewzahyojoho");
     }
     for (var chara of ngCharacters) {
       if (title.val().indexOf(chara) != -1) {
         ngCharaFlg = true;
         title.focus();
       }
+      /*
       if (naiyo.val().indexOf(chara) != -1) {
         ngCharaFlg = true;
         naiyo.focus();
@@ -982,6 +983,7 @@ require([
         ngCharaFlg = true;
         zahyojoho.focus();
       }
+      */
     }
     return ngCharaFlg;
   }
