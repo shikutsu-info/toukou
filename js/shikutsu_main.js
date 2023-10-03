@@ -2685,6 +2685,13 @@ var historyTable = {
               break;
             }
           }
+
+          //プレビュー画像の表示
+          if (keywords.split("|").indexOf("PREVIEW") != -1) {
+            if (contentType.indexOf('image') !== -1) {
+              att_html += att_name + '<br/><img decoding="async" class="view_gallery" src="' + att_url + '" width="100px"></img><br/>';
+            }
+          }
           continue;
         }
         else if (contentType.indexOf('video') !== -1) {
@@ -3287,6 +3294,7 @@ function func_requet_filetype_setting_visible(settings, elemid_list) {
 }
 /**
  * アタッチメントのキーワード中に設定キーワードが存在しているか
+ * 2番目のkeywordで検索
  * @param {object[]} settings 
  * @param {string | string[]} keywords 
  * @param {integer} index 
@@ -3300,8 +3308,14 @@ function func_request_filetype_setting_exists_keyword(settings, keywords, index)
     if (setting.visible || false) {
       var aryKeyword = keywords.toLowerCase().split("|");
       for (var i = 0; i < setting_keywords.length; i++) {
-        for (var j = 0; j < aryKeyword.length; j++) {
-          if (aryKeyword[j].indexOf(setting_keywords[i].toLowerCase()) != -1) {
+        // for (var j = 0; j < aryKeyword.length; j++) {
+        //   if (aryKeyword[j].indexOf(setting_keywords[i].toLowerCase()) != -1) {
+        //     return true;
+        //   }
+        // }
+        //2番目のkeywordで検索
+        if (aryKeyword.length > 1) {
+          if (aryKeyword[1].indexOf(setting_keywords[i].toLowerCase()) != -1) {
             return true;
           }
         }
