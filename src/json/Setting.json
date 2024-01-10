@@ -3477,7 +3477,10 @@
         "GS_osaka",
         "GS_tohoku",
         "GS_tokyo",
-        "S0502"
+        "S0502",
+        "GS_taiwan",
+        "GS_USA_demo",
+        "GS_gensai"
       ],
       "change_content": {
         "ja": {
