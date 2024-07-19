@@ -3492,7 +3492,7 @@
         "ru": "Скачать MAISETSU_KIT (даннные для дополненной реальности) ",
         "pt": "Download MAISETSU_KIT"
       },
-      "field_name": "Request_filetype07",
+      "field_name": "Request_filetype10",
       "checkbox_label": {
         "ja": "MAISETSU_KIT(.gsed)",
         "en": "MAISETSU_KIT(.gsed)",
