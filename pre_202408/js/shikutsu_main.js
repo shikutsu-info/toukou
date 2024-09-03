@@ -2628,7 +2628,8 @@ var historyTable = {
           /// 作成済み:2を考慮
           var $ipt = $("#viewformDiv .request-filetype input[type='checkbox']").eq(index);
           var value = features[0].attributes[item.field_name] || 0;
-          $ipt.val(value);
+          /// 「0」の場合は「1」とする 1960行目でチェック時にvalueを代入するため
+          $ipt.val(value || 1);
           $ipt.prop("checked", (value != 0 ? true : false));
         }
       });
