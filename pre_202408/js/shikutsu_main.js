@@ -137,7 +137,7 @@ $.ajaxSetup({ async: false });
 $.getJSON(json_url, function (config) {
   set_config(config);
   //言語設定　
-  func_change_lang(set_lang);
+  // func_change_lang(set_lang);
 
   // 会社情報を会社テーブルから取得
   var kaisha_form = new FormData();
@@ -1845,7 +1845,7 @@ require([
                 [
                   {
                     "attributes": {
-                      "OBJECTID": oid, 
+                      "OBJECTID": oid,
                       "Update_status": 2,  // 2:添付追加
                       "Update_status_Update": Date.now() // 更新ステータス変更日時
                     }
@@ -1861,7 +1861,7 @@ require([
                 "contentType": false,
                 "dataType": "json",
                 "async": true
-              }).then(function() {
+              }).then(function () {
                 historyTable.viewattachment(oid);
               });
             }
@@ -1958,7 +1958,7 @@ require([
         index++;
         /// 2:作成済み 考慮
         var $ipt = $("#viewformDiv .request-filetype input[type='checkbox']").eq(index);
-        var value = $ipt.prop("checked")?$ipt.val(): 0;
+        var value = $ipt.prop("checked") ? $ipt.val() : 0;
         attributes[item.field_name] = Number(value);
       }
     });
@@ -2779,7 +2779,7 @@ var historyTable = {
         [
           {
             "attributes": {
-              "OBJECTID": oid, 
+              "OBJECTID": oid,
               "Update_status": 3,  // 3:添付削除
               "Update_status_Update": Date.now() // 更新ステータス変更日時
             }
@@ -2795,7 +2795,7 @@ var historyTable = {
         "contentType": false,
         "dataType": "json",
         "async": true
-      }).done(function() {
+      }).done(function () {
         historyTable.viewattachment(oid);
       });
       // console.log(data);
@@ -3127,6 +3127,8 @@ function set_config(config) {
   ngCharacters = config.ngCharacters;
   // 文言置き換え用
   set_lang = config.languages[lang];
+  func_change_lang(set_lang);
+
   // アップロードファイルサイズ単一上限
   upload_limit_file_size = config.upload_limit_file_size || 0;
   // アップロードファイルサイズ合計上限
@@ -3233,7 +3235,8 @@ function create_request_filetype_check(settings, $parent, name, id_initial, clas
     if (settings[i].visible) {
       var $div = $("<div class='flex-box'></div>").appendTo($parent);
       var $input = $("<input type='checkbox' name='" + name + "' id='" + id_initial + settings[i].field_name + "' />").appendTo($div);
-      var $label = $("<label for='" + id_initial + settings[i].field_name + "'></label>").text(func_undefined_to_blank(settings[i].checkbox_label[lang])).appendTo($div);
+      // var $label = $("<label for='" + id_initial + settings[i].field_name + "'></label>").text(func_undefined_to_blank(settings[i].checkbox_label[lang])).appendTo($div);
+      var $label = $("<label class='sys-change-content' for='" + id_initial + settings[i].field_name + "'></label>").text(func_undefined_to_blank(settings[i].checkbox_label[lang])).appendTo($div);
       $label.addClass(className);
     }
   }
