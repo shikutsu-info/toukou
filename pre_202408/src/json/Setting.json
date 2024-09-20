@@ -3921,6 +3921,53 @@
           }
         ]
       }
+    },
+    {
+      "ids": [
+        "ZZ9904"
+      ],
+      "change_content": {
+        "ja": {
+          "座標付与(点群データ/3Dモデリング)": "座標付与(点群データ/平面図/3Dモデリング)",
+          "CAD+3Dモデリング統合(.dwg)": "平面図＋ダッシュボード統合"
+        }
+      },
+      "default_value": {
+        "ja": {
+          "kaninfo": "管①　管種：　　管径Φ：　　\r\n管②　管種：　　管径Φ：　　\r\n管③　管種：　　管径Φ：　　\r\n管④　管種：　　管径Φ：　　\r\n管⑤　管種：　　管径Φ：　　",
+          "zahyojoho": "座標①　x：　　y：　　z：　　\r\n座標②　x：　　y：　　z：　　\r\n座標③　x：　　y：　　z：　　",
+          "bikou": "【案件名】\n\n\n【切り図No】\n"
+        }
+      },
+      "textarea_ids": [],
+      "list_order_select_item": {
+        "ja": [
+          {
+            "value": "",
+            "html": "未設定"
+          },
+          {
+            "value": "Title",
+            "html": "タイトル(試掘名)"
+          },
+          {
+            "value": "created_date",
+            "html": "投稿日時(昇順)"
+          },
+          {
+            "value": "created_date desc",
+            "html": "投稿日時(降順)"
+          },
+          {
+            "value": "created_user",
+            "html": "投稿者名(昇順)"
+          },
+          {
+            "value": "created_user desc",
+            "html": "投稿者名(降順)"
+          }
+        ]
+      }
     }
   ]
 }
