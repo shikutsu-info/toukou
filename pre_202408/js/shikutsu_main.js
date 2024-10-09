@@ -2289,7 +2289,8 @@ require([
                 "RiyoshaID": user,
                 "KanriUpload": "",
                 "Update_status": 0,  // 0:添付追加
-                "Update_status_Update": Date.now() // 更新ステータス変更日時
+                "Update_status_Update": Date.now(), // 更新ステータス変更日時
+                "file_name": e.item.itemName
               }
             }
             form.set('f', 'json');
