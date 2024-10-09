@@ -2287,7 +2287,9 @@ require([
               "attributes": {
                 "KaishaID": $("#kaishaid").val(),
                 "RiyoshaID": user,
-                "KanriUpload": ""
+                "KanriUpload": "",
+                "Update_status": 0,  // 0:添付追加
+                "Update_status_Update": Date.now() // 更新ステータス変更日時
               }
             }
             form.set('f', 'json');
