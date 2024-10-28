@@ -23,7 +23,16 @@
     ">",
     "|",
     ".",
-    "➀","➁","➂","➃","➄","➅","➆","➇","➈","➉",
+    "➀",
+    "➁",
+    "➂",
+    "➃",
+    "➄",
+    "➅",
+    "➆",
+    "➇",
+    "➈",
+    "➉",
     " "
   ],
   "list_lang_select_item": [
@@ -3462,6 +3471,42 @@
         "ru": "AR (.png)",
         "pt": "AR(.png)"
       }
+    },
+    {
+      "visible": true,
+      "keyword": [
+        "RFT10"
+      ],
+      "downloaded_key": "RFT10_DL",
+      "link_text": {
+        "ja": "MAISETSU_KIT 連携ファイルダウンロード",
+        "en": "Download MAISETSU_KIT",
+        "zh-CN": "下载MAISETSU_KIT",
+        "zh-TW": "下載MAISETSU_KIT",
+        "ko": "MAISETSU_KIT 다운로드",
+        "it": "MAISETSU_KIT Scarica",
+        "fr": "Téléchargement MAISETSU_KIT",
+        "de": "MAISETSU_KIT-Download",
+        "es": "MAISETSU_KIT Descargar",
+        "nl": "MAISETSU_KIT downloaden",
+        "ru": "Скачать MAISETSU_KIT (даннные для дополненной реальности) ",
+        "pt": "Download MAISETSU_KIT"
+      },
+      "field_name": "Request_filetype10",
+      "checkbox_label": {
+        "ja": "MAISETSU_Kit 連携ファイル(.gsed)",
+        "en": "MAISETSU_KIT(.gsed)",
+        "zh-CN": "MAISETSU_KIT(.gsed)",
+        "zh-TW": "MAISETSU_KIT(.gsed)",
+        "ko": "MAISETSU_KIT(.gsed)",
+        "it": "MAISETSU_KIT(.gsed)",
+        "fr": "MAISETSU_KIT(.gsed)",
+        "de": "MAISETSU_KIT(.gsed)",
+        "es": "MAISETSU_KIT(.gsed)",
+        "nl": "MAISETSU_KIT(.gsed)",
+        "ru": "MAISETSU_KIT(.gsed)",
+        "pt": "MAISETSU_KIT(.gsed)"
+      }
     }
   ],
   "upload_extension_black_list": [],
@@ -3873,6 +3918,54 @@
           {
             "value": "created_user desc",
             "html": "Nome do pôster(ordem decrescente)"
+          }
+        ]
+      }
+    },
+    {
+      "ids": [
+        "Z00004",
+        "G00003_nscy"
+      ],
+      "change_content": {
+        "ja": {
+          "座標付与(点群データ/3Dモデリング)": "座標付与(点群データ/平面図/3Dモデリング)",
+          "CAD+3Dモデリング統合(.dwg)": "平面図＋ダッシュボード統合"
+        }
+      },
+      "default_value": {
+        "ja": {
+          "kaninfo": "管①　用途：　　材質：　　管径Φ：　　\r\n管②　用途：　　材質：　　管径Φ：　　\r\n管③　用途：　　材質：　　管径Φ：　　\r\n管④　用途：　　材質：　　管径Φ：　　\r\n管⑤　用途：　　材質：　　管径Φ：　　",
+          "zahyojoho": "座標①　x：　　y：　　z：　　\r\n座標②　x：　　y：　　z：　　\r\n座標③　x：　　y：　　z：　　",
+          "bikou": "【案件名】\n\n\n【切り図No】\n"
+        }
+      },
+      "textarea_ids": [],
+      "list_order_select_item": {
+        "ja": [
+          {
+            "value": "",
+            "html": "未設定"
+          },
+          {
+            "value": "Title",
+            "html": "タイトル(試掘名)"
+          },
+          {
+            "value": "created_date",
+            "html": "投稿日時(昇順)"
+          },
+          {
+            "value": "created_date desc",
+            "html": "投稿日時(降順)"
+          },
+          {
+            "value": "created_user",
+            "html": "投稿者名(昇順)"
+          },
+          {
+            "value": "created_user desc",
+            "html": "投稿者名(降順)"
           }
         ]
       }
