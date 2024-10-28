@@ -137,7 +137,7 @@ $.ajaxSetup({ async: false });
 $.getJSON(json_url, function (config) {
   set_config(config);
   //言語設定　
-  func_change_lang(set_lang);
+  // func_change_lang(set_lang);
 
   // 会社情報を会社テーブルから取得
   var kaisha_form = new FormData();
@@ -1651,7 +1651,9 @@ require([
       "ZahyoJoho": $("#zahyojoho").val(),
       "ZahyoFuyo": $("#zahyofuyo input[type='radio']:checked").val(),
       "Email": email,
-      "Status": 0
+      "Status": 0,
+      "Update_status": 0,  // 0:新規投稿
+      "Update_status_Update": Date.now() // 更新ステータス変更日時
     };
     // 要否ファイルチェックボックスのチェック状態からパラメータ作成
     var index = -1;
@@ -1836,7 +1838,32 @@ require([
           }
           request_ajax(param).then(function (data) {
             if (data != undefined && data.addAttachmentResult != undefined && data.addAttachmentResult.success || false) {
-              historyTable.viewattachment(oid);
+              // 更新ステータス更新
+              var formData = new FormData();
+              formData.set('f', 'json');
+              formData.set('features', JSON.stringify(
+                [
+                  {
+                    "attributes": {
+                      "OBJECTID": oid,
+                      "Update_status": 2,  // 2:添付追加
+                      "Update_status_Update": Date.now() // 更新ステータス変更日時
+                    }
+                  }
+                ]
+              ));
+              formData.set('token', token);
+              request_ajax({
+                "url": push_feature_url + "/" + layer_id + "/updateFeatures",
+                "type": "POST",
+                "data": formData,
+                "processData": false,
+                "contentType": false,
+                "dataType": "json",
+                "async": true
+              }).then(function () {
+                historyTable.viewattachment(oid);
+              });
             }
             else {
 
@@ -1919,7 +1946,9 @@ require([
       "zahyojoho": $("#viewzahyojoho").val(),
       // "genbakubun": $("#viewgenbakubun").val()
       "genbakubun": $("#viewgenbakubun input[type='radio']:checked").val(),
-      "zahyofuyo": $("#viewzahyofuyo input[type='radio']:checked").val()
+      "zahyofuyo": $("#viewzahyofuyo input[type='radio']:checked").val(),
+      "Update_status": 1,  // 1:投稿更新
+      "Update_status_Update": Date.now() // 更新ステータス変更日時
     };
 
     // 要否ファイルチェックボックスのチェック状態からパラメータ作成
@@ -1927,7 +1956,10 @@ require([
     $.each(request_filetype_setting, function (idx, item) {
       if (item.visible) {
         index++;
-        attributes[item.field_name] = Number($("#viewformDiv .request-filetype input[type='checkbox']").eq(index).prop("checked"));
+        /// 2:作成済み 考慮
+        var $ipt = $("#viewformDiv .request-filetype input[type='checkbox']").eq(index);
+        var value = $ipt.prop("checked") ? $ipt.val() : 0;
+        attributes[item.field_name] = Number(value);
       }
     });
 
@@ -2255,7 +2287,10 @@ require([
               "attributes": {
                 "KaishaID": $("#kaishaid").val(),
                 "RiyoshaID": user,
-                "KanriUpload": ""
+                "KanriUpload": "",
+                "Update_status": 0,  // 0:添付追加
+                "Update_status_Update": Date.now(), // 更新ステータス変更日時
+                "file_name": e.item.itemName
               }
             }
             form.set('f', 'json');
@@ -2593,7 +2628,12 @@ var historyTable = {
       $.each(request_filetype_setting, function (idx, item) {
         if (item.visible) {
           index++;
-          $("#viewformDiv .request-filetype input[type='checkbox']").eq(index).prop("checked", (features[0].attributes[item.field_name] == 1 ? true : false));
+          /// 作成済み:2を考慮
+          var $ipt = $("#viewformDiv .request-filetype input[type='checkbox']").eq(index);
+          var value = features[0].attributes[item.field_name] || 0;
+          /// 「0」の場合は「1」とする 1960行目でチェック時にvalueを代入するため
+          $ipt.val(value || 1);
+          $ipt.prop("checked", (value != 0 ? true : false));
         }
       });
       $("#viewzahyofuyo input").each(function () {
@@ -2687,7 +2727,7 @@ var historyTable = {
           }
 
           //プレビュー画像の表示
-          if (keywords.split("|").indexOf("PREVIEW") != -1 || keywords.split("|").indexOf("PREVIEW1") != -1 || keywords.split("|").indexOf("PREVIEW2") != -1 || keywords.split("|").indexOf("PREVIEW3") != -1) {
+          if (keywords.split("|").indexOf("PREVIEW") != -1) {
             if (contentType.indexOf('image') !== -1) {
               att_html += att_name + '<br/><img decoding="async" class="view_gallery" src="' + att_url + '" width="100px"></img><br/>';
             }
@@ -2735,7 +2775,32 @@ var historyTable = {
       dataType: 'json',
       async: true
     }).done(function (data) {
-      historyTable.viewattachment(oid);
+      // 更新ステータス更新
+      var formData = new FormData();
+      formData.set('f', 'json');
+      formData.set('features', JSON.stringify(
+        [
+          {
+            "attributes": {
+              "OBJECTID": oid,
+              "Update_status": 3,  // 3:添付削除
+              "Update_status_Update": Date.now() // 更新ステータス変更日時
+            }
+          }
+        ]
+      ));
+      formData.set('token', token);
+      $.ajax({
+        "url": push_feature_url + "/" + layer_id + "/updateFeatures",
+        "type": "POST",
+        "data": formData,
+        "processData": false,
+        "contentType": false,
+        "dataType": "json",
+        "async": true
+      }).done(function () {
+        historyTable.viewattachment(oid);
+      });
       // console.log(data);
     }).fail(function (data) {
       // console.log(data);
@@ -3065,6 +3130,8 @@ function set_config(config) {
   ngCharacters = config.ngCharacters;
   // 文言置き換え用
   set_lang = config.languages[lang];
+  func_change_lang(set_lang);
+
   // アップロードファイルサイズ単一上限
   upload_limit_file_size = config.upload_limit_file_size || 0;
   // アップロードファイルサイズ合計上限
@@ -3171,7 +3238,8 @@ function create_request_filetype_check(settings, $parent, name, id_initial, clas
     if (settings[i].visible) {
       var $div = $("<div class='flex-box'></div>").appendTo($parent);
       var $input = $("<input type='checkbox' name='" + name + "' id='" + id_initial + settings[i].field_name + "' />").appendTo($div);
-      var $label = $("<label for='" + id_initial + settings[i].field_name + "'></label>").text(func_undefined_to_blank(settings[i].checkbox_label[lang])).appendTo($div);
+      // var $label = $("<label for='" + id_initial + settings[i].field_name + "'></label>").text(func_undefined_to_blank(settings[i].checkbox_label[lang])).appendTo($div);
+      var $label = $("<label class='sys-change-content' for='" + id_initial + settings[i].field_name + "'></label>").text(func_undefined_to_blank(settings[i].checkbox_label[lang])).appendTo($div);
       $label.addClass(className);
     }
   }
