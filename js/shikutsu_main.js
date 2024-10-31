@@ -2727,7 +2727,7 @@ var historyTable = {
           }
 
           //プレビュー画像の表示
-          if (keywords.split("|").indexOf("PREVIEW") != -1) {
+          if (keywords.split("|").find(k => k.indexOf("PREVIEW") != -1)) {
             if (contentType.indexOf('image') !== -1) {
               att_html += att_name + '<br/><img decoding="async" class="view_gallery" src="' + att_url + '" width="100px"></img><br/>';
             }
