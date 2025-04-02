@@ -1279,7 +1279,8 @@ require([
               let pos = fileName.lastIndexOf(".");
               // 拡張子前の「.」を「_」へ置換
               if (pos > -1) {
-                fileName = fileName.substring(0, pos - 1).split(".").join("_") + fileName.substring(pos);
+                // fileName = fileName.substring(0, pos - 1).split(".").join("_") + fileName.substring(pos);
+                fileName = fileName.substring(0, pos).split(".").join("_") + fileName.substring(pos);
               }
               var form = new FormData();
               form.set("f", "json");
