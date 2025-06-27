@@ -1,5 +1,5 @@
 {
-  "webappId": "7qK1l49P6ioNbSn9",
+  "webappId": "flcUBGNhsFIOGDte",
   "get_kaisha_url": "https://services-ap1.arcgis.com/IGJZjUgPhEbs94bW/arcgis/rest/services/SHIKUTSUKUN_KAISHA_VIEW_v01/FeatureServer/0",
   "layer_id": "0",
   "history_webmap_id": "accf3eff22254ed69e23afeb094a4881",
@@ -33,17 +33,16 @@
     "➇",
     "➈",
     "➉",
-    " ",
-    "➀",
-    "➁",
-    "➂",
-    "➃",
-    "➄",
-    "➅",
-    "➆",
-    "➇",
-    "➈",
-    "➉",
+    "⓵",
+    "⓶",
+    "⓷",
+    "⓸",
+    "⓹",
+    "⓺",
+    "⓻",
+    "⓼",
+    "⓽",
+    "⓾",
     " ",
     "⓪",
     "①",
@@ -3987,7 +3986,6 @@
     {
       "ids": [
         "G00003_nscy",
-        "G00061_nscy",
         "Z00056"
       ],
       "change_content": {
