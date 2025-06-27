@@ -1279,7 +1279,8 @@ require([
               let pos = fileName.lastIndexOf(".");
               // 拡張子前の「.」を「_」へ置換
               if (pos > -1) {
-                fileName = fileName.substring(0, pos - 1).split(".").join("_") + fileName.substring(pos);
+                // fileName = fileName.substring(0, pos - 1).split(".").join("_") + fileName.substring(pos);
+                fileName = fileName.substring(0, pos).split(".").join("_") + fileName.substring(pos);
               }
               var form = new FormData();
               form.set("f", "json");
@@ -2727,7 +2728,7 @@ var historyTable = {
           }
 
           //プレビュー画像の表示
-          if (keywords.split("|").indexOf("PREVIEW") != -1) {
+          if (keywords.split("|").find(k => k.indexOf("PREVIEW") != -1)) {
             if (contentType.indexOf('image') !== -1) {
               att_html += att_name + '<br/><img decoding="async" class="view_gallery" src="' + att_url + '" width="100px"></img><br/>';
             }
@@ -3589,8 +3590,9 @@ function display_attachment() {
           let admin_user = false;
           // 管理アップロード+ユーザー対象アップロード
           if (attrib["KanriUpload"] != undefined && attrib["KanriUpload"] == "1"
-            && ((riyoshaId == _user && riyoshaId != creator) || (userLicenseType !== "Editor" && riyoshaId != creator))) {
+            && ((riyoshaId == _user && riyoshaId != creator) || ((userLicenseType !== "Editor" && userLicenseType !== "Contributor") && riyoshaId != creator))) {
             $list = $list_admin;
+            admin_user = ($.inArray(user, allow_users) > -1);
           }
           // 管理アップロード+管理者アップロード
           // else if (attrib["KanriUpload"] != undefined && attrib["KanriUpload"] == "1" && attrib["RiyoshaID"] == creator){
@@ -3599,11 +3601,12 @@ function display_attachment() {
             admin_user = ($.inArray(user, allow_users) > -1);
           }
           // ユーザーアップロード+Creator閲覧
-          else if (userLicenseType !== "Editor") {
+          //else if (userLicenseType !== "Editor") {
+          else if (userLicenseType !== "Editor" && userLicenseType !== "Contributor") {
             $list = $list_user;
           }
           // ユーザーアップロード+Editor閲覧
-          else if (userLicenseType === "Editor" && user === attrib["RiyoshaID"]) {
+          else if ((userLicenseType === "Editor" || userLicenseType === "Contributor") && user === attrib["RiyoshaID"]) {
             $list = $list_user;
           }
           if ($list != null) {
@@ -3639,10 +3642,10 @@ function display_attachment() {
             });
             let $button_delete = null;
             if (attrib["KanriUpload"] != undefined && attrib["KanriUpload"] == "1") {
-              if (userLicenseType === "Creator") {
-                $button_delete = $("<input type='button' value='" + func_undefined_to_blank(set_lang["uploadattach-tbl-btn-del"]) + "' />").appendTo($col);
-              }
-              else if (admin_user) {
+              // if (userLicenseType === "Creator") {
+              //   $button_delete = $("<input type='button' value='" + func_undefined_to_blank(set_lang["uploadattach-tbl-btn-del"]) + "' />").appendTo($col);
+              // }
+              if (admin_user) {
                 $button_delete = $("<input type='button' value='" + func_undefined_to_blank(set_lang["uploadattach-tbl-btn-del"]) + "' />").appendTo($col);
               }
             }
