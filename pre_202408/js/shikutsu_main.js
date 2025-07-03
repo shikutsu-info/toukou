@@ -3596,7 +3596,7 @@ function display_attachment() {
           let admin_user = false;
           // 管理アップロード+ユーザー対象アップロード
           if (attrib["KanriUpload"] != undefined && attrib["KanriUpload"] == "1"
-            && ((riyoshaId == _user && riyoshaId != creator) || ((userLicenseType === "Creator") && riyoshaId != creator))) {
+            && ((riyoshaId == _user && riyoshaId != creator) || ((userLicenseType !== "Editor" && userLicenseType !== "Contributor") && riyoshaId != creator))) {
             $list = $list_admin;
             admin_user = ($.inArray(user, allow_users) > -1);
           }
@@ -3608,7 +3608,7 @@ function display_attachment() {
           }
           // ユーザーアップロード+Creator閲覧
           //else if (userLicenseType !== "Editor") {
-          else if (userLicenseType === "Creator") {
+          else if (userLicenseType !== "Editor" && userLicenseType !== "Contributor") {
             $list = $list_user;
           }
           // ユーザーアップロード+Editor閲覧
