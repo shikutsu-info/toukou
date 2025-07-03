@@ -423,7 +423,9 @@ require([
 
       featureLayer.labelingInfo = [labelClass];
 
-      if (userLicenseType === "Creator") {  //Creatorは他ユーザの投稿も閲覧できる
+      if (userLicenseType === "Creator" && portal.user.description && portal.user.description.includes("ちかデジ編集者")) {
+        featureLayer.definitionExpression = "Status<>9 And " + creator_field + " = '" + user + "'";
+      } else if (userLicenseType === "Creator") {  //Creatorは他ユーザの投稿も閲覧できる
         featureLayer.definitionExpression = "Status<>9";
       } else {
         featureLayer.definitionExpression = "Status<>9 And " + creator_field + " = '" + user + "'";
@@ -2461,7 +2463,9 @@ var historyTable = {
     var form = new FormData();
     form.set('f', 'json');
     form.set('returnGeometry', false);
-    if (userLicenseType === "Creator") {  //Creatorは他ユーザの投稿も閲覧できる
+    if (userLicenseType === "Creator" && portal.user.description && portal.user.description.includes("ちかデジ編集者")) {
+      form.set('where', "Status<>9 And " + creator_field + " = '" + this.userId + "'");
+    } else if (userLicenseType === "Creator") {  //Creatorは他ユーザの投稿も閲覧できる
       form.set('where', "Status<>9");
     } else {
       form.set('where', "Status<>9 And " + creator_field + " = '" + this.userId + "'");
@@ -2846,7 +2850,9 @@ var historyTable = {
     var form = new FormData();
     form.set('f', 'json');
 
-    if (userLicenseType === "Creator") {  //Creatorは他ユーザの投稿も閲覧できる
+    if (userLicenseType === "Creator" && portal.user.description && portal.user.description.includes("ちかデジ編集者")) {
+      form.set('where', "Status<>9 And " + creator_field + " = '" + this.userId + "'");
+    } else if (userLicenseType === "Creator") {  //Creatorは他ユーザの投稿も閲覧できる
       form.set('where', "Status<>9");
     } else {
       form.set('where', "Status<>9 And " + creator_field + " = '" + this.userId + "'");
@@ -3590,7 +3596,7 @@ function display_attachment() {
           let admin_user = false;
           // 管理アップロード+ユーザー対象アップロード
           if (attrib["KanriUpload"] != undefined && attrib["KanriUpload"] == "1"
-            && ((riyoshaId == _user && riyoshaId != creator) || ((userLicenseType !== "Editor" && userLicenseType !== "Contributor") && riyoshaId != creator))) {
+            && ((riyoshaId == _user && riyoshaId != creator) || ((userLicenseType === "Creator") && riyoshaId != creator))) {
             $list = $list_admin;
             admin_user = ($.inArray(user, allow_users) > -1);
           }
@@ -3602,7 +3608,7 @@ function display_attachment() {
           }
           // ユーザーアップロード+Creator閲覧
           //else if (userLicenseType !== "Editor") {
-          else if (userLicenseType !== "Editor" && userLicenseType !== "Contributor") {
+          else if (userLicenseType === "Creator") {
             $list = $list_user;
           }
           // ユーザーアップロード+Editor閲覧
