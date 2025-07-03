@@ -423,7 +423,9 @@ require([
 
       featureLayer.labelingInfo = [labelClass];
 
-      if (userLicenseType === "Creator") {  //Creatorは他ユーザの投稿も閲覧できる
+      if (userLicenseType === "Creator" && portal.user.description && portal.user.description.includes("ちかデジ編集者")) {
+        featureLayer.definitionExpression = "Status<>9 And " + creator_field + " = '" + user + "'";
+      } else if (userLicenseType === "Creator") {  //Creatorは他ユーザの投稿も閲覧できる
         featureLayer.definitionExpression = "Status<>9";
       } else {
         featureLayer.definitionExpression = "Status<>9 And " + creator_field + " = '" + user + "'";
@@ -2461,7 +2463,9 @@ var historyTable = {
     var form = new FormData();
     form.set('f', 'json');
     form.set('returnGeometry', false);
-    if (userLicenseType === "Creator") {  //Creatorは他ユーザの投稿も閲覧できる
+    if (userLicenseType === "Creator" && portal.user.description && portal.user.description.includes("ちかデジ編集者")) {
+      form.set('where', "Status<>9 And " + creator_field + " = '" + this.userId + "'");
+    } else if (userLicenseType === "Creator") {  //Creatorは他ユーザの投稿も閲覧できる
       form.set('where', "Status<>9");
     } else {
       form.set('where', "Status<>9 And " + creator_field + " = '" + this.userId + "'");
@@ -2846,7 +2850,9 @@ var historyTable = {
     var form = new FormData();
     form.set('f', 'json');
 
-    if (userLicenseType === "Creator") {  //Creatorは他ユーザの投稿も閲覧できる
+    if (userLicenseType === "Creator" && portal.user.description && portal.user.description.includes("ちかデジ編集者")) {
+      form.set('where', "Status<>9 And " + creator_field + " = '" + this.userId + "'");
+    } else if (userLicenseType === "Creator") {  //Creatorは他ユーザの投稿も閲覧できる
       form.set('where', "Status<>9");
     } else {
       form.set('where', "Status<>9 And " + creator_field + " = '" + this.userId + "'");
