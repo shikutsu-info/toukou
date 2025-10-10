@@ -3986,7 +3986,7 @@
     {
       "ids": [
         "G00003_nscy",
-        "Z00056"
+        "G00061_nscy"
       ],
       "change_content": {
         "ja": {
@@ -4000,7 +4000,7 @@
         "ja": {
           "kaninfo": "管①　用途：　　材質：　　管径Φ：　　\r\n管②　用途：　　材質：　　管径Φ：　　\r\n管③　用途：　　材質：　　管径Φ：　　\r\n管④　用途：　　材質：　　管径Φ：　　\r\n管⑤　用途：　　材質：　　管径Φ：　　",
           "zahyojoho": "座標①　x：　　y：　　z：　　\r\n座標②　x：　　y：　　z：　　\r\n座標③　x：　　y：　　z：　　",
-          "bikou": "【案件名】\n\n【切図No.】\n\n【その他】\n"
+          "bikou": "【案件名】\n\n【切図No.】\n\n【測地成果】JGD2024　or　JGD2011　or　LWL\n※座標系を選択してくだい。\n\n【その他】\n\n"
         }
       },
       "textarea_ids": [],
