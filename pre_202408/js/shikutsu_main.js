@@ -1354,7 +1354,8 @@ require([
                         args.cancel = true;
                       }
                     }
-                  }).then(function (args) {
+                  }).then(async function (args) {
+                    await sleep(10); //test追加
                     // 分割アップロード完了
                     if (callbacks.upload_commit_start != undefined) {
                       callbacks.upload_commit_start(i, file);
@@ -1380,13 +1381,12 @@ require([
                       "async": true
                     }
                     // アップロードファイル適用AjaxRequest実行
-                    request_ajax(param).then(async function (args) {
+                    request_ajax(param).then(function (args) {
                       // レスポンス処理
                       if (!cancel && args != undefined && (args.success || false)) {
 
                         // console.log("files[" + i + "](commit_upload_file.then())");
                         if (callbacks.upload_commit_applied) {
-                          await sleep(2); //test追加
                           callbacks.upload_commit_applied(i, file, registed_data);
                         }
                         else {
