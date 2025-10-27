@@ -1839,6 +1839,7 @@ require([
             "dataType": "json",
             "async": true
           }
+          alert(`${url} ${ids[0]}`)
           request_ajax(param).then(function (data) {
             alert(`${data.addAttachmentResult.objectId} is ${data.addAttachmentResult.success}`)
             
