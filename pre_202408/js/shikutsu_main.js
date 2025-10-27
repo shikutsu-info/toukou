@@ -1513,6 +1513,7 @@ require([
       if (selector_label.length > 0) $(selector_label).text("");
     }
     if (callbacks.complete != undefined) {
+      await sleep(2); //test追加
       callbacks.complete();
     }
     else {
@@ -1837,7 +1838,7 @@ require([
             "processData": false,
             "contentType": false,
             "dataType": "json",
-            "async": false
+            "async": true
           }
           request_ajax(param).then(function (data) {
             if (data != undefined && data.addAttachmentResult != undefined && data.addAttachmentResult.success || false) {
