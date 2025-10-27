@@ -1837,7 +1837,7 @@ require([
             "processData": false,
             "contentType": false,
             "dataType": "json",
-            "async": true
+            "async": false
           }
           request_ajax(param).then(function (data) {
             if (data != undefined && data.addAttachmentResult != undefined && data.addAttachmentResult.success || false) {
