@@ -1380,12 +1380,13 @@ require([
                       "async": true
                     }
                     // アップロードファイル適用AjaxRequest実行
-                    request_ajax(param).then(function (args) {
+                    request_ajax(param).then(async function (args) {
                       // レスポンス処理
                       if (!cancel && args != undefined && (args.success || false)) {
 
                         // console.log("files[" + i + "](commit_upload_file.then())");
                         if (callbacks.upload_commit_applied) {
+                          await sleep(2); //test追加
                           callbacks.upload_commit_applied(i, file, registed_data);
                         }
                         else {
