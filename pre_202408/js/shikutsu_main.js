@@ -1840,6 +1840,8 @@ require([
             "async": true
           }
           request_ajax(param).then(function (data) {
+            alert(`data.addAttachmentResult.objectId is ${data.addAttachmentResult.success}`)
+            
             if (data != undefined && data.addAttachmentResult != undefined && data.addAttachmentResult.success || false) {
               // 更新ステータス更新
               var formData = new FormData();
