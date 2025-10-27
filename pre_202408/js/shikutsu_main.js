@@ -1354,8 +1354,7 @@ require([
                         args.cancel = true;
                       }
                     }
-                  }).then(async function (args) {
-                    await sleep(10); //test追加
+                  }).then(function (args) {
                     // 分割アップロード完了
                     if (callbacks.upload_commit_start != undefined) {
                       callbacks.upload_commit_start(i, file);
