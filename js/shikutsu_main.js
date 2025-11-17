@@ -880,7 +880,7 @@ require([
 
   // 添付ファイルの追加
   $('#addattachment-select').change(function () {
-    append_attachment_file($('#viewobjectid').val(), this.files);
+    append_attachment_file($('#viewobjectid').val(), $('#viewglobalid').val(), this.files);
   });
 
   // ページスクロールボタンイベント
@@ -1131,7 +1131,7 @@ require([
    * @param {String} caption
    * @param {Object} callbacks
    */
-  async function upload_files(files, selector_table, selector_select, selector_label, caption, callbacks) {
+  async function upload_files(files, selector_table, selector_select, selector_label, caption, callbacks, globalid) {
     callbacks = callbacks || {};
     // 非同期待ちフラグ
     var waiting = { status: false };
@@ -1513,7 +1513,7 @@ require([
       if (selector_label.length > 0) $(selector_label).text("");
     }
     if (callbacks.complete != undefined) {
-      callbacks.complete();
+      callbacks.complete(globalid);
     }
     else {
       // ボタン等選択可に
@@ -1691,7 +1691,7 @@ require([
       async: false
     }).done(function (data) {
       // console.log(data);
-      append_attachments(data.addResults[0].objectId, flg);
+      append_attachments(data.addResults[0].objectId, data.addResults[0].globalId, flg);
     }).fail(function (data) {
       // console.log(data);
     });
@@ -1702,7 +1702,7 @@ require([
    * @param {int} oid 
    * @param {String} flg image|movie
    */
-  function append_attachments(oid, flg) {
+  function append_attachments(oid, globalId, flg) {
 
     var uploads = [];
 
@@ -1712,6 +1712,7 @@ require([
       if ($row.find("input.id").length > 0 && $row.find("input.id").val().length > 0) {
         uploads.push({
           id: $row.find("input.id").val(),
+          name: $row.find("div.name").html(),
           status: 0
         });
       }
@@ -1719,7 +1720,7 @@ require([
 
     if (uploads.length > 0) {
       // 投稿ファイル登録
-      append_attachents(oid, uploads)
+      append_attachents(oid, globalId, uploads)
     }
     else {
       //投稿後画面切り替え
@@ -1734,9 +1735,10 @@ require([
    * @param {int} oid 
    * @param {Object[]} uploads 
    */
-  function append_attachents(oid, uploads) {
+  function append_attachents(oid, globalId, uploads) {
 
-    var url = push_feature_url + "/" + layer_id + "/" + oid + "/addAttachment";
+    // var url = push_feature_url + "/" + layer_id + "/" + oid + "/addAttachment";
+    var url = push_feature_url + "/applyEdits";
     var attachment = $('input[name="attachment"]:checked').val();
 
     append_image_attachents = (uploads, callback) => {
@@ -1746,6 +1748,54 @@ require([
       let append_image_attachent = async (count) => {
         let upload = uploads[count];
 
+        var form = new FormData();
+        form.set("f", "json");
+        form.set("edits", JSON.stringify([
+          {
+            "id": layer_id,
+            "attachments": {
+              "adds": [
+                {
+                  "globalId": `{${self.crypto.randomUUID()}}`,
+                  "parentGlobalId": `{${globalId}}`,
+                  "keywords": "",
+                  "name": upload.name,
+                  "uploadId": upload.id
+                }
+              ]
+            }
+          }
+        ]));
+        form.set("useGlobalIds", true);
+        form.set("rollbackOnFailure", true);
+        form.set("token", token);
+
+        var promise = $.ajax({
+          url: url,
+          type: "POST",
+          data: form,
+          processData: false,
+          contentType: false,
+          dataType: 'json',
+          async: true
+        }).done(function (data) {
+          // console.log(data);
+
+          uploads[count].status = 1;
+
+          var cnt = 0;
+          for (i = 0; i < uploads.length; i++) {
+            cnt = cnt + uploads[i].status;
+          }
+
+          if (cnt == uploads.length) {
+            callback();
+          }
+        }).fail(function (data) {
+          // console.log(data);
+        });
+
+        /*
         var form = new FormData();
         form.set('f', 'json');
         form.set('uploadId', upload.id);
@@ -1776,6 +1826,7 @@ require([
         }).fail(function (data) {
           // console.log(data);
         });
+        */
 
         if (count >= uploads.length - 1) {
           return;
@@ -1802,7 +1853,7 @@ require([
    * @param {FileObject[]} files
    * @returns 
    */
-  function append_attachment_file(oid, files) {
+  function append_attachment_file(oid, globalid, files) {
     var $elem = $("#attachmentlistDiv");
     $elem.find(".row").each(function (idx, row) {
       $(row).remove();
@@ -1815,15 +1866,93 @@ require([
         var $tr = $("<div class='row flex-box'></div>").html("<div class='name'></div><div class='status'></div><input type='hidden' class='id' />").appendTo($(elem));
         return $tr;
       },
-      complete: function () {
+      complete: function (globalid) {
         var ids = new Array();
+        var attachments = new Array();
         $("#attachmentlistDiv").find(".row").each(function (idx, row) {
           var $row = $(row);
           if ($row.find("input.id").length > 0 && $row.find("input.id").val().length > 0) {
             ids.push($row.find("input.id").val());
+            attachments.push({
+              uploadId: $row.find("input.id").val(),
+              fileName: $row.find("div.name").html()
+            })
           }
         });
-        if (ids.length > 0) {
+        if (attachments.length > 0) {
+          var url = push_feature_url + "/applyEdits";
+          var form = new FormData();
+          form.set("f", "json");
+          form.set("edits", JSON.stringify([
+            {
+              "id": layer_id,
+              "attachments": {
+                "adds": [
+                  {
+                    "globalId": `{${self.crypto.randomUUID()}}`,
+                    "parentGlobalId": `{${globalid}}`,
+                    "keywords": "",
+                    "name": attachments[0].fileName,
+                    "uploadId": attachments[0].uploadId
+                  }
+                ]
+              }
+            }
+          ]));
+          form.set("useGlobalIds", true);
+          form.set("rollbackOnFailure", true);
+          form.set("token", token);
+          var param = {
+            "url": url,
+            "type": "POST",
+            "data": form,
+            "processData": false,
+            "contentType": false,
+            "dataType": "json",
+            "async": true
+          }
+          request_ajax(param).then(function (data) {
+            if (data[0] != undefined && data[0].attachments != undefined && data[0].attachments.addResults[0] != undefined && data[0].attachments.addResults[0].success || false) {
+              // 更新ステータス更新
+              var formData = new FormData();
+              formData.set('f', 'json');
+              formData.set('features', JSON.stringify(
+                [
+                  {
+                    "attributes": {
+                      "OBJECTID": oid,
+                      "Update_status": 2,  // 2:添付追加
+                      "Update_status_Update": Date.now() // 更新ステータス変更日時
+                    }
+                  }
+                ]
+              ));
+              formData.set('token', token);
+              request_ajax({
+                "url": push_feature_url + "/" + layer_id + "/updateFeatures",
+                "type": "POST",
+                "data": formData,
+                "processData": false,
+                "contentType": false,
+                "dataType": "json",
+                "async": true
+              }).then(function () {
+                historyTable.viewattachment(oid);
+              });
+            }
+            else {
+
+            }
+          }).fail(function (data) {
+
+          });
+
+
+
+
+
+
+          /*
           var url = push_feature_url + "/" + layer_id + "/" + oid + "/addAttachment";
           var form = new FormData();
           form.set("f", "json");
@@ -1874,9 +2003,10 @@ require([
           }).fail(function (data) {
 
           });
+          */
         }
       }
-    });
+    }, globalid);
   }
 
   /**
@@ -2309,6 +2439,49 @@ require([
               async: false
             }).then(async function (data) {
               if (data != undefined && data.addResults != undefined && data.addResults.length > 0 && data.addResults[0].success) {
+
+                var form = new FormData();
+                form.set("f", "json");
+                form.set("edits", JSON.stringify([
+                  {
+                    "id": layer_id,
+                    "attachments": {
+                      "adds": [
+                        {
+                          "globalId": `{${self.crypto.randomUUID()}}`,
+                          "parentGlobalId": `{${data.addResults[0].globalId}}`,
+                          "keywords": "",
+                          "name": e.item.itemName,
+                          "uploadId": e.item.itemID
+                        }
+                      ]
+                    }
+                  }
+                ]));
+                form.set("useGlobalIds", true);
+                form.set("rollbackOnFailure", true);
+                form.set("token", token);
+                await request_ajax({
+                  url: url_push_attachment + "/applyEdits",
+                  type: "POST",
+                  data: form,
+                  processData: false,
+                  contentType: false,
+                  dataType: 'json',
+                  async: false
+                }).then(function (data) {
+                  let $div = $("#uploading_row" + idx).find(".upload-status .value");
+                  $div.empty();
+                  $("<span style='font-weight:bold;color:blue;'></span>").text(func_undefined_to_blank(set_lang["upload-info-added"])).appendTo($div);
+                  defer.resolve();
+                }).fail(function (data) {
+                  let $div = $("#uploading_row" + idx).find(".upload-status .value");
+                  $div.empty();
+                  $("<span style='font-weight:bold;color:red;'></span>").text(func_undefined_to_blank(set_lang["upload-info-fail"])).appendTo($div);
+                  defer.reject();
+                });
+
+                /*
                 let form = new FormData();
                 form.set('f', 'json');
                 form.set('uploadId', e.item.itemID);
@@ -2333,6 +2506,7 @@ require([
                   $("<span style='font-weight:bold;color:red;'></span>").text(func_undefined_to_blank(set_lang["upload-info-fail"])).appendTo($div);
                   defer.reject();
                 });
+                */
               }
               else {
                 let $div = $("#uploading_row" + idx).find(".upload-status .value");
@@ -2650,6 +2824,7 @@ var historyTable = {
       });
 
       $('#viewobjectid').val(objectid);
+      $('#viewglobalid').val(features[0].attributes["GlobalID"]);
       $('#viewstatus').val(features[0].attributes["Status"]);
       $('#viewscene_itemid').val(features[0].attributes["SceneItemID"]);
 
